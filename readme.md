@@ -1,30 +1,31 @@
-### MtAdmob plugin for Xamarin
+### MtAdmob plugin for Xamarin (Android & iOS)
 
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial and Rewarded Videos
 
-### IMPORTANT
-* Remember to edit your AppManifest otherwise it will not work on Android
-* For iOS install the Xamarin.Google.iOS.MobileAds & Xamarin.Google.iOS.SignIn plugins
-* On iOS you MUST now change the Ads init. In your iOS project Replace MobileAds.Configure with MobileAds.SharedInstance.Start(CompletionHandler);
-  where CompletionHandler is something like: private void CompletionHandler(InitializationStatus status){}
-* Edit your info.plist adding these Keys:
-  <key>GADApplicationIdentifier</key>
-  <string>ca-app-pub-3940256099942544~1458002511</string> <- This is a test key, replace it with your APPID
-  <key>GADIsAdManagerApp</key>
-  <true/>
-* ### If you don't do this, your iOS app will crash
+
+## Setup
+* Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob/
+* Install in your .NetStandard project and Android/iOS projects
+
+#### This plugin supports:
+* Xamarin.Android
+* Xamarin.iOS
 
 
+## How to use MTAdmob
 
-### BANNER
+ You can find a tutorial on my blog: 
+https://www.xamarinexpert.it/admob-made-easy/
+
+### To add a banner in your project
 
 To add a Banner on a page you have two options:
 
-#### XAML
+#### 1) XAML
 
 ```csharp
-<controls:MTAdView x:Name="myAds"></controls:MTAdView>
+<controls:MTAdView x:Name="myAds"/>
 ```
 
 remember to add this line in your XAML:
@@ -32,12 +33,12 @@ remember to add this line in your XAML:
 xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
 ```
 
-#### CODE
+#### 2) Code
 ```
 MTAdView ads = new MTAdView();
 ```
 
-### IMPORTANT
+#### Important
 
 To test the banner during the development google uses two Banner Id, one for Android and the other for iOS. Use them then remember to replace them with your own IDs:
 ```
@@ -50,13 +51,13 @@ iOS: ca-app-pub-3940256099942544/2934735716
 <Style TargetType="controls:MTAdView">
     <Setter Property="HeightRequest">
         <Setter.Value>
-            <x:OnIdiom Phone="50" Tablet="90"></x:OnIdiom>
+            <x:OnIdiom Phone="50" Tablet="90"/>
         </Setter.Value>
     </Setter>
 </Style>
 ```
 
-### PROPERTIES
+### Properties
 
 For each AdView if you want, you can set these properties:
 AdsId: To add the id of your ads
@@ -65,7 +66,7 @@ PersonalizedAds: You can set it to False if you want to use generic ads (for GDP
 
 **For GDPR it's better to rely on a custom consent instead or using the non personalized ads as I cannot guarantee it works. So it's better if you create a custom consent**
 
-### GLOBAL PROPERTIES
+### Global Properties
 
 AdsId: To add the id of your ads
 
@@ -78,7 +79,7 @@ You can use Global Properties in this way:
 CrossMTAdmob.Current.UserPersonalizedAds = true;
 
 
-### INTERSTITIAL
+### Insterstitial
 
 You can show an interstitial with a single line of code:
 
@@ -89,7 +90,7 @@ To Load an interstitial you can use this line:
 CrossMTAdmob.Current.LoadInterstitial("xx-xxx-xxx-xxxxxxxxxxxxxxxxx/xxxxxxxxxx");
 
 
-### REWARDED VIDEO
+### Rewarded video
 
 You can show a Rewarded video with a single line of code:
 
@@ -100,7 +101,7 @@ To Load a Rewarded Video you can use this line:
 CrossMTAdmob.Current.LoadRewardedVideo("xx-xxx-xxx-xxxxxxxxxxxxxxxxx/xxxxxxxxxx");
 
 
-### EVENTS FOR BANNERS
+### Events for Banners
 
 Just in case you need, the Banner ads offer 4 events:
 ```
@@ -110,7 +111,7 @@ AdsImpression	    Called when an impression is recorded for an ad.
 AdsOpened		    When the ads is opened
 ```
 
-### EVENTS FOR INTERSTITIALS
+### Events for Interstitials
 
 the Interstitial ads offer 3 events:
 ```
@@ -119,7 +120,7 @@ OnInterstitialOpened        When it's opened
 OnInterstitialClosed        When it's closed
 ```
 
-### EVENTS FOR REWARDED VIDEOS
+### Events for Rewarded Videos
 
 The Rewarded Videos offer 7 events:
 ```
@@ -130,9 +131,10 @@ OnRewardedVideoAdLeftApplication    When the users leaves the application
 OnRewardedVideoAdLoaded             When the ads is loaded
 OnRewardedVideoAdOpened             When the ads is opened
 OnRewardedVideoStarted              When the ads starts
+OnRewardedVideoAdCompleted          When the ads is completed
 ```
 
-### IMPORTANT
+### Important
 
 Remember to include the MTAdmob library with this code (usually it's added automatically):
 ```
@@ -140,7 +142,7 @@ using MarcTron.Plugin;
 ```
 
 
-### IMPORTANT FOR ANDROID:
+### Important for Android
 
 Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.initialize() with your AdMob App ID. 
 This needs to be done only once, ideally at app launch. For example:
@@ -166,36 +168,35 @@ Remeber to add this to your AppManifest:
 
 ### IMPORTANT FOR IOS:
 
-Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.initialize() with your AdMob App ID. 
+Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.SharedInstance.Start with your AdMob App ID. 
 This needs to be done only once, ideally at app launch. For example:
 
 ```csharp
 public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~1458002511 -->
-            MobileAds.Configure("xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
+            MobileAds.SharedInstance.Start(CompletionHandler);
 
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
+
+private void CompletionHandler(InitializationStatus status){}
 ```
 
-**In case the plugin doesn't install automatically the nuget package 
+#### On iOS you need to manually install these packages: 
 ```
 Xamarin.Google.iOS.MobileAds
+Xamarin.Google.iOS.SignIn
 ```
-you need to add it manually.**
+
+Edit your info.plist adding these Keys:
+```
+  <key>GADApplicationIdentifier</key>
+  <string>ca-app-pub-3940256099942544~1458002511</string> <- This is a test key, replace it with your APPID
+  <key>GADIsAdManagerApp</key>
+  <true/>
+```
 
 
 That's it. Cannot be easier than that :)
-
-
-### LINKS
-
-Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob
-
-Tutorial: https://www.xamarinexpert.it/admob-made-easy/
-
-To report any issue: https://bitbucket.org/marcojak81/mtadmob
