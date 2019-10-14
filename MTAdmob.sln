@@ -11,11 +11,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMTAdmob.Android", "Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMTAdmob.iOS", "Sample\SampleMTAdmob.iOS\SampleMTAdmob.iOS.csproj", "{632E1272-C118-442D-89BA-09DA8E090BCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMTAdmob", "Sample\SampleMTAdmob\SampleMTAdmob.csproj", "{F933088F-417F-4470-A8DA-3AD30F56D518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleMTAdmob", "Sample\SampleMTAdmob\SampleMTAdmob.csproj", "{F933088F-417F-4470-A8DA-3AD30F56D518}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{214089F8-1138-4386-BCDB-E3412D05A8F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{BEACC45E-ADC1-43EE-9662-D162FE104203}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F160B947-712E-4FD0-91E9-CBDEA2E9A51F}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+		readme.md = readme.md
+		MTAdmob\releases.txt = MTAdmob\releases.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
