@@ -1,0 +1,52 @@
+﻿### Release Notes
+
+**Version 1.4.4**
+ Removed deprecated code on iOS
+ Fixed issues on iOS (Please update from version 1.4.3)
+
+**Version 1.4.3**
+ Added Consent option to iOS
+ Updated Xamarin.Google.iOS.MobileAds to 7.47.0
+
+**Version 1.4.2**
+ Updated GooglePlayServicesAds.Lite 71.1720.1
+
+**Version 1.4.1**
+ Fixed issue on iOS where sometimes events weren't called on RewardedVideos
+
+**Version 1.4**
+ Fixed issue with multiple events called on RewardedVideos
+ Improved code for Interstitials.
+
+**Version 1.3**
+ Fixed crash on iOS with multiple Banner
+ Improved code
+ **To avoid compatibilty now the Banner control has been renamed from AdView to MTAdView**
+ 
+**Version 1.2**
+ With this version Loading and Showing Interstitials and rewarded videos are 2 separate events. Now the methods are:
+  * void LoadInterstitial(string adUnit);
+  * void ShowInterstitial();
+  * bool IsInterstitialLoaded();
+  * void LoadRewardedVideo(string adUnit);
+  * void ShowRewardedVideo();
+  * bool IsRewardedVideoLoaded();
+
+  I've removed the two methods:
+  * void ShowInterstitial(string adUnit);
+  * void ShowRewardedVideo(string adUnit);
+
+  Now you have to load the Interstitial or Rewarded Video and when you want you can show it. You can see if an interstitial or rewared video are loaded using the new methods
+  * bool IsInterstitialLoaded();
+  * bool IsRewardedVideoLoaded();
+
+  Thanks to these changes you have now more control over the Ads.
+
+**Version 1.1**
+* Added support for Rewarded Videos
+* Added events for Rewarded Videos
+* Added events for Interstitials
+
+**Version 1.0**
+* Banner and Insterstitial for Android
+* Banner and Insterstitial for iOS

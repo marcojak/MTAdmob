@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
+             mc:Ignorable="d"
+             x:Class="SampleMTAdmob.MainPage">
+
+    <ScrollView>
+        <StackLayout>
+            <Label Text="Let's test an Admob Banner!" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand" />
+            <Label x:Name="myLabel" Text="" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand" />
+            <!-- Place the Admob controls here -->
+            <controls:MTAdView x:Name="myAds" IsVisible="true" PersonalizedAds="true" AdsId="ca-app-pub-3940256099942544/6300978111" VerticalOptions="EndAndExpand" >
+                <controls:MTAdView.HeightRequest>
+                    <x:OnIdiom>
+                        <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
+                        <x:OnIdiom.Tablet>90</x:OnIdiom.Tablet>
+                        <x:OnIdiom.Desktop>90</x:OnIdiom.Desktop>
+                    </x:OnIdiom>
+                </controls:MTAdView.HeightRequest>
+            </controls:MTAdView>
+            <Button Text="Load Reward" Clicked="LoadReward_OnClicked"/>
+            <Button Text="Show Reward" Clicked="ShowReward_OnClicked"/>
+            <Button Text="Is Reward Loaded" Clicked="IsRewardLoaded_OnClicked"/>
+            <Button Text="Load Interstitial" Clicked="LoadInterstitial_OnClicked"/>
+            <Button Text="Show Interstitial" Clicked="ShowInterstitial_OnClicked"/>
+            <Button Text="Is Interstitial Loaded" Clicked="IsLoadedInterstitial_OnClicked"/>
+            <Button Text="Next Page" Clicked="NextPage"/>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>
