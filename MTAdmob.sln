@@ -24,6 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MTAdmob\releases.txt = MTAdmob\releases.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{7C7A5364-DE95-4E63-ABDB-B135B30193FC}"
+	ProjectSection(SolutionItems) = preProject
+		FUNDING.yml = FUNDING.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +179,7 @@ Global
 		{6CDD00FA-FC78-44B8-978B-87A8F7583BB0} = {214089F8-1138-4386-BCDB-E3412D05A8F9}
 		{632E1272-C118-442D-89BA-09DA8E090BCF} = {214089F8-1138-4386-BCDB-E3412D05A8F9}
 		{F933088F-417F-4470-A8DA-3AD30F56D518} = {214089F8-1138-4386-BCDB-E3412D05A8F9}
+		{7C7A5364-DE95-4E63-ABDB-B135B30193FC} = {F160B947-712E-4FD0-91E9-CBDEA2E9A51F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA9795CB-4D47-40B4-AB02-922F6321F2E7}
