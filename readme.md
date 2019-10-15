@@ -117,7 +117,7 @@ AdsOpened		    When the ads is opened
 the Interstitial ads offer 3 events:
 ```csharp
 OnInterstitialLoaded        When it's loaded
-OnInterstitialOpened        When it's opened      
+OnInterstitialOpened        When it's opened
 OnInterstitialClosed        When it's closed
 ```
 
