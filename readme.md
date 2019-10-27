@@ -188,7 +188,7 @@ private void CompletionHandler(InitializationStatus status){}
 #### On iOS you need to manually install these packages: 
 ```csharp
 Xamarin.Google.iOS.MobileAds
-Xamarin.Google.iOS.SignIn
+Xamarin.Google.iOS.SignIn 4.4.0 (Don't use version 5.0.1)
 ```
 
 Edit your info.plist adding these Keys:
