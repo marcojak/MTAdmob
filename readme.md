@@ -80,7 +80,7 @@ You can use Global Properties in this way:
 CrossMTAdmob.Current.UserPersonalizedAds = true;
 ```
 
-### Insterstitial
+### Interstitial
 
 You can show an interstitial with a single line of code:
 ```csharp
