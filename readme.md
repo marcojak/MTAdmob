@@ -80,7 +80,7 @@ You can use Global Properties in this way:
 CrossMTAdmob.Current.UserPersonalizedAds = true;
 ```
 
-### Insterstitial
+### Interstitial
 
 You can show an interstitial with a single line of code:
 ```csharp
@@ -117,7 +117,7 @@ AdsOpened		    When the ads is opened
 the Interstitial ads offer 3 events:
 ```csharp
 OnInterstitialLoaded        When it's loaded
-OnInterstitialOpened        When it's opened      
+OnInterstitialOpened        When it's opened
 OnInterstitialClosed        When it's closed
 ```
 
@@ -188,7 +188,7 @@ private void CompletionHandler(InitializationStatus status){}
 #### On iOS you need to manually install these packages: 
 ```csharp
 Xamarin.Google.iOS.MobileAds
-Xamarin.Google.iOS.SignIn
+Xamarin.Google.iOS.SignIn 4.4.0 (Don't use version 5.0.1)
 ```
 
 Edit your info.plist adding these Keys:
