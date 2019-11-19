@@ -123,7 +123,7 @@
     <PackageReference Include="MarcTron.Admob">
       <Version>1.4.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.848062" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xamarin.Google.iOS.MobileAds">
       <Version>7.47.0</Version>
