@@ -108,13 +108,15 @@ namespace MarcTron.Plugin
             return RewardBasedVideoAd.SharedInstance.IsReady;
         }
 
-        public void LoadRewardedVideo(string adUnit)
+        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
         {
             if (RewardBasedVideoAd.SharedInstance.IsReady)
             {
                 OnRewardedVideoAdLoaded?.Invoke(null, null);
                 return;
             }
+
+            RewardBasedVideoAd.SharedInstance.CustomRewardString = options?.CustomData;
 
             var request = Request.GetDefaultRequest();
             RewardBasedVideoAd.SharedInstance.LoadRequest(request, adUnit);
@@ -137,7 +139,7 @@ namespace MarcTron.Plugin
 
         public override void DidRewardUser(RewardBasedVideoAd rewardBasedVideoAd, AdReward reward)
         {
-            OnRewarded?.Invoke(rewardBasedVideoAd, new MTEventArgs() {RewardAmount = (int) reward.Amount, RewardType = reward.Type});
+            OnRewarded?.Invoke(rewardBasedVideoAd, new MTEventArgs() { RewardAmount = (int)reward.Amount, RewardType = reward.Type });
         }
 
         public override void DidClose(RewardBasedVideoAd rewardBasedVideoAd)
@@ -152,7 +154,7 @@ namespace MarcTron.Plugin
 
         public override void DidFailToLoad(RewardBasedVideoAd rewardBasedVideoAd, NSError error)
         {
-            OnRewardedVideoAdFailedToLoad?.Invoke(rewardBasedVideoAd, new MTEventArgs() {ErrorCode = (int) error.Code});
+            OnRewardedVideoAdFailedToLoad?.Invoke(rewardBasedVideoAd, new MTEventArgs() { ErrorCode = (int)error.Code });
         }
 
         public override void DidOpen(RewardBasedVideoAd rewardBasedVideoAd)
