@@ -154,6 +154,10 @@
     <None Include="readme.txt" Pack="true" PackagePath="."></None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="MTRewardedAdOptions.shared.cs" />
+  </ItemGroup>
+
   <!--Additional item groups-->
   <!--
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">

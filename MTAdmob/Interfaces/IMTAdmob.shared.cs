@@ -16,8 +16,13 @@ namespace MarcTron.Plugin.Interfaces
         void LoadInterstitial(string adUnit);
         void ShowInterstitial();
 
-        bool IsRewardedVideoLoaded();        
+        bool IsRewardedVideoLoaded();
+
+#if !MONOANDROID81
+        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options);
+#else
         void LoadRewardedVideo(string adUnit);
+#endif
         void ShowRewardedVideo();
 
 

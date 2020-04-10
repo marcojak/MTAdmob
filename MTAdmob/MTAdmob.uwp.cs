@@ -42,7 +42,7 @@ namespace MarcTron.Plugin
         {
         }
 
-        public void LoadRewardedVideo(string adUnit)
+        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
         {
         }
 
