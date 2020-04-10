@@ -19,7 +19,7 @@ namespace MarcTron.Plugin.Interfaces
         bool IsRewardedVideoLoaded();
 
 #if !MONOANDROID81
-        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options);
+        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null);
 #else
         void LoadRewardedVideo(string adUnit);
 #endif

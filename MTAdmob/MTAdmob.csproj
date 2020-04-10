@@ -158,6 +158,8 @@
     <None Remove="MTRewardedAdOptions.shared.cs" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadXFormsNugetUpgradeInfoBarMTAdmobHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
   <!--Additional item groups-->
   <!--
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
