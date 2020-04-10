@@ -16,6 +16,11 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
 * If you don't do this, your iOS app will crash
 
 Release Notes
+Version 1.5.0
+ Updated packages
+ Improved code
+ Add custom data to RewardedAd (thanks to Lordinaire)
+
 Version 1.4.4
  Removed deprecated code on iOS
  Fixed issues on iOS (Please update from version 1.4.3)

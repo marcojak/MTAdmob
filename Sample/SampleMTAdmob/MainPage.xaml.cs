@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using MarcTron.Plugin;
 using MarcTron.Plugin.Controls;
+using MarcTron.Plugin.CustomEventArgs;
 using Xamarin.Forms;
 
 namespace SampleMTAdmob

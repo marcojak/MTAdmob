@@ -65,6 +65,8 @@ namespace MarcTron.Plugin
             CreateInterstitialAd(adUnit);
 
             var request = Request.GetDefaultRequest();
+            if (CrossMTAdmob.Current.TestDevices != null)
+                request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
             _adInterstitial.LoadRequest(request);
         }
 
@@ -117,6 +119,8 @@ namespace MarcTron.Plugin
             }
 
             var request = Request.GetDefaultRequest();
+            if (CrossMTAdmob.Current.TestDevices != null)
+                request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
             RewardBasedVideoAd.SharedInstance.LoadRequest(request, adUnit);
         }
 

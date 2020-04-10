@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using MarcTron.Plugin;
+using MarcTron.Plugin.CustomEventArgs;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
