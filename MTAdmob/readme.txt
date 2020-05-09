@@ -16,6 +16,9 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
 * If you don't do this, your iOS app will crash
 
 Release Notes
+Version 1.5.5
+ Updated MobileAds to 7.57.0 to avoid Apple rejection because of the reference to UIWebView
+
 Version 1.5.0
  Updated packages
  Improved code

@@ -19,10 +19,10 @@
     <PackageId>MarcTron.Admob</PackageId>
     
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.5.0.0</AssemblyVersion>
-    <AssemblyFileVersion>1.5.0.0</AssemblyFileVersion>
-    <Version>1.5.0</Version>
-    <PackageVersion>1.5.0.0</PackageVersion>
+    <AssemblyVersion>1.5.5.0</AssemblyVersion>
+    <AssemblyFileVersion>1.5.5.0</AssemblyFileVersion>
+    <Version>1.5.5</Version>
+    <PackageVersion>1.5.5.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -39,6 +39,9 @@
     <PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
     <RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
     <PackageReleaseNotes>
+      Version 1.5.5
+      Updated MobileAds to 7.57.0 to avoid Apple rejection because of the reference to UIWebView
+
       Version 1.5.0
       Updated packages
       Improved code
@@ -80,7 +83,7 @@
       Version 1.0
       Banner and Insterstitial for Android
       Banner and Insterstitial for iOS
-</PackageReleaseNotes>
+    </PackageReleaseNotes>
     <PackageIconUrl>ICON URL</PackageIconUrl>
     <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, MTAdmob, Ads, Admob, uwp, Xamarin, Xamarin Expert, Banner, Insterstitial, Rewarded video, video, Google, Google Ads, Google Admob</PackageTags>
 
@@ -132,7 +135,8 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Build.Download" Version="0.10.0" />
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />    
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.57.0" />    
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid81'">
@@ -148,7 +152,7 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
     <!--<PackageReference Include="Xamarin.Google.iOS.SignIn" Version="5.0.2" />-->
     <!--<PackageReference Include="Xamarin.Firebase.iOS.Core" Version="6.6.0" />-->
-    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.53.1" />
+    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.57.0" />
   </ItemGroup>
 
   <ItemGroup>
