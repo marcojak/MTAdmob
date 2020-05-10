@@ -135,8 +135,7 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Build.Download" Version="0.10.0" />
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
-    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.57.0" />    
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />    
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid81'">

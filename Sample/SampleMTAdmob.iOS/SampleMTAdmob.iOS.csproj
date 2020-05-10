@@ -121,13 +121,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MarcTron.Admob">
-      <Version>1.5.0</Version>
+      <Version>1.5.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
-    <PackageReference Include="Xamarin.Google.iOS.MobileAds">
-      <Version>7.53.1</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
