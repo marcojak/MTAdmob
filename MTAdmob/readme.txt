@@ -246,4 +246,4 @@ That's it. Cannot be easier than that :)
 LINKS
 Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob
 Tutorial: https://www.xamarinexpert.it/admob-made-easy/
-To report any issue: https://bitbucket.org/marcojak81/mtadmob
+To report any issue: https://github.com/marcojak/MTAdmob/issues

@@ -174,28 +174,29 @@ public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
             <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~1458002511 -->
-            MobileAds.Configure("xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
+  MobileAds.Configure("xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
 
-            LoadApplication(new App());
+  LoadApplication(new App());
 
-            return base.FinishedLaunching(app, options);
-        }
-```
+  return base.FinishedLaunching(app, options);
+  }
+  ```
 
-**In case the plugin doesn't install automatically the nuget package 
-```
-Xamarin.Google.iOS.MobileAds
-```
-you need to add it manually.**
-
-
-That's it. Cannot be easier than that :)
+  **In case the plugin doesn't install automatically the nuget package
+  ```
+  Xamarin.Google.iOS.MobileAds
+  ```
+  you need to add it manually.**
 
 
-### LINKS
+  That's it. Cannot be easier than that :)
 
-Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob
 
-Tutorial: https://www.xamarinexpert.it/admob-made-easy/
+  ### LINKS
 
-To report any issue: https://bitbucket.org/marcojak81/mtadmob
+  Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob
+
+  Tutorial: https://www.xamarinexpert.it/admob-made-easy/
+
+  To report any issue: https://github.com/marcojak/MTAdmob/issues
+  
