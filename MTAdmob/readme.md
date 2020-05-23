@@ -1,4 +1,4 @@
-﻿### MtAdmob plugin for Xamarin
+﻿## MtAdmob plugin for Xamarin
 
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial and Rewarded Videos
