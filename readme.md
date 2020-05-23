@@ -166,6 +166,10 @@ Remeber to add this to your AppManifest:
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
 ```
+If you're Ads are not displayed on your Android Emulator, make sure your Emulator has Google Play Store API installed, otherwise you'll find this message in your Debugger Console:
+[GooglePlayServicesUtil] Google Play Store is missing.
+If it's still not showing ads after adding Play Store, open Google Play Store on your emulator. There might be some config work to be done by Play Store, e.g. login with your google account, so just start it and make sure it's working fine on your emulator.
+
 
 ### IMPORTANT FOR IOS:
 
