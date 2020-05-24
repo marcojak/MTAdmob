@@ -33,7 +33,7 @@ remember to add this line in your XAML:
 xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
 ```
 
-As you will have different Banner Ids for iOS and for Android, you could use the OnPlatform-Property like this:
+As you can have different Banner Ids for iOS and for Android, you could use the OnPlatform-Property like this:
 ```csharp
 <controls:MTAdView x:Name="myAds" AdsId="{OnPlatform Android='ca-app-pub-3940256099942544/6300978111', 
                                    iOS='ca-app-pub-3940256099942544/2934735716'}"/>
