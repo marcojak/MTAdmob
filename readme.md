@@ -33,6 +33,13 @@ remember to add this line in your XAML:
 xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
 ```
 
+As you will have different Banner Ids for iOS and for Android, you could use the OnPlatform-Property like this:
+```csharp
+<controls:MTAdView x:Name="myAds" AdsId="{OnPlatform Android='ca-app-pub-3940256099942544/6300978111', 
+                                   iOS='ca-app-pub-3940256099942544/2934735716'}"/>
+```
+Or set it in App.xaml (similar to HeightRequest as explained below) for all banners in your app.
+
 #### 2) Code
 ```csharp
 MTAdView ads = new MTAdView();
@@ -60,6 +67,7 @@ iOS: ca-app-pub-3940256099942544/2934735716
 ### Properties
 
 For each AdView if you want, you can set these properties:
+
 AdsId: To add the id of your ads
 
 PersonalizedAds: You can set it to False if you want to use generic ads (for GDPR...) (It works only for Android Banners, for the others, you must ask for consent)
@@ -161,13 +169,15 @@ protected override void OnCreate(Bundle savedInstanceState)
             LoadApplication(new App());
         }
 ```
-Remeber to add this to your AppManifest:
+Remember to add this to your AppManifest:
 ```csharp
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
 ```
-If you're Ads are not displayed on your Android Emulator, make sure your Emulator has Google Play Store API installed, otherwise you'll find this message in your Debugger Console:
+If your Ads are not displayed on your Android Emulator, make sure your Emulator has Google Play Store API installed, otherwise you'll find this message in your Debugger Console:
+
 [GooglePlayServicesUtil] Google Play Store is missing.
+
 If it's still not showing ads after adding Play Store, open Google Play Store on your emulator. There might be some config work to be done by Play Store, e.g. login with your google account, so just start it and make sure it's working fine on your emulator.
 
 
