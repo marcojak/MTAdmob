@@ -11,13 +11,16 @@ namespace MarcTron.Plugin
     /// <summary>
     /// Interface for MTAdmob
     /// </summary>
-    public class MTAdmobImplementation : RewardBasedVideoAdDelegate, IMTAdmob
+    public class MTAdmobImplementation : RewardBasedVideoAdDelegate, IMTAdmob/*, IRewardedAdDelegate*/ //New rewarded delegate
     {
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
         public List<string> TestDevices { get; set; }
 
         Interstitial _adInterstitial;
+
+        //New reward object
+        //RewardedAd _rewardedAd;
 
         public event EventHandler<MTEventArgs> OnRewarded;
         public event EventHandler OnRewardedVideoAdClosed;
@@ -34,6 +37,8 @@ namespace MarcTron.Plugin
         public MTAdmobImplementation()
         {
             RewardBasedVideoAd.SharedInstance.Delegate = this;
+            //New reward object
+            //_rewardedAd = new RewardedAd();
         }
 
         private void CreateInterstitialAd(string adUnit)
@@ -112,6 +117,7 @@ namespace MarcTron.Plugin
 
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
         {
+            //old method
             if (RewardBasedVideoAd.SharedInstance.IsReady)
             {
                 OnRewardedVideoAdLoaded?.Invoke(null, null);
@@ -124,10 +130,20 @@ namespace MarcTron.Plugin
             if (CrossMTAdmob.Current.TestDevices != null)
                 request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
             RewardBasedVideoAd.SharedInstance.LoadRequest(request, adUnit);
+
+            //new method
+            //if (_rewardedAd==null)
+            //    _rewardedAd = new RewardedAd();
+            //_rewardedAd.LoadRequest(request, completion);
         }
+
+        //private void completion(RequestError error)
+        //{
+        //}
 
         public void ShowRewardedVideo()
         {
+            //old method
             if (RewardBasedVideoAd.SharedInstance.IsReady)
             {
                 var window = UIApplication.SharedApplication.KeyWindow;
@@ -139,12 +155,31 @@ namespace MarcTron.Plugin
 
                 RewardBasedVideoAd.SharedInstance.Present(vc);
             }
+
+            //new method
+            //if (_rewardedAd.IsReady)
+            //{
+            //    var window = UIApplication.SharedApplication.KeyWindow;
+            //    var vc = window.RootViewController;
+            //    while (vc.PresentedViewController != null)
+            //    {
+            //        vc = vc.PresentedViewController;
+            //    }
+            //    _rewardedAd.Present(vc, this);
+            //}
         }
 
+        //old method
         public override void DidRewardUser(RewardBasedVideoAd rewardBasedVideoAd, AdReward reward)
         {
             OnRewarded?.Invoke(rewardBasedVideoAd, new MTEventArgs() { RewardAmount = (int)reward.Amount, RewardType = reward.Type });
         }
+
+        //new method
+        //public void UserDidEarnReward(RewardedAd rewardedAd, AdReward reward)
+        //{
+        //    OnRewarded?.Invoke(rewardedAd, new MTEventArgs() { RewardAmount = (int)reward.Amount, RewardType = reward.Type });
+        //}
 
         public override void DidClose(RewardBasedVideoAd rewardBasedVideoAd)
         {

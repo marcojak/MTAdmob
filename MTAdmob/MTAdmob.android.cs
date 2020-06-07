@@ -128,11 +128,7 @@ namespace MarcTron.Plugin
             return _rewardedAds != null && _rewardedAds.IsLoaded;
         }
 
-#if !MONOANDROID81
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
-#else
-        public void LoadRewardedVideo(string adUnit)
-#endif
         {
             if (_rewardedAds == null)
             {
@@ -156,7 +152,7 @@ namespace MarcTron.Plugin
                 {
                     _rewardedAds.UserId = options.UserId;
                     _rewardedAds.CustomData = options.CustomData;
-}
+                }
 #endif
                 _rewardedAds.LoadAd(adUnit, requestBuilder.Build());
             }
