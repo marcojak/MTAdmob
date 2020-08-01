@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Android.App;
 using Android.Gms.Ads;
 using Android.Gms.Ads.Reward;
+using Android.OS;
+using Google.Ads.Mediation.Admob;
 using MarcTron.Plugin.CustomEventArgs;
 using MarcTron.Plugin.Interfaces;
 using MarcTron.Plugin.Listeners;
@@ -15,8 +17,10 @@ namespace MarcTron.Plugin
     /// </summary>
     public class MTAdmobImplementation : IMTAdmob
     {
+        public bool IsEnabled { get; set; } = true;
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
+        public bool UseRestrictedDataProcessing { get; set; } = false;
         public List<string> TestDevices { get; set; }
 
         InterstitialAd _ad;
@@ -53,23 +57,49 @@ namespace MarcTron.Plugin
             return _ad != null && _ad.IsLoaded;
         }
 
+        public static AdRequest.Builder GetRequest()
+        {
+            bool addBundle = false;
+            Bundle bundleExtra = new Bundle();
+            var requestBuilder = new AdRequest.Builder();
+
+            if (CrossMTAdmob.Current.TestDevices != null)
+            {
+                foreach (var testDevice in CrossMTAdmob.Current.TestDevices)
+                {
+                    requestBuilder.AddTestDevice(testDevice);
+                }
+            }
+            
+            if (!CrossMTAdmob.Current.UserPersonalizedAds)
+            {
+                bundleExtra.PutString("npa", "1");
+                addBundle = true;
+            }
+
+            if (CrossMTAdmob.Current.UseRestrictedDataProcessing)
+            {
+                bundleExtra.PutString("rdp", "1");
+                addBundle = true;
+            }
+
+            if (addBundle)
+                requestBuilder = requestBuilder.AddNetworkExtrasBundle(Java.Lang.Class.FromType(typeof(AdMobAdapter)), bundleExtra);
+
+            return requestBuilder;
+        }
+
         public void LoadInterstitial(string adUnit)
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_ad == null || _ad?.AdUnitId != adUnit)
                 CreateInterstitialAd(adUnit);
 
             if (!_ad.IsLoaded && !_ad.IsLoading)
             {
-                var requestBuilder = new AdRequest.Builder();
-
-                if (CrossMTAdmob.Current.TestDevices != null)
-                {
-                    foreach (var testDevice in CrossMTAdmob.Current.TestDevices)
-                    {
-                        requestBuilder.AddTestDevice(testDevice);
-                    }
-                }
-
+                var requestBuilder = GetRequest();
                 _ad.LoadAd(requestBuilder.Build());
             }
             else
@@ -80,6 +110,9 @@ namespace MarcTron.Plugin
 
         public void ShowInterstitial()
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_ad != null && _ad.IsLoaded)
             {
                 _ad.Show();
@@ -130,6 +163,9 @@ namespace MarcTron.Plugin
 
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_rewardedAds == null)
             {
                 CreateRewardedVideo();
@@ -137,15 +173,7 @@ namespace MarcTron.Plugin
 
             if (!_rewardedAds.IsLoaded)
             {
-                var requestBuilder = new AdRequest.Builder();
-
-                if (CrossMTAdmob.Current.TestDevices != null)
-                {
-                    foreach (var testDevice in CrossMTAdmob.Current.TestDevices)
-                    {
-                        requestBuilder.AddTestDevice(testDevice);
-                    }
-                }
+                var requestBuilder = GetRequest();
 
 #if !MONOANDROID81
                 if (options != null)
@@ -164,6 +192,9 @@ namespace MarcTron.Plugin
 
         public void ShowRewardedVideo()
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_rewardedAds != null && _rewardedAds.IsLoaded)
             {
                 _rewardedAds.Show();

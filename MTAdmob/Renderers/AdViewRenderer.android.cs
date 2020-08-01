@@ -26,6 +26,9 @@ namespace MarcTron.Plugin.Renderers
 
         private void CreateNativeControl(MTAdView myMtAdView, string adsId, bool? personalizedAds)
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_adView != null)
                 return;
 
@@ -42,6 +45,9 @@ namespace MarcTron.Plugin.Renderers
             listener.AdClosed += myMtAdView.AdClosed;
             listener.AdImpression += myMtAdView.AdImpression;
             listener.AdOpened += myMtAdView.AdOpened;
+            listener.AdFailedToLoad += myMtAdView.AdFailedToLoad;
+            listener.AdLoaded += myMtAdView.AdLoaded;
+            listener.AdLeftApplication += myMtAdView.AdLeftApplication;
 
             _adView = new AdView(Context)
             {
@@ -51,33 +57,16 @@ namespace MarcTron.Plugin.Renderers
                 LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
             };
 
-            var requestBuilder = new AdRequest.Builder();
-            if (CrossMTAdmob.Current.TestDevices != null)
-            {
-                foreach (var testDevice in CrossMTAdmob.Current.TestDevices)
-                {
-                    requestBuilder.AddTestDevice(testDevice);
-                }
-            }
-
-            if ((personalizedAds.HasValue && personalizedAds.Value) || CrossMTAdmob.Current.UserPersonalizedAds)
-            {
-                _adView.LoadAd(requestBuilder.Build());
-            }
-            else
-            {
-                Bundle bundleExtra = new Bundle();
-                bundleExtra.PutString("npa", "1");
-
-                _adView.LoadAd(requestBuilder
-                    .AddNetworkExtrasBundle(Java.Lang.Class.FromType(typeof(AdMobAdapter)), bundleExtra)
-                    .Build());
-            }
+            var requestBuilder = MTAdmobImplementation.GetRequest();
+            _adView.LoadAd(requestBuilder.Build());
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<MTAdView> e)
         {
             base.OnElementChanged(e);
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (Control == null)
             {
                 CreateNativeControl(e.NewElement, e.NewElement.AdsId, e.NewElement.PersonalizedAds);

@@ -1,6 +1,5 @@
 ﻿using System;
 using CoreGraphics;
-using Foundation;
 using Google.MobileAds;
 using MarcTron.Plugin.Controls;
 using UIKit;
@@ -19,6 +18,9 @@ namespace MarcTron.Plugin.Renderers
 
         private void CreateNativeControl(UIViewController controller, MTAdView myMtAdView, string adsId, bool? personalizedAds, bool needToRefreshAdView)
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_adView != null && !needToRefreshAdView)
                 return;
 
@@ -38,17 +40,34 @@ namespace MarcTron.Plugin.Renderers
 
             _adView.AdReceived += myMtAdView.AdImpression;
 
-            if ((personalizedAds.HasValue && personalizedAds.Value) || CrossMTAdmob.Current.UserPersonalizedAds)
-            {
-                _adView.LoadRequest(GetRequest());
-            }
-            else
-            {
-                var request = GetRequest();
-                var extras = new Extras {AdditionalParameters = NSDictionary.FromObjectAndKey(new NSString("1"), new NSString("npa"))};
-                request.RegisterAdNetworkExtras(extras);
-                _adView.LoadRequest(request);
-            }
+
+            var request = MTAdmobImplementation.GetRequest();
+
+            //bool addExtra = false;
+            //var dict = new Dictionary<string,string>();
+            //if ((!personalizedAds.HasValue || !personalizedAds.Value) || !CrossMTAdmob.Current.UserPersonalizedAds)
+            //{
+            //    dict.Add(new NSString("npa"), new NSString("1"));
+            //    addExtra = true;
+            //}
+
+            //if (CrossMTAdmob.Current.UseRestrictedDataProcessing)
+            //{
+            //    dict.Add(new NSString("rdp"), new NSString("1"));
+            //    addExtra = true;
+            //}
+
+            //var request = GetRequest();
+            //if (addExtra)
+            //{
+            //    var extras = new Extras
+            //    {
+            //        AdditionalParameters = NSDictionary.FromObjectsAndKeys(dict.Values.ToArray(), dict.Keys.ToArray())
+            //    };
+            //    request.RegisterAdNetworkExtras(extras);
+            //}
+
+            _adView.LoadRequest(request);
         }
 
         Request GetRequest()
@@ -83,6 +102,9 @@ namespace MarcTron.Plugin.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<MTAdView> e)
         {
             base.OnElementChanged(e);
+
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
 
             if (_adView != null)
                 return;

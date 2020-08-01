@@ -5,7 +5,6 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
 
 ### IMPORTANT
 * Remember to edit your AppManifest otherwise it will not work on Android
-* For iOS install the Xamarin.Google.iOS.MobileAds & Xamarin.Google.iOS.SignIn plugins
 * On iOS you MUST now change the Ads init. In your iOS project Replace MobileAds.Configure with MobileAds.SharedInstance.Start(CompletionHandler);
   where CompletionHandler is something like: private void CompletionHandler(InitializationStatus status){}
 * Edit your info.plist adding these Keys:
@@ -15,6 +14,8 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
   <true/>
 * ### If you don't do this, your iOS app will crash
 
+* I'm slowly starting to move toward AndroidX, so it's possible that you need to install more packages in your Android project, in case of a build error,
+  Visual Studio will tell you which packages you need to install.
 
 
 ### BANNER
@@ -73,6 +74,8 @@ PersonalizedAds: You can set it to False if you want to use generic ads (for GDP
 **For GDPR it's better to rely on a custom consent instead or using the non personalized ads as I cannot guarantee it works. So it's better if you create a custom consent**
 
 TestDevices: You can add here the ID of your test devices
+
+UseRestrictedDataProcessing: For compliance with the CCPA
 
 You can use Global Properties in this way:
 CrossMTAdmob.Current.UserPersonalizedAds = true;

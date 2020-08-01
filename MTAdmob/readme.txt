@@ -5,7 +5,6 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
 
 ### IMPORTANT
 * Remember to edit your AppManifest otherwise it will not work on Android
-* For iOS install the Xamarin.Google.iOS.MobileAds & Xamarin.Google.iOS.SignIn plugins
 * On iOS you MUST now change the Ads init. In your iOS project Replace MobileAds.Configure with MobileAds.SharedInstance.Start(CompletionHandler);
   where CompletionHandler is something like: private void CompletionHandler(InitializationStatus status){}
 * Edit your info.plist adding these Keys:
@@ -15,7 +14,15 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
   <true/>
 * If you don't do this, your iOS app will crash
 
+* I'm slowly starting to move toward AndroidX, so it's possible that you need to install more packages in your Android project, in case of a build error,
+  Visual Studio will tell you which packages you need to install.
+
 Release Notes
+Version 1.5.7
+ Added IsEnabled to disable the ads (banners, interstitials, rewarded videos) (Default = true)
+ Added UseRestrictedDataProcessing for CCPA compliance (Default = false)
+ Starting to move to AndroidX, possibly you'll need new packages in your Android project but VS will tell you
+
 Version 1.5.6
  Fixed possible issue with some MONODROID versions for LoadRewardedVideo
 

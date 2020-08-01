@@ -1,4 +1,9 @@
 ﻿### Release Notes
+**Version 1.5.7**
+ Added IsEnabled to disable the ads (banners, interstitials, rewarded videos) (Default = true)
+ Added UseRestrictedDataProcessing for CCPA compliance (Default = false)
+ Starting to move to AndroidX, possibly you'll need new packages in your Android project but VS will tell you
+
 **Version 1.5.6**
  Fixed possible issue with some MONODROID versions for LoadRewardedVideo
 

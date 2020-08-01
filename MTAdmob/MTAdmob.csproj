@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!--Work around so the conditions work below-->
     <TargetFrameworks></TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90;uap10.0.16299</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90;uap10.0.18362</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90</TargetFrameworks>
     <!--Feel free to add as many targets as you need below
     netstandard1.0;netstandard2.0;MonoAndroid81;Xamarin.iOS10;uap10.0.16299;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;Tizen40
@@ -19,10 +19,10 @@
     <PackageId>MarcTron.Admob</PackageId>
     
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.5.6.0</AssemblyVersion>
-    <AssemblyFileVersion>1.5.6.0</AssemblyFileVersion>
-    <Version>1.5.6</Version>
-    <PackageVersion>1.5.6.0</PackageVersion>
+    <AssemblyVersion>1.5.7.0</AssemblyVersion>
+    <AssemblyFileVersion>1.5.7.0</AssemblyFileVersion>
+    <Version>1.5.7</Version>
+    <PackageVersion>1.5.7.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -41,54 +41,58 @@
     <PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
     <RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
     <PackageReleaseNotes>
-      Version 1.5.6
-      Fixed possible issue with some MONODROID versions for LoadRewardedVideo
-      
-      Version 1.5.5
-      Updated MobileAds to 7.57.0 to avoid Apple rejection because of the reference to UIWebView
+		Version 1.5.7
+		Added IsEnabled to disable the ads (banners, interstitials, rewarded videos) (Default = true)
+		Added UseRestrictedDataProcessing for CCPA compliance (Default = false)
 
-      Version 1.5.0
-      Updated packages
-      Improved code
-      Add custom data to RewardedAd (thanks to Lordinaire)
+		Version 1.5.6
+		Fixed possible issue with some MONODROID versions for LoadRewardedVideo
 
-      Version 1.4.5
-      Automatically added Google.SignIn 4.4.0 (This version is required to compile your project).
+		Version 1.5.5
+		Updated MobileAds to 7.57.0 to avoid Apple rejection because of the reference to UIWebView
 
-      Version 1.4.4
-      Removed deprecated code on iOS
-      Fixed issues on iOS (Please update from version 1.4.3 and read the README to init your projects)
+		Version 1.5.0
+		Updated packages
+		Improved code
+		Add custom data to RewardedAd (thanks to Lordinaire)
 
-      Version 1.4.3
-      Added Consent option to iOS
-      Updated Xamarin.Google.iOS.MobileAds to 7.47.0
+		Version 1.4.5
+		Automatically added Google.SignIn 4.4.0 (This version is required to compile your project).
 
-      Version 1.4.2
-      Updated GooglePlayServicesAds.Lite 71.1720.1
+		Version 1.4.4
+		Removed deprecated code on iOS
+		Fixed issues on iOS (Please update from version 1.4.3 and read the README to init your projects)
 
-      Version 1.4.1
-      Fixed issue on iOS where some events weren't called on RewardedVideos in case of no internet
+		Version 1.4.3
+		Added Consent option to iOS
+		Updated Xamarin.Google.iOS.MobileAds to 7.47.0
 
-      Version 1.4
-      Fixed issue with multiple events called on RewardedVideos
-      Improved code for Interstitials.
+		Version 1.4.2
+		Updated GooglePlayServicesAds.Lite 71.1720.1
 
-      Version 1.3
-      Fixed crash on iOS with multiple Banner
-      To avoid compatibilty now the Banner control has been renamed from AdView to MTAdView
+		Version 1.4.1
+		Fixed issue on iOS where some events weren't called on RewardedVideos in case of no internet
 
-      Version 1.2
-      Now Load and Show are two separate methods to give you more control over your Ads
+		Version 1.4
+		Fixed issue with multiple events called on RewardedVideos
+		Improved code for Interstitials.
 
-      Version 1.1
-      Added support for Rewarded Videos
-      Added events for Rewarded Videos
-      Added events for Interstitials
+		Version 1.3
+		Fixed crash on iOS with multiple Banner
+		To avoid compatibilty now the Banner control has been renamed from AdView to MTAdView
 
-      Version 1.0
-      Banner and Insterstitial for Android
-      Banner and Insterstitial for iOS
-    </PackageReleaseNotes>
+		Version 1.2
+		Now Load and Show are two separate methods to give you more control over your Ads
+
+		Version 1.1
+		Added support for Rewarded Videos
+		Added events for Rewarded Videos
+		Added events for Interstitials
+
+		Version 1.0
+		Banner and Insterstitial for Android
+		Banner and Insterstitial for iOS
+	</PackageReleaseNotes>
     <PackageIconUrl>ICON URL</PackageIconUrl>
     <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, MTAdmob, Ads, Admob, uwp, Xamarin, Xamarin Expert, Banner, Insterstitial, Rewarded video, video, Google, Google Ads, Google Admob</PackageTags>
 
@@ -146,17 +150,23 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid81'">
     <!--<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>-->
     <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="60.1142.1" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+	  <!--<PackageReference Include="Xamarin.Android.Support.Annotations" Version="27.0.2" />-->
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid90'">
     <!--<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>-->
-    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="71.1720.1" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="71.1720.4" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
+	  <!--<PackageReference Include="Xamarin.Android.Support.Annotations" Version="28.0.0.3" />-->
+    <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.1.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
     <!--<PackageReference Include="Xamarin.Google.iOS.SignIn" Version="5.0.2" />-->
     <!--<PackageReference Include="Xamarin.Firebase.iOS.Core" Version="6.6.0" />-->
     <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.57.0" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,8 +7,15 @@ namespace MarcTron.Plugin.Interfaces
     // ReSharper disable once InconsistentNaming
     public interface IMTAdmob
     {
+        /// <summary>
+        /// Gets if the plugin is enabled.
+        /// </summary>
+        bool IsEnabled { get; set; }
+
         string AdsId { get; set; }
         bool UserPersonalizedAds { get; set; }
+
+        bool UseRestrictedDataProcessing { get; set; }
 
         List<string> TestDevices { get; set; }
 

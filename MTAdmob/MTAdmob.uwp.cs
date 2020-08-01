@@ -7,13 +7,15 @@ namespace MarcTron.Plugin
 {
     /// <summary>
     /// Interface for MTAdmob
-    /// This han ton been implemented yet but it could be in a next version or you can implement and send it with a pull request :)
+    /// This has not been implemented yet but it could be in a next version or you can implement and send it with a pull request :)
     /// </summary>
     public class MTAdmobImplementation : IMTAdmob
     {
+        public bool IsEnabled { get; set; } = true;
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
         public List<string> TestDevices { get; set; }
+        public bool UseRestrictedDataProcessing { get; set; }
 
         public event EventHandler<MTEventArgs> OnRewarded;
         public event EventHandler OnRewardedVideoAdClosed;

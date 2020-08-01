@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Foundation;
 using Google.MobileAds;
 using MarcTron.Plugin.CustomEventArgs;
@@ -13,9 +14,11 @@ namespace MarcTron.Plugin
     /// </summary>
     public class MTAdmobImplementation : RewardBasedVideoAdDelegate, IMTAdmob/*, IRewardedAdDelegate*/ //New rewarded delegate
     {
+        public bool IsEnabled { get; set; } = true;
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
         public List<string> TestDevices { get; set; }
+        public bool UseRestrictedDataProcessing { get; set; } = false;
 
         Interstitial _adInterstitial;
 
@@ -65,18 +68,55 @@ namespace MarcTron.Plugin
             _adInterstitial.WillDismissScreen += _adInterstitial_WillDismissScreen;
         }
 
-        public void LoadInterstitial(string adUnit)
+        public static Request GetRequest()
         {
-            CreateInterstitialAd(adUnit);
-
             var request = Request.GetDefaultRequest();
+            bool addExtra = false;
+            var dict = new Dictionary<string, string>();
+
             if (CrossMTAdmob.Current.TestDevices != null)
                 request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
+
+            if (!CrossMTAdmob.Current.UserPersonalizedAds)
+            {
+                dict.Add(new NSString("npa"), new NSString("1"));
+                addExtra = true;
+            }
+
+            if (CrossMTAdmob.Current.UseRestrictedDataProcessing)
+            {
+                dict.Add(new NSString("rdp"), new NSString("1"));
+                addExtra = true;
+            }
+
+            if (addExtra)
+            {
+                var extras = new Extras
+                {
+                    AdditionalParameters = NSDictionary.FromObjectsAndKeys(dict.Values.ToArray(), dict.Keys.ToArray())
+                };
+                request.RegisterAdNetworkExtras(extras);
+            }
+
+            return request;
+        }
+
+        public void LoadInterstitial(string adUnit)
+        {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
+            CreateInterstitialAd(adUnit);
+
+            var request = GetRequest();
             _adInterstitial.LoadRequest(request);
         }
 
         public void ShowInterstitial()
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             if (_adInterstitial != null && _adInterstitial.IsReady)
             {
                 var window = UIApplication.SharedApplication.KeyWindow;
@@ -117,6 +157,9 @@ namespace MarcTron.Plugin
 
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             //old method
             if (RewardBasedVideoAd.SharedInstance.IsReady)
             {
@@ -126,9 +169,7 @@ namespace MarcTron.Plugin
 
             RewardBasedVideoAd.SharedInstance.CustomRewardString = options?.CustomData;
 
-            var request = Request.GetDefaultRequest();
-            if (CrossMTAdmob.Current.TestDevices != null)
-                request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
+            var request = GetRequest();
             RewardBasedVideoAd.SharedInstance.LoadRequest(request, adUnit);
 
             //new method
@@ -143,6 +184,9 @@ namespace MarcTron.Plugin
 
         public void ShowRewardedVideo()
         {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
             //old method
             if (RewardBasedVideoAd.SharedInstance.IsReady)
             {
