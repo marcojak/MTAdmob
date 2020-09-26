@@ -11,6 +11,7 @@ namespace SampleMTAdmob
             InitializeComponent();
 
             CrossMTAdmob.Current.UserPersonalizedAds = true;
+            CrossMTAdmob.Current.ComplyWithFamilyPolicies = true;
             CrossMTAdmob.Current.UseRestrictedDataProcessing = true;
             CrossMTAdmob.Current.AdsId = "ca-app-pub-3940256099942544/6300978111";
             CrossMTAdmob.Current.TestDevices = new List<string>() {"YOUR PHONE IDS HERE", "", ""};

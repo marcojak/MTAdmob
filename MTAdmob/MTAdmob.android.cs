@@ -21,6 +21,7 @@ namespace MarcTron.Plugin
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
         public bool UseRestrictedDataProcessing { get; set; } = false;
+        public bool ComplyWithFamilyPolicies { get; set; } = false;
         public List<string> TestDevices { get; set; }
 
         InterstitialAd _ad;
@@ -80,6 +81,13 @@ namespace MarcTron.Plugin
             if (CrossMTAdmob.Current.UseRestrictedDataProcessing)
             {
                 bundleExtra.PutString("rdp", "1");
+                addBundle = true;
+            }
+
+            if (CrossMTAdmob.Current.ComplyWithFamilyPolicies)
+            {
+                requestBuilder.TagForChildDirectedTreatment(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
+                bundleExtra.PutString("max_ad_content_rating", "G");
                 addBundle = true;
             }
 
