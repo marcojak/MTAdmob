@@ -19,6 +19,7 @@ namespace MarcTron.Plugin
         public bool UserPersonalizedAds { get; set; }
         public List<string> TestDevices { get; set; }
         public bool UseRestrictedDataProcessing { get; set; } = false;
+        public bool ComplyWithFamilyPolicies { get; set; } = false;
 
         Interstitial _adInterstitial;
 
@@ -71,12 +72,15 @@ namespace MarcTron.Plugin
         public static Request GetRequest()
         {
             var request = Request.GetDefaultRequest();
+            
+
             bool addExtra = false;
             var dict = new Dictionary<string, string>();
 
+            MobileAds.SharedInstance.RequestConfiguration.TagForChildDirectedTreatment(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
             if (CrossMTAdmob.Current.TestDevices != null)
                 request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
-
+         
             if (!CrossMTAdmob.Current.UserPersonalizedAds)
             {
                 dict.Add(new NSString("npa"), new NSString("1"));
@@ -86,6 +90,13 @@ namespace MarcTron.Plugin
             if (CrossMTAdmob.Current.UseRestrictedDataProcessing)
             {
                 dict.Add(new NSString("rdp"), new NSString("1"));
+                addExtra = true;
+            }
+
+            if (CrossMTAdmob.Current.ComplyWithFamilyPolicies)
+            {
+                request.Tag(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
+                dict.Add(new NSString("max_ad_content_rating"), new NSString("G"));
                 addExtra = true;
             }
 
