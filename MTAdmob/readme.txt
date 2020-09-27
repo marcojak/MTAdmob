@@ -18,6 +18,9 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
   Visual Studio will tell you which packages you need to install.
 
 Release Notes
+Version 1.5.8
+ Added support for Comply with Google Play’s Families Policy (Thanks to Abdul Rahman)
+
 Version 1.5.7
  Added IsEnabled to disable the ads (banners, interstitials, rewarded videos) (Default = true)
  Added UseRestrictedDataProcessing for CCPA compliance (Default = false)
