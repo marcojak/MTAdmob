@@ -18,6 +18,10 @@ This plugin supports: Banners, Interstitial and Rewarded Videos
   Visual Studio will tell you which packages you need to install.
 
 Release Notes
+Version 1.6.0
+Updated Xamarin.Google.iOS.MobileAds to 7.66 (Required for iOS 14+)
+Updated GooglePlayServices.Ads.Lite to 119.1.0
+
 Version 1.5.8
  Added support for Comply with Google Play’s Families Policy (Thanks to Abdul Rahman)
 
