@@ -19,10 +19,10 @@
     <PackageId>MarcTron.Admob</PackageId>
     
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.5.7.0</AssemblyVersion>
-    <AssemblyFileVersion>1.5.7.0</AssemblyFileVersion>
-    <Version>1.5.7</Version>
-    <PackageVersion>1.5.7.0</PackageVersion>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <AssemblyFileVersion>1.6.0.0</AssemblyFileVersion>
+    <Version>1.6.0</Version>
+    <PackageVersion>1.6.0.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -41,6 +41,13 @@
     <PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
     <RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
     <PackageReleaseNotes>
+		Version 1.6.0
+		Updated Xamarin.Google.iOS.MobileAds to 7.66 (Required for iOS 14+)
+		Updated GooglePlayServices.Ads.Lite to 119.1.0
+
+		Version 1.5.8
+		Added support for Comply with Google Play’s Families Policy (Thanks to Abdul Rahman)
+
 		Version 1.5.7
 		Added IsEnabled to disable the ads (banners, interstitials, rewarded videos) (Default = true)
 		Added UseRestrictedDataProcessing for CCPA compliance (Default = false)
@@ -104,6 +111,7 @@
     <Owners>Marco Troncone</Owners>
     <Authors>Marco Troncone</Authors>
     <Copyright>Copyright 2019</Copyright>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
@@ -148,24 +156,18 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid81'">
-    <!--<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>-->
     <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="60.1142.1" />
     <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
-	  <!--<PackageReference Include="Xamarin.Android.Support.Annotations" Version="27.0.2" />-->
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid90'">
-    <!--<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>-->
-    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="71.1720.4" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="119.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
-	  <!--<PackageReference Include="Xamarin.Android.Support.Annotations" Version="28.0.0.3" />-->
     <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.1.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-    <!--<PackageReference Include="Xamarin.Google.iOS.SignIn" Version="5.0.2" />-->
-    <!--<PackageReference Include="Xamarin.Firebase.iOS.Core" Version="6.6.0" />-->
-    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.57.0" />
+    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
   </ItemGroup>
 

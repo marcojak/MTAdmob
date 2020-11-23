@@ -16,6 +16,7 @@ namespace MarcTron.Plugin
         public bool UserPersonalizedAds { get; set; }
         public List<string> TestDevices { get; set; }
         public bool UseRestrictedDataProcessing { get; set; }
+        public bool ComplyWithFamilyPolicies { get; set; }
 
         public event EventHandler<MTEventArgs> OnRewarded;
         public event EventHandler OnRewardedVideoAdClosed;

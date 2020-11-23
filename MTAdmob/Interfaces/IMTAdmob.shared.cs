@@ -17,6 +17,8 @@ namespace MarcTron.Plugin.Interfaces
 
         bool UseRestrictedDataProcessing { get; set; }
 
+        bool ComplyWithFamilyPolicies { get; set; }
+
         List<string> TestDevices { get; set; }
 
         bool IsInterstitialLoaded();

@@ -30,6 +30,13 @@ namespace MarcTron.Plugin.Controls
             set => SetValue(PersonalizedAdsProperty, value);
         }
 
+        public static readonly BindableProperty ComplyFamilyPoliciesProperty = BindableProperty.Create("ComplyFamilyPolicies", typeof(bool), typeof(MTAdView));
+        public bool? ComplyFamilyPolicies
+        {
+            get => (bool?)GetValue(ComplyFamilyPoliciesProperty);
+            set => SetValue(ComplyFamilyPoliciesProperty, value);
+        }
+
         internal void AdClicked(object sender, EventArgs e)
         {
             AdsClicked?.Invoke(sender,e);

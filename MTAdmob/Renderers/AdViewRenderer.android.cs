@@ -1,9 +1,7 @@
 ﻿using System;
 using Android.Content;
 using Android.Gms.Ads;
-using Android.OS;
 using Android.Widget;
-using Google.Ads.Mediation.Admob;
 using MarcTron.Plugin.Controls;
 using MarcTron.Plugin.Listeners;
 using Xamarin.Forms;
