@@ -167,15 +167,15 @@ protected override void OnCreate(Bundle savedInstanceState)
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            base.OnCreate(savedInstanceState);
-            <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
-            MobileAds.Initialize(ApplicationContext, "xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
+            base.OnCreate(savedInstanceState);            
+            MobileAds.Initialize(ApplicationContext);
             Xamarin.Forms.Forms.Init(this, savedInstanceState); 
             LoadApplication(new App());
         }
 ```
 Remember to add this to your AppManifest:
 ```csharp
+<!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
 ```
