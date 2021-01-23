@@ -3,8 +3,11 @@
   <PropertyGroup>
     <!--Work around so the conditions work below-->
     <TargetFrameworks></TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90;uap10.0.18362</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid81;MonoAndroid90</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid90;uap10.0.18362</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard1.0;netstandard2.0;Xamarin.iOS10;MonoAndroid90</TargetFrameworks>
+
+
+	<TargetFrameworkVersion Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">v10.0</TargetFrameworkVersion>
     <!--Feel free to add as many targets as you need below
     netstandard1.0;netstandard2.0;MonoAndroid81;Xamarin.iOS10;uap10.0.16299;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;Tizen40
     For UWP update the version number with a version number you have installed.
@@ -18,15 +21,17 @@
     <RootNamespace>MarcTron.Plugin</RootNamespace>
     <PackageId>MarcTron.Admob</PackageId>
     
-    <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <Product>Plugin.MtAdmob</Product>
+    <AssemblyVersion>1.6.1.0</AssemblyVersion>
     <AssemblyFileVersion>1.6.0.0</AssemblyFileVersion>
-    <Version>1.6.0</Version>
-    <PackageVersion>1.6.0.0</PackageVersion>
+    <Version>1.6.1</Version>
+    <PackageVersion>1.6.1.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
     <DefineConstants>$(DefineConstants);</DefineConstants>
+
+
 
     <!--<IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>-->
@@ -41,6 +46,10 @@
     <PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
     <RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
     <PackageReleaseNotes>
+		Version 1.6.1
+		Removed support for MonoAndroid81
+		Updated GooglePlayServices.Ads.Lite to 119.6.0
+
 		Version 1.6.0
 		Updated Xamarin.Google.iOS.MobileAds to 7.66 (Required for iOS 14+)
 		Updated GooglePlayServices.Ads.Lite to 119.1.0
@@ -143,7 +152,7 @@
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-    <Compile Include="**\*.android.cs" />
+	  <Compile Include="**\*.android.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
@@ -152,23 +161,16 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Build.Download" Version="0.10.0" />
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />    
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid81'">
-    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="60.1142.1" />
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />    
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid90'">
-    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="119.1.0" />
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
-    <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.1.0.1" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="119.6.0" />
+    <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.1.0.8" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
     <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
   </ItemGroup>
 
   <ItemGroup>

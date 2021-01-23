@@ -3,6 +3,11 @@
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial and Rewarded Videos
 
+### Please, support me
+If possible, please, support my work with few coffees or even better with a Membership!
+You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert)
+Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
+
 ### IMPORTANT
 * Remember to edit your AppManifest otherwise it will not work on Android
 * On iOS you MUST now change the Ads init. In your iOS project Replace MobileAds.Configure with MobileAds.SharedInstance.Start(CompletionHandler);
@@ -154,15 +159,15 @@ protected override void OnCreate(Bundle savedInstanceState)
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            base.OnCreate(savedInstanceState);
-            <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
-            MobileAds.Initialize(ApplicationContext, "xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
+            base.OnCreate(savedInstanceState);            
+            MobileAds.Initialize(ApplicationContext, );
             Xamarin.Forms.Forms.Init(this, savedInstanceState); 
             LoadApplication(new App());
         }
 ```
 Remeber to add this to your AppManifest:
 ```csharp
+<!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
 ```

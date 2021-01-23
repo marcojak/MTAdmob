@@ -120,11 +120,15 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.800" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\MTAdmob\MTAdmob.csproj">
+      <Project>{93ffea0a-37ed-4ce1-b902-2098992af15f}</Project>
+      <Name>MTAdmob</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SampleMTAdmob\SampleMTAdmob.csproj">
       <Project>{910F5696-931C-4C16-8D06-EF9857FA09AF}</Project>
       <Name>SampleMTAdmob</Name>
@@ -132,7 +136,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarSampleMTAdmobiOSHideInfoBar="True" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarSampleMTAdmobiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

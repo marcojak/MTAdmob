@@ -18,7 +18,7 @@ namespace SampleMTAdmob.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            MobileAds.Initialize(this, " ca­-app-pub-­3940256099942544~3347511713");
+            MobileAds.Initialize(this);
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
