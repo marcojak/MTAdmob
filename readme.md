@@ -212,5 +212,9 @@ Edit your info.plist adding these Keys:
   <true/>
 ```
 
+If you are builing your app for iOS on Windows without using your Mac, then
+MobileAds.SharedInstance will be null and the ads will not work.
+
+You have to build the app using your Mac to use Admob on iOS!
 
 That's it. Cannot be easier than that :)
