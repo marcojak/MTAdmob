@@ -1,10 +1,10 @@
 ﻿using System;
-using Android.Gms.Ads.Reward;
+//using Android.Gms.Ads.Reward;
 using MarcTron.Plugin.CustomEventArgs;
 
 namespace MarcTron.Plugin.Listeners
 {
-    public class MyRewardedVideoAdListener : Java.Lang.Object, IRewardedVideoAdListener
+    public class MyRewardedVideoAdListener : Java.Lang.Object//, IRewardedVideoAdListener
     {
         public event EventHandler<MTEventArgs> OnRewardedEvent;
         public event EventHandler OnRewardedVideoAdClosedEvent;
@@ -15,10 +15,10 @@ namespace MarcTron.Plugin.Listeners
         public event EventHandler OnRewardedVideoStartedEvent;
         public event EventHandler OnRewardedVideoCompletedEvent;
 
-        public void OnRewarded(IRewardItem reward)
-        {
-            OnRewardedEvent?.Invoke(null, new MTEventArgs() {RewardAmount = reward.Amount, RewardType = reward.Type});
-        }
+        //public void OnRewarded(IRewardItem reward)
+        //{
+        //    OnRewardedEvent?.Invoke(null, new MTEventArgs() {RewardAmount = reward.Amount, RewardType = reward.Type});
+        //}
 
         public void OnRewardedVideoAdClosed()
         {

@@ -37,17 +37,17 @@ namespace MarcTron.Plugin.Listeners
             AdOpened?.Invoke(this, null);
         }
 
-        public override void OnAdFailedToLoad(int errorCode)
-        {
-            base.OnAdFailedToLoad(errorCode);
-            AdFailedToLoad?.Invoke(this, null);
-        }
+        //public override void OnAdFailedToLoad(int errorCode)
+        //{
+        //    base.OnAdFailedToLoad(errorCode);
+        //    AdFailedToLoad?.Invoke(this, null);
+        //}
 
-        public override void OnAdLeftApplication()
-        {
-            base.OnAdLeftApplication();
-            AdLeftApplication?.Invoke(this, null);
-        }
+        //public override void OnAdLeftApplication()
+        //{
+        //    base.OnAdLeftApplication();
+        //    AdLeftApplication?.Invoke(this, null);
+        //}
 
         public override void OnAdLoaded()
         {

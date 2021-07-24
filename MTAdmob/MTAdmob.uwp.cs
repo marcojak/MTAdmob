@@ -17,6 +17,9 @@ namespace MarcTron.Plugin
         public List<string> TestDevices { get; set; }
         public bool UseRestrictedDataProcessing { get; set; }
         public bool ComplyWithFamilyPolicies { get; set; }
+        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get ; set ; }
+        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
+        public string MaxAdContentRating { get; set; }
 
         public event EventHandler<MTEventArgs> OnRewarded;
         public event EventHandler OnRewardedVideoAdClosed;
