@@ -18,6 +18,10 @@ namespace MarcTron.Plugin.Interfaces
         bool UseRestrictedDataProcessing { get; set; }
         bool ComplyWithFamilyPolicies { get; set; }
 
+         MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; }
+         MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
+         string MaxAdContentRating { get; set; }    
+
         List<string> TestDevices { get; set; }
 
         bool IsInterstitialLoaded();
@@ -30,9 +34,7 @@ namespace MarcTron.Plugin.Interfaces
 
         void ShowRewardedVideo();
 
-        MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; }
-        MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
-        string MaxAdContentRating { get; set; }        
+            
 
         event EventHandler OnInterstitialLoaded;
         event EventHandler OnInterstitialOpened;      

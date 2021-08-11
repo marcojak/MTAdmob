@@ -22,7 +22,7 @@ namespace MarcTron.Plugin.Services
                 return;
 
             var context = Android.App.Application.Context;
-            var requestBuilder = MTAdmobImplementation.GetRequest(mTAdmobImplementation);
+            var requestBuilder = MTAdmobImplementation.GetRequest(/*mTAdmobImplementation*/);
             InterstitialAd.Load(context, adUnit, requestBuilder.Build(), this);
         }
 
@@ -47,6 +47,7 @@ namespace MarcTron.Plugin.Services
             if (mInterstitialAd != null)
             {
                 mInterstitialAd.Show(Android.App.Application.Context.GetActivity());
+                mInterstitialAd = null;
             }
             else
             {

@@ -8,7 +8,7 @@ using Google.Ads.Mediation.Admob;
 using MarcTron.Plugin.CustomEventArgs;
 using MarcTron.Plugin.Interfaces;
 using MarcTron.Plugin.Services;
-using static Android.Gms.Ads.RequestConfiguration;
+//using static Android.Gms.Ads.RequestConfiguration;
 // ReSharper disable InconsistentNaming
 
 namespace MarcTron.Plugin
@@ -73,7 +73,7 @@ namespace MarcTron.Plugin
             rewardService = new RewardService(this);
         }
 
-        public static AdRequest.Builder GetRequest(MTAdmobImplementation mTAdmobImplementation)
+        public static AdRequest.Builder GetRequest(/*MTAdmobImplementation mTAdmobImplementation*/)
         {
             bool addBundle = false;
             Bundle bundleExtra = new Bundle();
@@ -97,9 +97,9 @@ namespace MarcTron.Plugin
                 addBundle = true;
             }
 
-            configuration.SetTagForChildDirectedTreatment((int)mTAdmobImplementation.TagForChildDirectedTreatment);
-            configuration.SetTagForUnderAgeOfConsent((int)mTAdmobImplementation.TagForUnderAgeOfConsent);
-            configuration.SetMaxAdContentRating(MTMaxAdContentRating.MaxAdContentRatingG);
+            configuration.SetTagForChildDirectedTreatment((int)CrossMTAdmob.Current.TagForChildDirectedTreatment);
+            configuration.SetTagForUnderAgeOfConsent((int)CrossMTAdmob.Current.TagForUnderAgeOfConsent);
+            configuration.SetMaxAdContentRating(CrossMTAdmob.Current.MaxAdContentRating);
             MobileAds.RequestConfiguration = configuration.Build();
 
             if (addBundle)

@@ -21,7 +21,7 @@ namespace MarcTron.Plugin.Services
                 return;
 
             var context = Android.App.Application.Context;
-            var requestBuilder = MTAdmobImplementation.GetRequest(mTAdmobImplementation);
+            var requestBuilder = MTAdmobImplementation.GetRequest(/*mTAdmobImplementation*/);
             RewardedAd.Load(context, adUnit, requestBuilder.Build(), this);
         }
 
@@ -46,6 +46,7 @@ namespace MarcTron.Plugin.Services
             if (mRewardedAd != null)
             {
                 mRewardedAd.Show(Android.App.Application.Context.GetActivity(), this);
+                mRewardedAd = null;
             }
             else
             {

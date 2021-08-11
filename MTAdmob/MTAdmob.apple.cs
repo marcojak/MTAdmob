@@ -20,13 +20,8 @@ namespace MarcTron.Plugin
         public List<string> TestDevices { get; set; }
         public bool UseRestrictedDataProcessing { get; set; } = false;
         public bool ComplyWithFamilyPolicies { get; set; } = false;
-        /// <summary>
-        /// Not implemented yet on iOS
-        /// </summary>
+     
         public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get ; set ; }
-        /// <summary>
-        /// Not implemented yet on iOS
-        /// </summary>
         public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get ; set ; }
         /// <summary>
         /// Not implemented yet on iOS
@@ -80,6 +75,8 @@ namespace MarcTron.Plugin
             var dict = new Dictionary<string, string>();
 
             MobileAds.SharedInstance.RequestConfiguration.TagForChildDirectedTreatment(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
+            MobileAds.SharedInstance.RequestConfiguration.TagForUnderAgeOfConsent(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
+            MobileAds.SharedInstance.RequestConfiguration.MaxAdContentRating = CrossMTAdmob.Current.MaxAdContentRating;
             if (CrossMTAdmob.Current.TestDevices != null)
                 request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
          
