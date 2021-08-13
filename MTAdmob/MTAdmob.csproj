@@ -2,12 +2,10 @@
 
   <PropertyGroup>
     <!--Work around so the conditions work below-->
-    <TargetFrameworks></TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;Xamarin.iOS10;MonoAndroid90;uap10.0.18362</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;Xamarin.iOS10;MonoAndroid90</TargetFrameworks>
+	<TargetFrameworks>netstandard2.0;xamarinios10;monoandroid10.0;</TargetFrameworks>
+	<TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">uap10.0.18362;$(TargetFrameworks)</TargetFrameworks>
 
-
-	<TargetFrameworkVersion Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">v10.0</TargetFrameworkVersion>
+	<!--<TargetFrameworkVersion Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">v10.0</TargetFrameworkVersion>-->
     <!--Feel free to add as many targets as you need below
     netstandard1.0;netstandard2.0;MonoAndroid81;Xamarin.iOS10;uap10.0.16299;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;Tizen40
     For UWP update the version number with a version number you have installed.
@@ -131,37 +129,15 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|uap10.0.18362|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|MonoAndroid90|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|Xamarin.iOS10|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|Xamarin.iOS10|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|MonoAndroid90|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|uap10.0.18362|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
+  
   <ItemGroup>
     <Compile Include="**\*.shared.cs" />
   </ItemGroup>
@@ -179,12 +155,15 @@
     -->
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
 	  <Compile Include="**\*.android.cs" />
+	  <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.2.0" />
+	  <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.2.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinios')) ">
     <Compile Include="**\*.apple.cs" />
+	  <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -192,22 +171,22 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />    
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid90'">
+  <!--<ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid90'">
     <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.2.0" />
     <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.2.0" />
-  </ItemGroup>
+  </ItemGroup>-->
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+  <!--<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
     <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <None Include="readme.txt" Pack="true" PackagePath="."></None>
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <None Remove="MTRewardedAdOptions.shared.cs" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadXFormsNugetUpgradeInfoBarMTAdmobHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>
