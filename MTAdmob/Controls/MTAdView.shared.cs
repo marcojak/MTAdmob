@@ -22,20 +22,20 @@ namespace MarcTron.Plugin.Controls
             set => SetValue(AdsIdProperty, value);
         }
 
-        public static readonly BindableProperty PersonalizedAdsProperty = BindableProperty.Create("PersonalizedAds", typeof(bool), typeof(MTAdView));
+        //public static readonly BindableProperty PersonalizedAdsProperty = BindableProperty.Create("PersonalizedAds", typeof(bool), typeof(MTAdView));
 
-        public bool? PersonalizedAds
-        {
-            get => (bool?)GetValue(PersonalizedAdsProperty);
-            set => SetValue(PersonalizedAdsProperty, value);
-        }
+        //public bool? PersonalizedAds
+        //{
+        //    get => (bool?)GetValue(PersonalizedAdsProperty);
+        //    set => SetValue(PersonalizedAdsProperty, value);
+        //}
 
-        public static readonly BindableProperty ComplyFamilyPoliciesProperty = BindableProperty.Create("ComplyFamilyPolicies", typeof(bool), typeof(MTAdView));
-        public bool? ComplyFamilyPolicies
-        {
-            get => (bool?)GetValue(ComplyFamilyPoliciesProperty);
-            set => SetValue(ComplyFamilyPoliciesProperty, value);
-        }
+        //public static readonly BindableProperty ComplyFamilyPoliciesProperty = BindableProperty.Create("ComplyFamilyPolicies", typeof(bool), typeof(MTAdView));
+        //public bool? ComplyFamilyPolicies
+        //{
+        //    get => (bool?)GetValue(ComplyFamilyPoliciesProperty);
+        //    set => SetValue(ComplyFamilyPoliciesProperty, value);
+        //}
 
         internal void AdClicked(object sender, EventArgs e)
         {

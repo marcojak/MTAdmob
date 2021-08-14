@@ -16,7 +16,7 @@ namespace MarcTron.Plugin.Renderers
         string _adUnitId = string.Empty;
         BannerView _adView;
 
-        private void CreateNativeControl(UIViewController controller, MTAdView myMtAdView, string adsId, bool? personalizedAds, bool needToRefreshAdView)
+        private void CreateNativeControl(UIViewController controller, MTAdView myMtAdView, string adsId, /*bool? personalizedAds,*/ bool needToRefreshAdView)
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
@@ -115,9 +115,9 @@ namespace MarcTron.Plugin.Renderers
                 if (controller != null)
                 {
                     if (e.NewElement != null)
-                        CreateNativeControl(controller, e.NewElement, e.NewElement.AdsId, e.NewElement.PersonalizedAds, false);
+                        CreateNativeControl(controller, e.NewElement, e.NewElement.AdsId, false);
                     else if (e.OldElement != null)
-                        CreateNativeControl(controller, e.OldElement, e.OldElement.AdsId, e.OldElement.PersonalizedAds, true);
+                        CreateNativeControl(controller, e.OldElement, e.OldElement.AdsId, true);
                     else
                         return;
                     SetNativeControl(_adView);

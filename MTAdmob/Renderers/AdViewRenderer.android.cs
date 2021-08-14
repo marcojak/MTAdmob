@@ -22,7 +22,7 @@ namespace MarcTron.Plugin.Renderers
         {
         }
 
-        private void CreateNativeControl(MTAdView myMtAdView, string adsId, bool? personalizedAds)
+        private void CreateNativeControl(MTAdView myMtAdView, string adsId)
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
@@ -67,7 +67,7 @@ namespace MarcTron.Plugin.Renderers
 
             if (Control == null)
             {
-                CreateNativeControl(e.NewElement, e.NewElement.AdsId, e.NewElement.PersonalizedAds);
+                CreateNativeControl(e.NewElement, e.NewElement.AdsId);
                 SetNativeControl(_adView);
             }
         }
