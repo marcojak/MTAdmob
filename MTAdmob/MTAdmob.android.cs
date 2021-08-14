@@ -25,7 +25,7 @@ namespace MarcTron.Plugin
         public List<string> TestDevices { get; set; }
         public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; } = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
         public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; } = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
-        public string MaxAdContentRating { get; set; } = MTMaxAdContentRating.MaxAdContentRatingG;
+        public MTMaxAdContentRating MaxAdContentRating { get; set; } = MTMaxAdContentRating.MaxAdContentRatingG;
         public bool ComplyWithFamilyPolicies { get; set ; }
 
         InterstitialService interstitialService;
@@ -99,7 +99,7 @@ namespace MarcTron.Plugin
 
             configuration.SetTagForChildDirectedTreatment((int)CrossMTAdmob.Current.TagForChildDirectedTreatment);
             configuration.SetTagForUnderAgeOfConsent((int)CrossMTAdmob.Current.TagForUnderAgeOfConsent);
-            configuration.SetMaxAdContentRating(CrossMTAdmob.Current.MaxAdContentRating);
+            configuration.SetMaxAdContentRating(CrossMTAdmob.Current.GetAdContentRatingString());
             MobileAds.RequestConfiguration = configuration.Build();
 
             if (addBundle)
@@ -136,6 +136,22 @@ namespace MarcTron.Plugin
         public void ShowRewardedVideo()
         {
             rewardService.ShowReward();
+        }
+
+        public string GetAdContentRatingString()
+        {
+            switch (MaxAdContentRating)
+            {
+                case MTMaxAdContentRating.MaxAdContentRatingG:
+                    return "MAX_AD_CONTENT_RATING_G";
+                case MTMaxAdContentRating.MaxAdContentRatingPg:
+                    return "MAX_AD_CONTENT_RATING_PG";
+                case MTMaxAdContentRating.MaxAdContentRatingT:
+                    return "MAX_AD_CONTENT_RATING_T";
+                case MTMaxAdContentRating.MaxAdContentRatingMa:
+                    return "MAX_AD_CONTENT_RATING_MA";
+                default: return "MAX_AD_CONTENT_RATING_G";
+            }
         }
     }
 }

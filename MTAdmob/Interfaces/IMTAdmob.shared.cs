@@ -18,9 +18,9 @@ namespace MarcTron.Plugin.Interfaces
         bool UseRestrictedDataProcessing { get; set; }
         bool ComplyWithFamilyPolicies { get; set; }
 
-         MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; }
-         MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
-         string MaxAdContentRating { get; set; }    
+        MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; }
+        MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
+        MTMaxAdContentRating MaxAdContentRating { get; set; }    
 
         List<string> TestDevices { get; set; }
 
@@ -33,6 +33,8 @@ namespace MarcTron.Plugin.Interfaces
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null);
 
         void ShowRewardedVideo();
+
+        string GetAdContentRatingString();
 
             
 

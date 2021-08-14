@@ -17,6 +17,10 @@ namespace SampleMTAdmob
         public MainPage()
         {
             InitializeComponent();
+
+            CrossMTAdmob.Current.TagForChildDirectedTreatment = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
+            CrossMTAdmob.Current.TagForUnderAgeOfConsent = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
+            CrossMTAdmob.Current.MaxAdContentRating = MTMaxAdContentRating.MaxAdContentRatingG;
             //If you want to load a banner programmatically:
             //MTAdView myAds = new MTAdView();
             //myAds.AdsId = "xxx";

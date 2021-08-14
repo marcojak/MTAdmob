@@ -20,10 +20,10 @@ namespace MarcTron.Plugin
         public List<string> TestDevices { get; set; }
         public bool UseRestrictedDataProcessing { get; set; } = false;
         public bool ComplyWithFamilyPolicies { get; set; } = false;
-     
-        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get ; set ; }
-        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get ; set ; }
-        public string MaxAdContentRating { get ; set ; }
+
+        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; } = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
+        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; } = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
+        public MTMaxAdContentRating MaxAdContentRating { get ; set ; } = MTMaxAdContentRating.MaxAdContentRatingG;
 
         InterstitialService interstitialService;
         RewardService rewardService;
@@ -71,9 +71,9 @@ namespace MarcTron.Plugin
             bool addExtra = false;
             var dict = new Dictionary<string, string>();
 
-            MobileAds.SharedInstance.RequestConfiguration.TagForChildDirectedTreatment(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
-            MobileAds.SharedInstance.RequestConfiguration.TagForUnderAgeOfConsent(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
-            MobileAds.SharedInstance.RequestConfiguration.MaxAdContentRating = CrossMTAdmob.Current.MaxAdContentRating;
+            MobileAds.SharedInstance.RequestConfiguration.TagForChildDirectedTreatment(CrossMTAdmob.Current.TagForChildDirectedTreatment == MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentTrue);
+            MobileAds.SharedInstance.RequestConfiguration.TagForUnderAgeOfConsent(CrossMTAdmob.Current.TagForUnderAgeOfConsent == MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentTrue);
+            MobileAds.SharedInstance.RequestConfiguration.MaxAdContentRating = CrossMTAdmob.Current.GetAdContentRatingString();
             if (CrossMTAdmob.Current.TestDevices != null)
                 request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
          
@@ -136,6 +136,22 @@ namespace MarcTron.Plugin
         public void ShowRewardedVideo()
         {
             rewardService.ShowRewardedVideo();
+        }
+
+        public string GetAdContentRatingString()
+        {
+            switch (MaxAdContentRating)
+            {
+                case MTMaxAdContentRating.MaxAdContentRatingG:
+                    return "GADMaxAdContentRatingGeneral";
+                case MTMaxAdContentRating.MaxAdContentRatingPg:
+                    return "GADMaxAdContentRatingParentalGuidance";
+                case MTMaxAdContentRating.MaxAdContentRatingT:
+                    return "GADMaxAdContentRatingTeen";
+                case MTMaxAdContentRating.MaxAdContentRatingMa:
+                    return "GADMaxAdContentRatingMatureAudience";
+                default: return "GADMaxAdContentRatingGeneral";
+            }
         }
     }
 }

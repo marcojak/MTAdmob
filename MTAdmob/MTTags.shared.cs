@@ -18,11 +18,19 @@ namespace MarcTron.Plugin
         TagForUnderAgeOfConsentTrue,
     }
 
-    public static class MTMaxAdContentRating
+    public enum MTMaxAdContentRating
     {
-        public static string MaxAdContentRatingG = "G";
-        public static string MaxAdContentRatingT = "T";
-        public static string MaxAdContentRatingMa = "MA";
-        public static string MaxAdContentRatingPg = "PG";
+        MaxAdContentRatingG,
+        MaxAdContentRatingPg,
+        MaxAdContentRatingT,
+        MaxAdContentRatingMa
     }
+
+    //public static class MTMaxAdContentRating
+    //{
+    //    public static string MaxAdContentRatingG = "G";
+    //    public static string MaxAdContentRatingT = "T";
+    //    public static string MaxAdContentRatingMa = "MA";
+    //    public static string MaxAdContentRatingPg = "PG";
+    //}
 }
