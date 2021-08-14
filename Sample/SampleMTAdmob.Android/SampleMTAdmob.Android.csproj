@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -98,7 +97,7 @@
       <Name>MTAdmob</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleMTAdmob\SampleMTAdmob.csproj">
-      <Project>{910F5696-931C-4C16-8D06-EF9857FA09AF}</Project>
+      <Project>{F933088F-417F-4470-A8DA-3AD30F56D518}</Project>
       <Name>SampleMTAdmob</Name>
     </ProjectReference>
   </ItemGroup>

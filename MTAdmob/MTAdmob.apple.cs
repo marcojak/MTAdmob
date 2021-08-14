@@ -23,9 +23,6 @@ namespace MarcTron.Plugin
      
         public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get ; set ; }
         public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get ; set ; }
-        /// <summary>
-        /// Not implemented yet on iOS
-        /// </summary>
         public string MaxAdContentRating { get ; set ; }
 
         InterstitialService interstitialService;
