@@ -64,10 +64,8 @@ iOS: ca-app-pub-3940256099942544/2934735716
 
 ### PROPERTIES
 
-For each AdView if you want, you can set these properties:
+For each AdView if you want, you can set this property:
 AdsId: To add the id of your ads
-
-PersonalizedAds: You can set it to False if you want to use generic ads (for GDPR...) (It works only for Android Banners, for the others, you must ask for consent)
 
 **For GDPR it's better to rely on a custom consent instead or using the non personalized ads as I cannot guarantee it works. So it's better if you create a custom consent**
 

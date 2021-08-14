@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -53,9 +52,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.2.0.4" />
     <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.4" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1.1" />
@@ -98,14 +97,14 @@
       <Name>MTAdmob</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleMTAdmob\SampleMTAdmob.csproj">
-      <Project>{910F5696-931C-4C16-8D06-EF9857FA09AF}</Project>
+      <Project>{F933088F-417F-4470-A8DA-3AD30F56D518}</Project>
       <Name>SampleMTAdmob</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadXFormsNugetUpgradeInfoBarSampleMTAdmobAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

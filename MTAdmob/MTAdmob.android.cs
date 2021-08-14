@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Android.App;
 using Android.Gms.Ads;
-using Android.Gms.Ads.Reward;
+using Android.Gms.Ads.Interstitial;
+using Android.Gms.Ads.Rewarded;
 using Android.OS;
 using Google.Ads.Mediation.Admob;
 using MarcTron.Plugin.CustomEventArgs;
 using MarcTron.Plugin.Interfaces;
-using MarcTron.Plugin.Listeners;
+using MarcTron.Plugin.Services;
+//using static Android.Gms.Ads.RequestConfiguration;
 // ReSharper disable InconsistentNaming
 
 namespace MarcTron.Plugin
@@ -15,20 +16,23 @@ namespace MarcTron.Plugin
     /// <summary>
     /// Interface for MTAdmob
     /// </summary>
-    public class MTAdmobImplementation : IMTAdmob
+    public class MTAdmobImplementation : InterstitialAdLoadCallback, IMTAdmob
     {
         public bool IsEnabled { get; set; } = true;
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
-        public bool UseRestrictedDataProcessing { get; set; } = false;
-        public bool ComplyWithFamilyPolicies { get; set; } = false;
+        public bool UseRestrictedDataProcessing { get; set; } = false;      
         public List<string> TestDevices { get; set; }
+        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; } = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
+        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; } = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
+        public MTMaxAdContentRating MaxAdContentRating { get; set; } = MTMaxAdContentRating.MaxAdContentRatingG;
+        public bool ComplyWithFamilyPolicies { get; set ; }
 
-        InterstitialAd _ad;
-
-        IRewardedVideoAd _rewardedAds;
+        InterstitialService interstitialService;
+        RewardService rewardService;
 
         public event EventHandler<MTEventArgs> OnRewarded;
+        public event EventHandler<MTEventArgs> OnUserEarnedReward;
         public event EventHandler OnRewardedVideoAdClosed;
         public event EventHandler<MTEventArgs> OnRewardedVideoAdFailedToLoad;
         public event EventHandler OnRewardedVideoAdLeftApplication;
@@ -36,42 +40,51 @@ namespace MarcTron.Plugin
         public event EventHandler OnRewardedVideoAdOpened;
         public event EventHandler OnRewardedVideoStarted;
         public event EventHandler OnRewardedVideoAdCompleted;
+
         public event EventHandler OnInterstitialLoaded;
         public event EventHandler OnInterstitialOpened;
         public event EventHandler OnInterstitialClosed;
+        public event EventHandler<MTEventArgs> OnInterstitialFailedToShow;
+        public event EventHandler OnInterstitialImpression;
 
-        private void CreateInterstitialAd(string adUnit)
+        public event EventHandler OnRewardLoaded;
+        public event EventHandler OnRewardOpened;
+        public event EventHandler OnRewardClosed;
+        public event EventHandler<MTEventArgs> OnRewardFailedToShow;
+        public event EventHandler OnRewardImpression;
+
+        public virtual void MOnInterstitialLoaded() => OnInterstitialLoaded?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialOpened() => OnInterstitialOpened?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialClosed() => OnInterstitialClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialFailedToShow(AdError p0) => OnInterstitialFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain});
+        public virtual void MOnInterstitialImpression() => OnInterstitialImpression?.Invoke(this, EventArgs.Empty);
+
+
+        public virtual void MOnRewardLoaded() => OnRewardLoaded?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardOpened() => OnRewardOpened?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardClosed() => OnRewardClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardFailedToShow(AdError p0) => OnRewardFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
+        public virtual void MOnUserEarnedReward(IRewardItem p0) => OnUserEarnedReward?.Invoke(this, new MTEventArgs() { RewardType=p0.Type, RewardAmount=p0.Amount });
+        public virtual void MOnRewardImpression() => OnRewardImpression?.Invoke(this, EventArgs.Empty);
+
+        public MTAdmobImplementation()
         {
-            var context = Application.Context;
-            _ad = new InterstitialAd(context) {AdUnitId = adUnit};
-            var interstitialAdListener = new InterstitialAdListener();
-
-            interstitialAdListener.AdLoaded += InterstitialAdListener_AdLoaded;
-            interstitialAdListener.AdOpened += InterstitialAdListener_AdOpened;
-            interstitialAdListener.AdClosed += InterstitialAdListener_AdClosed;
-
-            _ad.AdListener = interstitialAdListener;
+            interstitialService = new InterstitialService(this);
+            rewardService = new RewardService(this);
         }
 
-        public bool IsInterstitialLoaded()
-        {
-            return _ad != null && _ad.IsLoaded;
-        }
-
-        public static AdRequest.Builder GetRequest()
+        public static AdRequest.Builder GetRequest(/*MTAdmobImplementation mTAdmobImplementation*/)
         {
             bool addBundle = false;
             Bundle bundleExtra = new Bundle();
             var requestBuilder = new AdRequest.Builder();
+            var configuration = new RequestConfiguration.Builder();
 
             if (CrossMTAdmob.Current.TestDevices != null)
             {
-                foreach (var testDevice in CrossMTAdmob.Current.TestDevices)
-                {
-                    requestBuilder.AddTestDevice(testDevice);
-                }
-            }
-            
+                configuration = configuration.SetTestDeviceIds(CrossMTAdmob.Current.TestDevices);                
+            }            
+
             if (!CrossMTAdmob.Current.UserPersonalizedAds)
             {
                 bundleExtra.PutString("npa", "1");
@@ -84,12 +97,10 @@ namespace MarcTron.Plugin
                 addBundle = true;
             }
 
-            if (CrossMTAdmob.Current.ComplyWithFamilyPolicies)
-            {
-                requestBuilder.TagForChildDirectedTreatment(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
-                bundleExtra.PutString("max_ad_content_rating", "G");
-                addBundle = true;
-            }
+            configuration.SetTagForChildDirectedTreatment((int)CrossMTAdmob.Current.TagForChildDirectedTreatment);
+            configuration.SetTagForUnderAgeOfConsent((int)CrossMTAdmob.Current.TagForUnderAgeOfConsent);
+            configuration.SetMaxAdContentRating(CrossMTAdmob.Current.GetAdContentRatingString());
+            MobileAds.RequestConfiguration = configuration.Build();
 
             if (addBundle)
                 requestBuilder = requestBuilder.AddNetworkExtrasBundle(Java.Lang.Class.FromType(typeof(AdMobAdapter)), bundleExtra);
@@ -97,160 +108,50 @@ namespace MarcTron.Plugin
             return requestBuilder;
         }
 
+        public bool IsInterstitialLoaded()
+        {
+            return interstitialService.IsLoaded();
+        }
+
         public void LoadInterstitial(string adUnit)
         {
-            if (!CrossMTAdmob.Current.IsEnabled)
-                return;
-
-            if (_ad == null || _ad?.AdUnitId != adUnit)
-                CreateInterstitialAd(adUnit);
-
-            if (!_ad.IsLoaded && !_ad.IsLoading)
-            {
-                var requestBuilder = GetRequest();
-                _ad.LoadAd(requestBuilder.Build());
-            }
-            else
-            {
-                Console.WriteLine("Interstitial already loaded");
-            }
+            interstitialService.LoadInterstitial(adUnit);
         }
 
         public void ShowInterstitial()
         {
-            if (!CrossMTAdmob.Current.IsEnabled)
-                return;
-
-            if (_ad != null && _ad.IsLoaded)
-            {
-                _ad.Show();
-            }
-            else
-            {
-                Console.WriteLine("Interstitial not loaded");
-            }
-        }
-
-        private void InterstitialAdListener_AdClosed(object sender, EventArgs e)
-        {
-            OnInterstitialClosed?.Invoke(sender, e);
-        }
-
-        private void InterstitialAdListener_AdOpened(object sender, EventArgs e)
-        {
-            OnInterstitialOpened?.Invoke(sender, e);
-        }
-
-        private void InterstitialAdListener_AdLoaded(object sender, EventArgs e)
-        {
-            OnInterstitialLoaded?.Invoke(sender, e);
-        }
-
-        private void CreateRewardedVideo()
-        {
-            var context = Application.Context;
-            _rewardedAds = MobileAds.GetRewardedVideoAdInstance(context);
-
-            var rewardListener = new MyRewardedVideoAdListener();
-            _rewardedAds.RewardedVideoAdListener = rewardListener;
-
-            rewardListener.OnRewardedEvent += RewardListener_OnRewardedEvent;
-            rewardListener.OnRewardedVideoAdClosedEvent += RewardListener_OnRewardedVideoAdClosedEvent;
-            rewardListener.OnRewardedVideoAdFailedToLoadEvent += RewardListener_OnRewardedVideoAdFailedToLoadEvent;
-            rewardListener.OnRewardedVideoAdLeftApplicationEvent += RewardListener_OnRewardedVideoAdLeftApplicationEvent;
-            rewardListener.OnRewardedVideoAdLoadedEvent += RewardListener_OnRewardedVideoAdLoadedEvent;
-            rewardListener.OnRewardedVideoAdOpenedEvent += RewardListener_OnRewardedVideoAdOpenedEvent;
-            rewardListener.OnRewardedVideoStartedEvent += RewardListener_OnRewardedVideoStartedEvent;
-            rewardListener.OnRewardedVideoCompletedEvent += RewardListener_OnRewardedVideoCompletedEvent;
+            interstitialService.ShowInterstitial();
         }
 
         public bool IsRewardedVideoLoaded()
         {
-            return _rewardedAds != null && _rewardedAds.IsLoaded;
+            return rewardService.IsLoaded();
         }
 
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
         {
-            if (!CrossMTAdmob.Current.IsEnabled)
-                return;
-
-            if (_rewardedAds == null)
-            {
-                CreateRewardedVideo();
-            }
-
-            if (!_rewardedAds.IsLoaded)
-            {
-                var requestBuilder = GetRequest();
-
-#if !MONOANDROID81
-                if (options != null)
-                {
-                    _rewardedAds.UserId = options.UserId;
-                    _rewardedAds.CustomData = options.CustomData;
-                }
-#endif
-                _rewardedAds.LoadAd(adUnit, requestBuilder.Build());
-            }
-            else
-            {
-                Console.WriteLine("Rewarded Video already loaded");
-            }
+            rewardService.LoadReward(adUnit);
         }
 
         public void ShowRewardedVideo()
         {
-            if (!CrossMTAdmob.Current.IsEnabled)
-                return;
+            rewardService.ShowReward();
+        }
 
-            if (_rewardedAds != null && _rewardedAds.IsLoaded)
+        public string GetAdContentRatingString()
+        {
+            switch (MaxAdContentRating)
             {
-                _rewardedAds.Show();
+                case MTMaxAdContentRating.MaxAdContentRatingG:
+                    return "MAX_AD_CONTENT_RATING_G";
+                case MTMaxAdContentRating.MaxAdContentRatingPg:
+                    return "MAX_AD_CONTENT_RATING_PG";
+                case MTMaxAdContentRating.MaxAdContentRatingT:
+                    return "MAX_AD_CONTENT_RATING_T";
+                case MTMaxAdContentRating.MaxAdContentRatingMa:
+                    return "MAX_AD_CONTENT_RATING_MA";
+                default: return "MAX_AD_CONTENT_RATING_G";
             }
-            else
-            {
-                Console.WriteLine("Rewarded Video not loaded");
-            }
-        }
-
-        private void RewardListener_OnRewardedVideoAdLoadedEvent(object sender, EventArgs e)
-        {
-            OnRewardedVideoAdLoaded?.Invoke(sender, e);
-        }
-
-        private void RewardListener_OnRewardedVideoStartedEvent(object sender, EventArgs e)
-        {
-            OnRewardedVideoStarted?.Invoke(sender, e);
-        }
-
-        private void RewardListener_OnRewardedVideoAdLeftApplicationEvent(object sender, EventArgs e)
-        {
-            OnRewardedVideoAdLeftApplication?.Invoke(sender, e);
-        }
-
-        private void RewardListener_OnRewardedVideoAdFailedToLoadEvent(object sender, MTEventArgs e)
-        {
-            OnRewardedVideoAdFailedToLoad?.Invoke(sender, e);
-        }
-
-        private void RewardListener_OnRewardedVideoAdOpenedEvent(object sender, EventArgs e)
-        {
-            OnRewardedVideoAdOpened?.Invoke(sender, e);
-        }
-
-        private void RewardListener_OnRewardedVideoAdClosedEvent(object sender, EventArgs e)
-        {
-            OnRewardedVideoAdClosed?.Invoke(sender, e);
-        }
-
-        private void RewardListener_OnRewardedEvent(object sender, MTEventArgs e)
-        {
-            OnRewarded?.Invoke(null, e);
-        }
-
-        private void RewardListener_OnRewardedVideoCompletedEvent(object sender, EventArgs e)
-        {
-            OnRewardedVideoAdCompleted?.Invoke(sender, e);
         }
     }
 }

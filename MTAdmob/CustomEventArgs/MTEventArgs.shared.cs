@@ -6,6 +6,8 @@ namespace MarcTron.Plugin.CustomEventArgs
     public class MTEventArgs : EventArgs
     {
         public int? ErrorCode;
+        public string ErrorMessage;
+        public string ErrorDomain;
         public int RewardAmount;
         public string RewardType;
     }

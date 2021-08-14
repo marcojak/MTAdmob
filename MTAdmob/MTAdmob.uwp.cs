@@ -17,6 +17,9 @@ namespace MarcTron.Plugin
         public List<string> TestDevices { get; set; }
         public bool UseRestrictedDataProcessing { get; set; }
         public bool ComplyWithFamilyPolicies { get; set; }
+        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get ; set ; }
+        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
+        public MTMaxAdContentRating MaxAdContentRating { get; set; }
 
         public event EventHandler<MTEventArgs> OnRewarded;
         public event EventHandler OnRewardedVideoAdClosed;
@@ -30,6 +33,11 @@ namespace MarcTron.Plugin
         public event EventHandler OnInterstitialOpened;
         public event EventHandler OnInterstitialClosed;
         public event EventHandler OnRewardedVideoAdCompleted;
+
+        public string GetAdContentRatingString()
+        {
+            throw new NotImplementedException();
+        }
 
         public bool IsInterstitialLoaded()
         {
