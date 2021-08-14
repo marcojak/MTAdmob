@@ -1,8 +1,14 @@
 ﻿### Release Notes
+**Version 1.6.2**
+Updated GooglePlayServices.Ads.Lite to 120.2.0
+Updated Xamarin.AndroidX.Annotation to 1.2.0
+Removed Personalized property from MTAdView
+
 **Version 1.6.1**
 Updated GooglePlayServices.Ads.Lite to 119.6.0
 Updated all dependencies
 Removed support for MonoAndroid81
+
 **Version 1.6.0**
 Updated Xamarin.Google.iOS.MobileAds to 7.66 (Required for iOS 14+)
 Updated GooglePlayServices.Ads.Lite to 119.1.0
