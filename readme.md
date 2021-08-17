@@ -22,11 +22,6 @@ Your help allows me to continue to spend time on this project and continue to ma
 
  You can find a tutorial on my blog: https://www.xamarinexpert.it/admob-made-easy/
 
-
-### NOTE
-Currently the plugin is not compatible with the latest version of Xamarin.GooglePlayServices.Ads.
-Try to use version 119.8.0 or previous versions.
-
 ### To add a banner in your project
 
 To add a Banner on a page you have two options:
