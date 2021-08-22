@@ -97,10 +97,10 @@ namespace MarcTron.Plugin
                 addBundle = true;
             }
 
-            configuration.SetTagForChildDirectedTreatment((int)CrossMTAdmob.Current.TagForChildDirectedTreatment);
-            configuration.SetTagForUnderAgeOfConsent((int)CrossMTAdmob.Current.TagForUnderAgeOfConsent);
-            configuration.SetMaxAdContentRating(CrossMTAdmob.Current.GetAdContentRatingString());
-            MobileAds.RequestConfiguration = configuration.Build();
+            MobileAds.RequestConfiguration = configuration.SetTagForChildDirectedTreatment((int)CrossMTAdmob.Current.TagForChildDirectedTreatment).
+            SetTagForUnderAgeOfConsent((int)CrossMTAdmob.Current.TagForUnderAgeOfConsent).
+            SetMaxAdContentRating(CrossMTAdmob.Current.GetAdContentRatingString()).Build();
+            //MobileAds.RequestConfiguration = configuration.Build();
 
             if (addBundle)
                 requestBuilder = requestBuilder.AddNetworkExtrasBundle(Java.Lang.Class.FromType(typeof(AdMobAdapter)), bundleExtra);
@@ -143,14 +143,14 @@ namespace MarcTron.Plugin
             switch (MaxAdContentRating)
             {
                 case MTMaxAdContentRating.MaxAdContentRatingG:
-                    return "MAX_AD_CONTENT_RATING_G";
+                    return "G";
                 case MTMaxAdContentRating.MaxAdContentRatingPg:
-                    return "MAX_AD_CONTENT_RATING_PG";
+                    return "PG";
                 case MTMaxAdContentRating.MaxAdContentRatingT:
-                    return "MAX_AD_CONTENT_RATING_T";
+                    return "T";
                 case MTMaxAdContentRating.MaxAdContentRatingMa:
-                    return "MAX_AD_CONTENT_RATING_MA";
-                default: return "MAX_AD_CONTENT_RATING_G";
+                    return "MA";
+                default: return "";
             }
         }
     }

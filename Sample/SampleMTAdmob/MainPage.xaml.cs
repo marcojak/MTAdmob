@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using MarcTron.Plugin;
@@ -17,10 +18,13 @@ namespace SampleMTAdmob
         public MainPage()
         {
             InitializeComponent();
+            CrossMTAdmob.Current.TestDevices = new List<string>() { "D70290758AB9D6060C3B14AA41DAB53A"};
+
 
             CrossMTAdmob.Current.TagForChildDirectedTreatment = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
             CrossMTAdmob.Current.TagForUnderAgeOfConsent = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
             CrossMTAdmob.Current.MaxAdContentRating = MTMaxAdContentRating.MaxAdContentRatingG;
+
             //If you want to load a banner programmatically:
             //MTAdView myAds = new MTAdView();
             //myAds.AdsId = "xxx";

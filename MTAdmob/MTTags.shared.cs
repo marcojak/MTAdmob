@@ -23,7 +23,8 @@ namespace MarcTron.Plugin
         MaxAdContentRatingG,
         MaxAdContentRatingPg,
         MaxAdContentRatingT,
-        MaxAdContentRatingMa
+        MaxAdContentRatingMa,
+        MaxAdContentRatingUnspecified
     }
 
     //public static class MTMaxAdContentRating
