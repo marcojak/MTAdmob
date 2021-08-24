@@ -23,6 +23,9 @@ Your help allows me to continue to spend time on this project and continue to ma
   Visual Studio will tell you which packages you need to install.
 
 Release Notes
+Version 1.6.5
+Fixed missing events for rewarded video on Android (Regression)
+
 Version 1.6.4
 Fixed issue with ADs request on Android
 Replaced string consts for content rating filter

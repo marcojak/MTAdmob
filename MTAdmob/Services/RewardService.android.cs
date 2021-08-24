@@ -70,7 +70,8 @@ namespace MarcTron.Plugin.Services
 
         public void OnUserEarnedReward(Android.Gms.Ads.Rewarded.IRewardItem p0)
         {
-            mTAdmobImplementation.MOnUserEarnedReward(p0);
+            //mTAdmobImplementation.MOnUserEarnedReward(p0);
+            mTAdmobImplementation.MOnRewarded(p0);
         }
     }
 
