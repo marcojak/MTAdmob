@@ -60,7 +60,12 @@ namespace MarcTron.Plugin
         public virtual void MOnInterstitialImpression() => OnInterstitialImpression?.Invoke(this, EventArgs.Empty);
 
 
-        public virtual void MOnRewardLoaded() => OnRewardLoaded?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardLoaded()
+        {
+            OnRewardLoaded?.Invoke(this, EventArgs.Empty);
+            OnRewardedVideoAdLoaded?.Invoke(this, EventArgs.Empty);
+        }
+
         public virtual void MOnRewardOpened() => OnRewardOpened?.Invoke(this, EventArgs.Empty);
         public virtual void MOnRewardClosed() => OnRewardClosed?.Invoke(this, EventArgs.Empty);
         public virtual void MOnRewardFailedToShow(AdError p0) => OnRewardFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
