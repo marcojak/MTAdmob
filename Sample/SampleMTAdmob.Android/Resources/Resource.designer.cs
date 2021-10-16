@@ -64,6 +64,12 @@ namespace SampleMTAdmob.Droid
 			global::MarcTron.Plugin.Resource.Animator.design_appbar_state_list_animator = global::SampleMTAdmob.Droid.Resource.Animator.design_appbar_state_list_animator;
 			global::MarcTron.Plugin.Resource.Animator.design_fab_hide_motion_spec = global::SampleMTAdmob.Droid.Resource.Animator.design_fab_hide_motion_spec;
 			global::MarcTron.Plugin.Resource.Animator.design_fab_show_motion_spec = global::SampleMTAdmob.Droid.Resource.Animator.design_fab_show_motion_spec;
+			global::MarcTron.Plugin.Resource.Animator.fragment_close_enter = global::SampleMTAdmob.Droid.Resource.Animator.fragment_close_enter;
+			global::MarcTron.Plugin.Resource.Animator.fragment_close_exit = global::SampleMTAdmob.Droid.Resource.Animator.fragment_close_exit;
+			global::MarcTron.Plugin.Resource.Animator.fragment_fade_enter = global::SampleMTAdmob.Droid.Resource.Animator.fragment_fade_enter;
+			global::MarcTron.Plugin.Resource.Animator.fragment_fade_exit = global::SampleMTAdmob.Droid.Resource.Animator.fragment_fade_exit;
+			global::MarcTron.Plugin.Resource.Animator.fragment_open_enter = global::SampleMTAdmob.Droid.Resource.Animator.fragment_open_enter;
+			global::MarcTron.Plugin.Resource.Animator.fragment_open_exit = global::SampleMTAdmob.Droid.Resource.Animator.fragment_open_exit;
 			global::MarcTron.Plugin.Resource.Animator.mtrl_btn_state_list_anim = global::SampleMTAdmob.Droid.Resource.Animator.mtrl_btn_state_list_anim;
 			global::MarcTron.Plugin.Resource.Animator.mtrl_btn_unelevated_state_list_anim = global::SampleMTAdmob.Droid.Resource.Animator.mtrl_btn_unelevated_state_list_anim;
 			global::MarcTron.Plugin.Resource.Animator.mtrl_card_state_list_anim = global::SampleMTAdmob.Droid.Resource.Animator.mtrl_card_state_list_anim;
@@ -1605,6 +1611,7 @@ namespace SampleMTAdmob.Droid
 			global::MarcTron.Plugin.Resource.Id.snap = global::SampleMTAdmob.Droid.Resource.Id.snap;
 			global::MarcTron.Plugin.Resource.Id.snapMargins = global::SampleMTAdmob.Droid.Resource.Id.snapMargins;
 			global::MarcTron.Plugin.Resource.Id.spacer = global::SampleMTAdmob.Droid.Resource.Id.spacer;
+			global::MarcTron.Plugin.Resource.Id.special_effects_controller_view_tag = global::SampleMTAdmob.Droid.Resource.Id.special_effects_controller_view_tag;
 			global::MarcTron.Plugin.Resource.Id.split_action_bar = global::SampleMTAdmob.Droid.Resource.Id.split_action_bar;
 			global::MarcTron.Plugin.Resource.Id.src_atop = global::SampleMTAdmob.Droid.Resource.Id.src_atop;
 			global::MarcTron.Plugin.Resource.Id.src_in = global::SampleMTAdmob.Droid.Resource.Id.src_in;
@@ -1660,6 +1667,7 @@ namespace SampleMTAdmob.Droid
 			global::MarcTron.Plugin.Resource.Id.view_offset_helper = global::SampleMTAdmob.Droid.Resource.Id.view_offset_helper;
 			global::MarcTron.Plugin.Resource.Id.view_tree_lifecycle_owner = global::SampleMTAdmob.Droid.Resource.Id.view_tree_lifecycle_owner;
 			global::MarcTron.Plugin.Resource.Id.view_tree_saved_state_registry_owner = global::SampleMTAdmob.Droid.Resource.Id.view_tree_saved_state_registry_owner;
+			global::MarcTron.Plugin.Resource.Id.view_tree_view_model_store_owner = global::SampleMTAdmob.Droid.Resource.Id.view_tree_view_model_store_owner;
 			global::MarcTron.Plugin.Resource.Id.visible = global::SampleMTAdmob.Droid.Resource.Id.visible;
 			global::MarcTron.Plugin.Resource.Id.visible_removing_fragment_view_tag = global::SampleMTAdmob.Droid.Resource.Id.visible_removing_fragment_view_tag;
 			global::MarcTron.Plugin.Resource.Id.withText = global::SampleMTAdmob.Droid.Resource.Id.withText;

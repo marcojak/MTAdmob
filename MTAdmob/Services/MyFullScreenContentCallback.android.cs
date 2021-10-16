@@ -38,7 +38,10 @@ namespace MarcTron.Plugin.Services
             if (isInterstitial)
                 MTAdmobImplementation.MOnInterstitialOpened();
             else
+            {
                 MTAdmobImplementation.MOnRewardOpened();
+                MTAdmobImplementation.MOnRewardedVideoAdCompleted();
+            }
         }
 
         public override void OnAdImpression()
