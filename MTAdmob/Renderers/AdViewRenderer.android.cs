@@ -7,6 +7,9 @@ using MarcTron.Plugin.Listeners;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using MarcTron.Plugin.Renderers;
+using Android.Util;
+using Android.Runtime;
+using Android.Views;
 
 [assembly: ExportRenderer(typeof(MTAdView), typeof(AdViewRenderer))]
 
@@ -15,7 +18,6 @@ namespace MarcTron.Plugin.Renderers
     public class AdViewRenderer : ViewRenderer<MTAdView, AdView>
     {
         string _adUnitId = string.Empty;
-        readonly AdSize _adSize = AdSize.SmartBanner;
         AdView _adView;
 
         public AdViewRenderer(Context context) : base(context)
@@ -49,7 +51,7 @@ namespace MarcTron.Plugin.Renderers
 
             _adView = new AdView(Context)
             {
-                AdSize = _adSize,
+                AdSize = GetAdSize(),
                 AdUnitId = _adUnitId,
                 AdListener = listener,
                 LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
@@ -70,6 +72,21 @@ namespace MarcTron.Plugin.Renderers
                 CreateNativeControl(e.NewElement, e.NewElement.AdsId);
                 SetNativeControl(_adView);
             }
+        }
+        
+        private AdSize GetAdSize()
+        {
+            var outMetrics = new DisplayMetrics();
+            var display = Context?.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
+
+            display?.DefaultDisplay?.GetMetrics(outMetrics);
+
+            float widthPixels = outMetrics.WidthPixels;
+            float density = outMetrics.Density;
+
+            int adWidth = (int)(widthPixels / density);
+
+            return AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSize(Context, adWidth);
         }
     }
 }
