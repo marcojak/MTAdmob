@@ -29,7 +29,7 @@ namespace SampleMTAdmob
             //MTAdView myAds = new MTAdView();
             //myAds.AdsId = "xxx";
             //myAds.PersonalizedAds = true;
-            //myAds.AdsClicked += MyAdsAdsClicked;
+            //myAds.AdsClicked += MyAds_AdsClicked;
             //myAds.AdsClosed += MyAds_AdVClosed;
             //myAds.AdsImpression += MyAds_AdVImpression;
             //myAds.AdsOpened += MyAds_AdVOpened;
@@ -131,11 +131,20 @@ namespace SampleMTAdmob
             Console.WriteLine("MyAds_AdVClosed");
         }
 
-        private void MyAdsAdsClicked(object sender, EventArgs e)
+        private void MyAds_AdsClicked(object sender, EventArgs e)
         {
-            Console.WriteLine("MyAdsAdsClicked");
+            Console.WriteLine("MyAds_AdsClicked");
         }
 
+        private void MyAds_AdFailedToLoad(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine($"MyAds_AdFailedToLoad: {e.ErrorCode} - {e.ErrorMessage}");
+        }
+
+        private void MyAds_AdLoaded(object sender, EventArgs e)
+        {
+            Console.WriteLine("MyAds_AdLoaded");
+        }
 
         private void LoadReward_OnClicked(object sender, EventArgs e)
         {

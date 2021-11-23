@@ -117,7 +117,16 @@ public partial class SecondPage : ContentPage
         {
             Console.WriteLine("2MyAdsAdsClicked");
         }
+        
+        private void MyAds_AdFailedToLoad(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine($"2MyAds_AdFailedToLoad: {e.ErrorCode} - {e.ErrorMessage}");
+        }
 
+        private void MyAds_AdLoaded(object sender, EventArgs e)
+        {
+            Console.WriteLine("2MyAds_AdLoaded");
+        }
 
         private void LoadReward_OnClicked(object sender, EventArgs e)
         {

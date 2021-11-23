@@ -16,7 +16,17 @@
                    HorizontalOptions="Center"
                    VerticalOptions="CenterAndExpand" />
             <!-- Place the Admob controls here -->
-            <controls:MTAdView x:Name="myAds" IsVisible="true" AdsId="ca-app-pub-3940256099942544/6300978111" VerticalOptions="EndAndExpand" >
+            <controls:MTAdView 
+                x:Name="myAds"
+                AdsClicked="MyAds_AdsClicked"
+                AdsClosed="MyAds_AdVClosed"
+                AdsFailedToLoad="MyAds_AdFailedToLoad"
+                AdsId="ca-app-pub-3940256099942544/6300978111"
+                AdsImpression="MyAds_AdVImpression"
+                AdsLoaded="MyAds_AdLoaded"
+                AdsOpened="MyAds_AdVOpened"
+                IsVisible="true"
+                VerticalOptions="EndAndExpand">
                 <controls:MTAdView.HeightRequest>
                     <x:OnIdiom>
                         <x:OnIdiom.Phone>50</x:OnIdiom.Phone>
