@@ -20,10 +20,10 @@
     <PackageId>MarcTron.Admob</PackageId>
     
     <Product>Plugin.MtAdmob</Product>
-    <AssemblyVersion>1.6.7.0</AssemblyVersion>
-    <AssemblyFileVersion>1.6.7.0</AssemblyFileVersion>
-    <Version>1.6.7</Version>
-    <PackageVersion>1.6.7.0</PackageVersion>
+    <AssemblyVersion>1.6.8.0</AssemblyVersion>
+    <AssemblyFileVersion>1.6.8.0</AssemblyFileVersion>
+    <Version>1.6.8</Version>
+    <PackageVersion>1.6.8.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -44,6 +44,10 @@
     <PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
     <RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
     <PackageReleaseNotes>
+		Version 1.6.8
+		Replaced AdSize.SmartBanner as deprecated (thanks to roswer13)
+		Improved AdFailedToLoad (thanks to roswer13)
+
 		Version 1.6.7
 		Fixed OnRewardedVideoAdCompleted on Android
 		Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.1
@@ -175,7 +179,7 @@
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
 	  <Compile Include="**\*.android.cs" />
-	  <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.3.0.1" />
+	  <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.3.0.2" />
 	  <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.2.0" />
   </ItemGroup>
 
