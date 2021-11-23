@@ -1,4 +1,5 @@
 ﻿using System;
+using MarcTron.Plugin.CustomEventArgs;
 using Xamarin.Forms;
 
 namespace MarcTron.Plugin.Controls
@@ -10,7 +11,7 @@ namespace MarcTron.Plugin.Controls
         public event EventHandler AdsClosed;
         public event EventHandler AdsImpression;
         public event EventHandler AdsOpened;
-        public event EventHandler AdsFailedToLoad;
+        public event EventHandler<MTEventArgs> AdsFailedToLoad;
         public event EventHandler AdsLeftApplication;
         public event EventHandler AdsLoaded;
 
@@ -57,7 +58,7 @@ namespace MarcTron.Plugin.Controls
             AdsOpened?.Invoke(sender, e);
         }
 
-        internal void AdFailedToLoad(object sender, EventArgs e)
+        internal void AdFailedToLoad(object sender, MTEventArgs e)
         {
             AdsFailedToLoad?.Invoke(sender, e);
         }
