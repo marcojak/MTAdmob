@@ -21,12 +21,12 @@ namespace MarcTron.Plugin
         public bool IsEnabled { get; set; } = true;
         public string AdsId { get; set; }
         public bool UserPersonalizedAds { get; set; }
-        public bool UseRestrictedDataProcessing { get; set; } = false;      
+        public bool UseRestrictedDataProcessing { get; set; } = false;
         public List<string> TestDevices { get; set; }
         public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; } = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
         public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; } = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
         public MTMaxAdContentRating MaxAdContentRating { get; set; } = MTMaxAdContentRating.MaxAdContentRatingG;
-        public bool ComplyWithFamilyPolicies { get; set ; }
+        public bool ComplyWithFamilyPolicies { get; set; }
 
         InterstitialService interstitialService;
         RewardService rewardService;
@@ -56,7 +56,7 @@ namespace MarcTron.Plugin
         public virtual void MOnInterstitialLoaded() => OnInterstitialLoaded?.Invoke(this, EventArgs.Empty);
         public virtual void MOnInterstitialOpened() => OnInterstitialOpened?.Invoke(this, EventArgs.Empty);
         public virtual void MOnInterstitialClosed() => OnInterstitialClosed?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnInterstitialFailedToShow(AdError p0) => OnInterstitialFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain});
+        public virtual void MOnInterstitialFailedToShow(AdError p0) => OnInterstitialFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
         public virtual void MOnInterstitialImpression() => OnInterstitialImpression?.Invoke(this, EventArgs.Empty);
 
 
@@ -67,9 +67,17 @@ namespace MarcTron.Plugin
         }
 
         public virtual void MOnRewardOpened() => OnRewardOpened?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardClosed() => OnRewardClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardClosed()
+        {
+            OnRewardClosed?.Invoke(this, EventArgs.Empty); 
+            OnRewardedVideoAdClosed?.Invoke(this, EventArgs.Empty);
+        }
         public virtual void MOnRewardedVideoAdCompleted() => OnRewardedVideoAdCompleted?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardFailedToShow(AdError p0) => OnRewardFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
+        public virtual void MOnRewardFailedToShow(AdError p0) 
+        { 
+            OnRewardFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
+            OnRewardedVideoAdFailedToLoad?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
+        }
         public virtual void MOnUserEarnedReward(IRewardItem p0) => OnUserEarnedReward?.Invoke(this, new MTEventArgs() { RewardType=p0.Type, RewardAmount=p0.Amount });
 
         public virtual void MOnRewarded(IRewardItem p0) => OnRewarded?.Invoke(this, new MTEventArgs() { RewardType = p0.Type, RewardAmount = p0.Amount });

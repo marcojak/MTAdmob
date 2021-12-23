@@ -23,6 +23,13 @@ Your help allows me to continue to spend time on this project and continue to ma
   Visual Studio will tell you which packages you need to install.
 
 Release Notes
+Version 1.6.9
+Updated  Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.3
+Removed MyRewardedVideoAdListener
+Enabled OnRewardedVideoAdLoaded On Android
+Enabled OnRewardedVideoAdFailedToLoad On Android
+Enabled OnRewardedVideoAdClosed On Android
+
 Version 1.6.8
 Replaced AdSize.SmartBanner as deprecated (thanks to roswer13)
 Improved AdFailedToLoad (thanks to roswer13)
