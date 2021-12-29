@@ -39,6 +39,7 @@ namespace MarcTron.Plugin.Renderers
             };
 
             _adView.AdReceived += myMtAdView.AdImpression;
+            _adView.WillLeaveApplication += myMtAdView.AdClicked;
 
 
             var request = MTAdmobImplementation.GetRequest();
