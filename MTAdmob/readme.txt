@@ -9,10 +9,9 @@ You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert
 Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
 
 ### IMPORTANT
-* Remember to edit your AppManifest otherwise it will not work on Android
-* On iOS you MUST now change the Ads init. In your iOS project Replace MobileAds.Configure with MobileAds.SharedInstance.Start(CompletionHandler);
-  where CompletionHandler is something like: private void CompletionHandler(InitializationStatus status){}
-* Edit your info.plist adding these Keys:
+* On Android you need to add your Admob APPLICATION_ID to your AppManifest.
+* On iOS you need to add GADApplicationIdentifier to your Info.plist:
+  Edit your info.plist adding these Keys:
   <key>GADApplicationIdentifier</key>
   <string>ca-app-pub-3940256099942544~1458002511</string> <- This is a test key, replace it with your APPID
   <key>GADIsAdManagerApp</key>
@@ -23,6 +22,9 @@ Your help allows me to continue to spend time on this project and continue to ma
   Visual Studio will tell you which packages you need to install.
 
 Release Notes
+Version 1.7.0
+Added banner click support for iOS (thanks to alex-relov)
+
 Version 1.6.9
 Updated  Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.3
 Removed MyRewardedVideoAdListener
@@ -30,110 +32,7 @@ Enabled OnRewardedVideoAdLoaded On Android
 Enabled OnRewardedVideoAdFailedToLoad On Android
 Enabled OnRewardedVideoAdClosed On Android
 
-Version 1.6.8
-Replaced AdSize.SmartBanner as deprecated (thanks to roswer13)
-Improved AdFailedToLoad (thanks to roswer13)
-
-Version 1.6.7
-Fixed OnRewardedVideoAdCompleted on Android
-Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.1
-
-Version 1.6.6
-Fixed OnRewardedVideoAdLoaded on Android
-
-Version 1.6.5
-Fixed missing events for rewarded video on Android (Regression)
-
-Version 1.6.4
-Fixed issue with ADs request on Android
-Replaced string consts for content rating filter
-
-Version 1.6.3
-Fixed missing events for rewarded video on Android
-
-Version 1.6.2
-Updated GooglePlayServices.Ads.Lite to 120.2.0
-Updated Xamarin.AndroidX.Annotation to 1.2.0
-Removed Personalized property from MTAdView
-
-Version 1.6.1
-Updated GooglePlayServices.Ads.Lite to 119.6.0
-Updated all dependencies
-Removed support for MonoAndroid81
-
-Version 1.6.0
-Updated Xamarin.Google.iOS.MobileAds to 7.66 (Required for iOS 14+)
-Updated GooglePlayServices.Ads.Lite to 119.1.0
-
-Version 1.5.8
- Added support for Comply with Google Play’s Families Policy (Thanks to Abdul Rahman)
-
-Version 1.5.7
- Added IsEnabled to disable the ads (banners, interstitials, rewarded videos) (Default = true)
- Added UseRestrictedDataProcessing for CCPA compliance (Default = false)
- Starting to move to AndroidX, possibly you'll need new packages in your Android project but VS will tell you
-
-Version 1.5.6
- Fixed possible issue with some MONODROID versions for LoadRewardedVideo
-
-Version 1.5.5
- Updated MobileAds to 7.57.0 to avoid Apple rejection because of the reference to UIWebView
-
-Version 1.5.0
- Updated packages
- Improved code
- Add custom data to RewardedAd (thanks to Lordinaire)
-
-Version 1.4.4
- Removed deprecated code on iOS
- Fixed issues on iOS (Please update from version 1.4.3)
-
-Version 1.4.3
- Added Consent option to iOS
- Updated Xamarin.Google.iOS.MobileAds to 7.47.0
-
-Version 1.4.2
- Updated GooglePlayServicesAds.Lite 71.1720.1
-
-Version 1.4.1
- Fixed issue on iOS where sometimes events weren't called on RewardedVideos
-
-Version 1.4
- Fixed issue with multiple events called on RewardedVideos
- Improved code for Interstitials.
-
-Version 1.3
- Fixed crash on iOS with multiple Banner
- Improved code
- To avoid compatibilty now the Banner control has been renamed from AdView to MTAdView
-
-Version 1.2
- With this version Loading and Showing Interstitials and rewarded videos are 2 separate events. Now the methods are:
-  void LoadInterstitial(string adUnit);
-  void ShowInterstitial();
-  bool IsInterstitialLoaded();
-  void LoadRewardedVideo(string adUnit);
-  void ShowRewardedVideo();
-  bool IsRewardedVideoLoaded();
-
-  I've removed the two methods:
-  void ShowInterstitial(string adUnit);
-  void ShowRewardedVideo(string adUnit);
-
-  Now you have to load the Interstitial or Rewarded Video and when you want you can show it. You can see if an interstitial or rewared video are loaded using the new methods
-  bool IsInterstitialLoaded();
-  bool IsRewardedVideoLoaded();
-
-  Thanks to these changes you have now more control over the Ads.
-
-Version 1.1
- Added support for Rewarded Videos
- Added events for Rewarded Videos
- Added events for Interstitials
-
-Version 1.0
-Banner and Insterstitial for Android
-Banner and Insterstitial for iOS
+HOW TO USE MTADMOB
 
 BANNER
 
@@ -147,11 +46,11 @@ remember to add this line in your XAML:
 
 xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
 
-
 CODE
 
 MTAdView ads = new MTAdView();
 
+Now you can add the control to your layout.
 
 PROPERTIES
 
@@ -228,7 +127,6 @@ OnRewardedVideoAdOpened             When the ads is opened
 OnRewardedVideoStarted              When the ads starts
 
 
-
 IMPORTANT
 
 Remember to include the MTAdmob library with this code (usually it's added automatically):
@@ -255,8 +153,7 @@ If the Banners don't appear in your app, probably it's a size problem. To solve 
 
 IMPORTANT FOR ANDROID:
 
-Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.initialize() with your AdMob App ID. 
-This needs to be done only once, ideally at app launch. For example:
+Before loading ads, you need to call MobileAds.initialize() on OnCreate: 
 
 
 protected override void OnCreate(Bundle savedInstanceState)
@@ -266,7 +163,7 @@ protected override void OnCreate(Bundle savedInstanceState)
 
             base.OnCreate(savedInstanceState);
 
-            MobileAds.Initialize(ApplicationContext);
+            MobileAds.Initialize(this);   <---
             Xamarin.Forms.Forms.Init(this, savedInstanceState); 
             LoadApplication(new App());
         }
@@ -279,21 +176,6 @@ Remeber to add this to your AppManifest:
 
 
 IMPORTANT FOR IOS:
-
-Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.initialize() with your AdMob App ID. 
-This needs to be done only once, ideally at app launch. For example:
-
-
-public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        {
-            global::Xamarin.Forms.Forms.Init();
-            <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~1458002511 -->
-            MobileAds.Configure("xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
-
-            LoadApplication(new App());
-
-            return base.FinishedLaunching(app, options);
-        }
 
 In case the plugin doesn't install automatically the nuget package 
 Xamarin.Google.iOS.MobileAds

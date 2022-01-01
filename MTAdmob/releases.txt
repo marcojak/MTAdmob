@@ -1,4 +1,7 @@
 ﻿### Release Notes
+**Version 1.7.0**
+Added banner click support for iOS (thanks to alex-relov)
+
 **Version 1.6.9**
 Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.3
 Removed MyRewardedVideoAdListener

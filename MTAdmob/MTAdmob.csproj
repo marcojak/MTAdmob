@@ -20,10 +20,10 @@
     <PackageId>MarcTron.Admob</PackageId>
     
     <Product>Plugin.MtAdmob</Product>
-    <AssemblyVersion>1.6.9.0</AssemblyVersion>
-    <AssemblyFileVersion>1.6.9.0</AssemblyFileVersion>
-    <Version>1.6.9</Version>
-    <PackageVersion>1.6.9.0</PackageVersion>
+    <AssemblyVersion>1.7.0.0</AssemblyVersion>
+    <AssemblyFileVersion>1.7.0.0</AssemblyFileVersion>
+    <Version>1.7.0</Version>
+    <PackageVersion>1.7.0.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -44,6 +44,9 @@
     <PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
     <RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
     <PackageReleaseNotes>
+		Version 1.7.0
+		Added banner click support for iOS (thanks to alex-relov)
+		
 		Version 1.6.9
 		Updated  Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.3
 		Removed MyRewardedVideoAdListener
@@ -200,22 +203,9 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1905" />    
   </ItemGroup>
 
-  <!--<ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid90'">
-    <PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.2.0" />
-    <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.2.0" />
-  </ItemGroup>-->
-
-  <!--<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-    <PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="7.66.0" />
-  </ItemGroup>-->
-
   <ItemGroup>
     <None Include="readme.txt" Pack="true" PackagePath="."></None>
   </ItemGroup>
-
-  <!--<ItemGroup>
-    <None Remove="MTRewardedAdOptions.shared.cs" />
-  </ItemGroup>-->
 
   <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadXFormsNugetUpgradeInfoBarMTAdmobHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>

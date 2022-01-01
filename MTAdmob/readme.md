@@ -9,15 +9,14 @@ You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert
 Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
 
 ### IMPORTANT
-* Remember to edit your AppManifest otherwise it will not work on Android
-* On iOS you MUST now change the Ads init. In your iOS project Replace MobileAds.Configure with MobileAds.SharedInstance.Start(CompletionHandler);
-  where CompletionHandler is something like: private void CompletionHandler(InitializationStatus status){}
-* Edit your info.plist adding these Keys:
+* On Android you need to add your Admob APPLICATION_ID to your AppManifest.
+* On iOS you need to add GADApplicationIdentifier to your Info.plist:
+  Edit your info.plist adding these Keys:
   <key>GADApplicationIdentifier</key>
   <string>ca-app-pub-3940256099942544~1458002511</string> <- This is a test key, replace it with your APPID
   <key>GADIsAdManagerApp</key>
   <true/>
-* ### If you don't do this, your iOS app will crash
+* If you don't do this, your iOS app will crash
 
 * I'm slowly starting to move toward AndroidX, so it's possible that you need to install more packages in your Android project, in case of a build error,
   Visual Studio will tell you which packages you need to install.
@@ -42,6 +41,8 @@ xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
 ```
 MTAdView ads = new MTAdView();
 ```
+
+Now you can add the control to your layout.
 
 ### IMPORTANT
 
@@ -148,8 +149,7 @@ using MarcTron.Plugin;
 
 ### IMPORTANT FOR ANDROID:
 
-Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.initialize() with your AdMob App ID. 
-This needs to be done only once, ideally at app launch. For example:
+Before loading ads, you need to call MobileAds.initialize() on OnCreate: 
 
 ```csharp
 protected override void OnCreate(Bundle savedInstanceState)
@@ -171,22 +171,6 @@ Remeber to add this to your AppManifest:
 ```
 
 ### IMPORTANT FOR IOS:
-
-Before loading ads, have your app initialize the Mobile Ads SDK by calling MobileAds.initialize() with your AdMob App ID. 
-This needs to be done only once, ideally at app launch. For example:
-
-```csharp
-public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-        {
-            global::Xamarin.Forms.Forms.Init();
-            <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~1458002511 -->
-  MobileAds.Configure("xx-xxx-xxx-xxxxxxxxxxxxxxxx~xxxxxxxxxx");
-
-  LoadApplication(new App());
-
-  return base.FinishedLaunching(app, options);
-  }
-  ```
 
   **In case the plugin doesn't install automatically the nuget package
   ```
