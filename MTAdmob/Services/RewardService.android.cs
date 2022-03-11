@@ -57,6 +57,7 @@ namespace MarcTron.Plugin.Services
         public override void OnAdFailedToLoad(LoadAdError p0)
         {
             base.OnAdFailedToLoad(p0);
+            mTAdmobImplementation.MOnRewardFailedToShow(p0);
             mRewardedAd = null;
         }
 
