@@ -12,6 +12,12 @@ You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert
 Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
 
 
+### PLEASE NOTE
+The current version of the plugin is compatible with Xamarin.Google.iOS.MobileAds up to version 7.66.0.
+In version 8.13.0 Google changed interstitials and rewards for iOS and these changes are not supported yet.
+I'm working on a new version of the plugin that will support the changes made by Google.
+For now just don't update Xamarin.Google.iOS.MobileAds to version 8.13.0.
+
 ## Setup
 * Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob/
 * Install in your .NetStandard project and Android/iOS projects
