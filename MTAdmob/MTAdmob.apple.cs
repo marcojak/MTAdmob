@@ -70,7 +70,6 @@ namespace MarcTron.Plugin
 
             bool addExtra = false;
             var dict = new Dictionary<string, string>();
-            MobileAds.SharedInstance.Vol
             MobileAds.SharedInstance.RequestConfiguration.TagForChildDirectedTreatment(CrossMTAdmob.Current.TagForChildDirectedTreatment == MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentTrue);
             MobileAds.SharedInstance.RequestConfiguration.TagForUnderAgeOfConsent(CrossMTAdmob.Current.TagForUnderAgeOfConsent == MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentTrue);
             MobileAds.SharedInstance.RequestConfiguration.MaxAdContentRating = CrossMTAdmob.Current.GetAdContentRatingString();
