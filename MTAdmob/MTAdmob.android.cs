@@ -28,6 +28,8 @@ namespace MarcTron.Plugin
         public MTMaxAdContentRating MaxAdContentRating { get; set; } = MTMaxAdContentRating.MaxAdContentRatingG;
         public bool ComplyWithFamilyPolicies { get; set; }
 
+        public bool Muted { get { return MobileAds.SetAppMuted} }
+
         InterstitialService interstitialService;
         RewardService rewardService;
 
@@ -62,6 +64,7 @@ namespace MarcTron.Plugin
 
         public virtual void MOnRewardLoaded()
         {
+            MobileAds.
             OnRewardLoaded?.Invoke(this, EventArgs.Empty);
             OnRewardedVideoAdLoaded?.Invoke(this, EventArgs.Empty);
         }
@@ -169,6 +172,16 @@ namespace MarcTron.Plugin
                     return "MA";
                 default: return "";
             }
+        }
+
+        public void SetAppMuted(bool muted)
+        {
+            MobileAds.SetAppMuted(muted);
+        }
+
+        public void SetAppVolume(float volume)
+        {
+            MobileAds.SetAppVolume(volume);
         }
     }
 }

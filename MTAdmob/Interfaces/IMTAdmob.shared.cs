@@ -36,7 +36,9 @@ namespace MarcTron.Plugin.Interfaces
 
         string GetAdContentRatingString();
 
-            
+        void SetAppMuted(bool muted);
+        void SetAppVolume(float volume);
+
 
         event EventHandler OnInterstitialLoaded;
         event EventHandler OnInterstitialOpened;      
