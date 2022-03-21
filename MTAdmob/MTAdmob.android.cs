@@ -170,5 +170,15 @@ namespace MarcTron.Plugin
                 default: return "";
             }
         }
+
+        public void SetAppMuted(bool muted)
+        {
+            MobileAds.SetAppMuted(muted);
+        }
+
+        public void SetAppVolume(float volume)
+        {
+            MobileAds.SetAppVolume(volume);
+        }
     }
 }

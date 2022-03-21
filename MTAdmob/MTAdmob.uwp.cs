@@ -73,5 +73,14 @@ namespace MarcTron.Plugin
         public void ShowRewardedVideo()
         {
         }
+
+
+        public void SetAppMuted(bool muted)
+        {
+        }
+
+        public void SetAppVolume(float volume)
+        {
+        }
     }
 }
