@@ -28,7 +28,7 @@ namespace MarcTron.Plugin
         InterstitialService interstitialService;
         RewardService rewardService;
 
-        Interstitial _adInterstitial;
+        InterstitialAd _adInterstitial;
 
         public event EventHandler<MTEventArgs> OnRewarded;
         public event EventHandler OnRewardedVideoAdClosed;
@@ -66,16 +66,16 @@ namespace MarcTron.Plugin
         public static Request GetRequest()
         {
             var request = Request.GetDefaultRequest();
-            
 
             bool addExtra = false;
             var dict = new Dictionary<string, string>();
+
             MobileAds.SharedInstance.RequestConfiguration.TagForChildDirectedTreatment(CrossMTAdmob.Current.TagForChildDirectedTreatment == MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentTrue);
             MobileAds.SharedInstance.RequestConfiguration.TagForUnderAgeOfConsent(CrossMTAdmob.Current.TagForUnderAgeOfConsent == MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentTrue);
             MobileAds.SharedInstance.RequestConfiguration.MaxAdContentRating = CrossMTAdmob.Current.GetAdContentRatingString();
             if (CrossMTAdmob.Current.TestDevices != null)
-                request.TestDevices = CrossMTAdmob.Current.TestDevices.ToArray();
-         
+                MobileAds.SharedInstance.RequestConfiguration.TestDeviceIdentifiers = CrossMTAdmob.Current.TestDevices.ToArray();
+
             if (!CrossMTAdmob.Current.UserPersonalizedAds)
             {
                 dict.Add(new NSString("npa"), new NSString("1"));
@@ -90,7 +90,8 @@ namespace MarcTron.Plugin
 
             if (CrossMTAdmob.Current.ComplyWithFamilyPolicies)
             {
-                request.Tag(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
+                //To enable again
+                //request.Tag(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
                 dict.Add(new NSString("max_ad_content_rating"), new NSString("G"));
                 addExtra = true;
             }

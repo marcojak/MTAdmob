@@ -1,12 +1,14 @@
 ﻿using Google.MobileAds;
 using System;
+using System.Threading.Tasks;
+using Foundation;
 using UIKit;
 
 namespace MarcTron.Plugin.Services
 {
-    class InterstitialService
+    class InterstitialService : FullScreenContentDelegate
     {
-        Interstitial _adInterstitial;
+        InterstitialAd _adInterstitial;
         private MTAdmobImplementation mTAdmobImplementation;
 
         public InterstitialService(MTAdmobImplementation mTAdmobImplementation)
@@ -14,28 +16,14 @@ namespace MarcTron.Plugin.Services
             this.mTAdmobImplementation = mTAdmobImplementation;
         }
 
-        private void CreateInterstitialAd(string adUnit)
+        private async Task CreateInterstitialAd(string adUnit)
         {
-            try
+            var request = MTAdmobImplementation.GetRequest();
+            _adInterstitial = await InterstitialAd.LoadAsync(adUnit, request);
+            if (_adInterstitial != null)
             {
-                if (_adInterstitial != null)
-                {
-                    _adInterstitial.AdReceived -= _adInterstitial_AdReceived;
-                    _adInterstitial.WillPresentScreen -= _adInterstitial_WillPresentScreen;
-                    _adInterstitial.WillDismissScreen -= _adInterstitial_WillDismissScreen;
-                    _adInterstitial = null;
-                }
+                _adInterstitial.Delegate = this;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            _adInterstitial = new Interstitial(adUnit);
-
-            _adInterstitial.AdReceived += _adInterstitial_AdReceived;
-            _adInterstitial.WillPresentScreen += _adInterstitial_WillPresentScreen;
-            _adInterstitial.WillDismissScreen += _adInterstitial_WillDismissScreen;
         }
 
         public void LoadInterstitial(string adUnit)
@@ -45,31 +33,46 @@ namespace MarcTron.Plugin.Services
 
             CreateInterstitialAd(adUnit);
 
-            var request = MTAdmobImplementation.GetRequest();
-            _adInterstitial.LoadRequest(request);
+            //var request = MTAdmobImplementation.GetRequest();
+            //_adInterstitial.LoadRequest(request);
         }
 
         public void ShowInterstitial()
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
-
-            if (_adInterstitial != null && _adInterstitial.IsReady)
+            if (_adInterstitial != null)
             {
-                var window = UIApplication.SharedApplication.KeyWindow;
-                var vc = window.RootViewController;
-                while (vc.PresentedViewController != null)
+                var canPresent = _adInterstitial.CanPresent(GetViewController(), out var error);
+                if (canPresent)
                 {
-                    vc = vc.PresentedViewController;
-                }
+                    var window = UIApplication.SharedApplication.KeyWindow;
+                    var vc = window.RootViewController;
+                    while (vc.PresentedViewController != null)
+                    {
+                        vc = vc.PresentedViewController;
+                    }
 
-                _adInterstitial.Present(vc);
+                    _adInterstitial.Present(vc);
+                }
             }
+        }
+
+        private UIViewController GetViewController()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var vc = window.RootViewController;
+            while (vc.PresentedViewController != null)
+            {
+                vc = vc.PresentedViewController;
+            }
+
+            return vc;
         }
 
         internal bool IsLoaded()
         {
-            return _adInterstitial != null && _adInterstitial.IsReady;
+            return _adInterstitial != null && _adInterstitial.CanPresent(GetViewController(), out var error);
         }
 
         private void _adInterstitial_WillDismissScreen(object sender, EventArgs e)
@@ -85,6 +88,23 @@ namespace MarcTron.Plugin.Services
         private void _adInterstitial_AdReceived(object sender, EventArgs e)
         {
             mTAdmobImplementation.MOnInterstitialLoaded();
+        }
+
+        public override void DidPresentFullScreenContent(FullScreenPresentingAd ad)
+        {
+            Console.WriteLine("DidPresentFullScreenContent");
+            mTAdmobImplementation.MOnInterstitialOpened();
+        }
+
+        public override void DidFailToPresentFullScreenContent(FullScreenPresentingAd ad, NSError error)
+        {
+            Console.WriteLine("DidFailToPresentFullScreenContent");
+        }
+
+        public override void DidDismissFullScreenContent(FullScreenPresentingAd ad)
+        {
+            Console.WriteLine("DidDismissFullScreenContent");
+            mTAdmobImplementation.MOnInterstitialClosed();
         }
     }
 }

@@ -2,23 +2,46 @@
 using Google.MobileAds;
 using MarcTron.Plugin.CustomEventArgs;
 using System;
+using System.Threading.Tasks;
 using UIKit;
 
 namespace MarcTron.Plugin.Services
 {
-    class RewardService : RewardBasedVideoAdDelegate
+    class RewardService : FullScreenContentDelegate
     {
+        RewardedAd _adRewarded;
         private MTAdmobImplementation mTAdmobImplementation;
 
         public RewardService(MTAdmobImplementation mTAdmobImplementation)
         {
             this.mTAdmobImplementation = mTAdmobImplementation;
-            RewardBasedVideoAd.SharedInstance.Delegate = this;
+        }
+
+        private async Task CreateRewardedAd(string adUnit)
+        {
+            var request = MTAdmobImplementation.GetRequest();
+            _adRewarded = await RewardedAd.LoadAsync(adUnit, request);
+            if (_adRewarded != null)
+            {
+                _adRewarded.Delegate = this;
+            }
+        }
+
+        private UIViewController GetViewController()
+        {
+            var window = UIApplication.SharedApplication.KeyWindow;
+            var vc = window.RootViewController;
+            while (vc.PresentedViewController != null)
+            {
+                vc = vc.PresentedViewController;
+            }
+
+            return vc;
         }
 
         public bool IsRewardedVideoLoaded()
         {
-            return RewardBasedVideoAd.SharedInstance.IsReady;
+            return _adRewarded != null && _adRewarded.CanPresent(GetViewController(), out var error);
         }
 
         public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
@@ -26,96 +49,98 @@ namespace MarcTron.Plugin.Services
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
 
-            //old method
-            if (RewardBasedVideoAd.SharedInstance.IsReady)
-            {
-                mTAdmobImplementation.MOnRewardedVideoAdLoaded();
-                return;
-            }
+            CreateRewardedAd(adUnit);
 
-            RewardBasedVideoAd.SharedInstance.CustomRewardString = options?.CustomData;
+            //Hot to pass this???
+            //RewardBasedVideoAd.SharedInstance.CustomRewardString = options?.CustomData;
 
-            var request = MTAdmobImplementation.GetRequest();
-            RewardBasedVideoAd.SharedInstance.LoadRequest(request, adUnit);
-
-            //new method
-            //if (_rewardedAd==null)
-            //    _rewardedAd = new RewardedAd();
-            //_rewardedAd.LoadRequest(request, completion);
         }
 
         public void ShowRewardedVideo()
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
-
-            //old method
-            if (RewardBasedVideoAd.SharedInstance.IsReady)
+            if (_adRewarded != null)
             {
-                var window = UIApplication.SharedApplication.KeyWindow;
-                var vc = window.RootViewController;
-                while (vc.PresentedViewController != null)
+                var canPresent = _adRewarded.CanPresent(GetViewController(), out var error);
+                if (canPresent)
                 {
-                    vc = vc.PresentedViewController;
+                    var window = UIApplication.SharedApplication.KeyWindow;
+                    var vc = window.RootViewController;
+                    while (vc.PresentedViewController != null)
+                    {
+                        vc = vc.PresentedViewController;
+                    }
+
+                    _adRewarded.Present(vc, DidEarnReward);
                 }
-
-                RewardBasedVideoAd.SharedInstance.Present(vc);
             }
+        }
 
-            //new method
-            //if (_rewardedAd.IsReady)
-            //{
-            //    var window = UIApplication.SharedApplication.KeyWindow;
-            //    var vc = window.RootViewController;
-            //    while (vc.PresentedViewController != null)
-            //    {
-            //        vc = vc.PresentedViewController;
-            //    }
-            //    _rewardedAd.Present(vc, this);
-            //}
+        private void DidEarnReward()
+        {
+            var r = _adRewarded.AdReward;
         }
 
 
-        //old method
-        public override void DidRewardUser(RewardBasedVideoAd rewardBasedVideoAd, AdReward reward)
-        {
-            mTAdmobImplementation.MOnRewarded(new MTEventArgs() { RewardAmount = (int)reward.Amount, RewardType = reward.Type });
-        }
+        ////old method
+        //public override void DidRewardUser(RewardBasedVideoAd rewardBasedVideoAd, AdReward reward)
+        //{
+        //    mTAdmobImplementation.MOnRewarded(new MTEventArgs() { RewardAmount = (int)reward.Amount, RewardType = reward.Type });
+        //}
 
 
-        public override void DidClose(RewardBasedVideoAd rewardBasedVideoAd)
-        {
-            mTAdmobImplementation.MOnRewardedVideoAdClosed();
-        }
+        //public override void DidClose(RewardBasedVideoAd rewardBasedVideoAd)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoAdClosed();
+        //}
 
-        public override void DidCompletePlaying(RewardBasedVideoAd rewardBasedVideoAd)
-        {
-            mTAdmobImplementation.MOnRewardedVideoAdCompleted();
-        }
+        //public override void DidCompletePlaying(RewardBasedVideoAd rewardBasedVideoAd)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoAdCompleted();
+        //}
 
-        public override void DidFailToLoad(RewardBasedVideoAd rewardBasedVideoAd, NSError error)
-        {
-            mTAdmobImplementation.MOnRewardedVideoAdFailedToLoad(new MTEventArgs() { ErrorCode = (int)error.Code });
-        }
+        //public override void DidFailToLoad(RewardBasedVideoAd rewardBasedVideoAd, NSError error)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoAdFailedToLoad(new MTEventArgs() { ErrorCode = (int)error.Code });
+        //}
 
-        public override void DidOpen(RewardBasedVideoAd rewardBasedVideoAd)
+        //public override void DidOpen(RewardBasedVideoAd rewardBasedVideoAd)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoAdOpened();
+        //}
+
+        //public override void DidReceiveAd(RewardBasedVideoAd rewardBasedVideoAd)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoAdLoaded();
+        //}
+
+        //public override void DidStartPlaying(RewardBasedVideoAd rewardBasedVideoAd)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoStarted();
+        //}
+
+        //public override void WillLeaveApplication(RewardBasedVideoAd rewardBasedVideoAd)
+        //{
+        //    mTAdmobImplementation.MOnRewardedVideoAdLeftApplication();
+        //}
+
+        public override void DidPresentFullScreenContent(FullScreenPresentingAd ad)
         {
+            Console.WriteLine("DidPresentFullScreenContent");
             mTAdmobImplementation.MOnRewardedVideoAdOpened();
         }
 
-        public override void DidReceiveAd(RewardBasedVideoAd rewardBasedVideoAd)
+        public override void DidFailToPresentFullScreenContent(FullScreenPresentingAd ad, NSError error)
         {
-            mTAdmobImplementation.MOnRewardedVideoAdLoaded();
+            Console.WriteLine("DidFailToPresentFullScreenContent");
+            mTAdmobImplementation.MOnRewardedVideoAdFailedToLoad(new MTEventArgs() { ErrorCode = (int)error.Code, ErrorDomain = error.Domain, ErrorMessage = error.LocalizedDescription });
         }
 
-        public override void DidStartPlaying(RewardBasedVideoAd rewardBasedVideoAd)
+        public override void DidDismissFullScreenContent(FullScreenPresentingAd ad)
         {
-            mTAdmobImplementation.MOnRewardedVideoStarted();
-        }
-
-        public override void WillLeaveApplication(RewardBasedVideoAd rewardBasedVideoAd)
-        {
-            mTAdmobImplementation.MOnRewardedVideoAdLeftApplication();
+            Console.WriteLine("DidDismissFullScreenContent");
+            mTAdmobImplementation.MOnRewardedVideoAdClosed();
         }
     }
 }

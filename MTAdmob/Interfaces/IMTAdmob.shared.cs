@@ -39,7 +39,6 @@ namespace MarcTron.Plugin.Interfaces
         void SetAppMuted(bool muted);
         void SetAppVolume(float volume);
 
-
         event EventHandler OnInterstitialLoaded;
         event EventHandler OnInterstitialOpened;      
         event EventHandler OnInterstitialClosed;
