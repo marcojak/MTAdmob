@@ -6,7 +6,7 @@
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial and Rewarded Videos
 
-##If you are looking for the newer version of my plugin for MAUI, you can visit: https://github.com/marcojak/MauiMTAdmob
+## If you are looking for the newer version of my plugin for MAUI, you can visit: [MauiMTAdmob](https://github.com/marcojak/MauiMTAdmob)
 
 ### Please, support me
 If possible, please, support my work with few coffees or even better with a Membership!
