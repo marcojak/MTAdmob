@@ -15,10 +15,12 @@ Your help allows me to continue to spend time on this project and continue to ma
 
 
 ### PLEASE NOTE
-The current version of the plugin is compatible with Xamarin.Google.iOS.MobileAds up to version 7.66.0.
-In version 8.13.0 Google changed interstitials and rewards for iOS and these changes are not supported yet.
+
+The previous versions of the plugin are compatible with Xamarin.Google.iOS.MobileAds up to version 7.66.0.
+You need to use version >= 1.8 to use the newer versions of Xamarin.Google.iOS.MobileAds.
+~~In version 8.13.0 Google changed interstitials and rewards for iOS and these changes are not supported yet.
 I'm working on a new version of the plugin that will support the changes made by Google.
-For now just don't update Xamarin.Google.iOS.MobileAds to version 8.13.0.
+For now just don't update Xamarin.Google.iOS.MobileAds to version 8.13.0.~~
 
 ## Setup
 * Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob/
