@@ -3,7 +3,7 @@
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial and Rewarded Videos
 
-### Please, support me
+### Please, support my work
 If possible, please, support my work with few coffees or even better with a Membership!
 You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert)
 Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
@@ -22,6 +22,14 @@ Your help allows me to continue to spend time on this project and continue to ma
   Visual Studio will tell you which packages you need to install.
 
 Release Notes
+Version 1.9.0
+Updated Xamarin.AndroidX.Work.Runtime to 2.7.0 to allow to target Android 12+
+
+Version 1.8.0
+Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.5
+Updated Xamarin.Google.iOS.MobileAds to 8.13.0.1
+Code updated to support new Ads libraries
+
 Version 1.7.0
 Added banner click support for iOS (thanks to alex-relov)
 

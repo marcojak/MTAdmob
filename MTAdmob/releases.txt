@@ -1,4 +1,12 @@
 ﻿### Release Notes
+**Version 1.9.0**
+Updated Xamarin.AndroidX.Work.Runtime to 2.7.0 to allow to target Android 12+
+
+**Version 1.8.0**
+Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.5
+ Xamarin.Google.iOS.MobileAds to 8.13.0.1
+Code updated to support new Ads libraries
+
 **Version 1.7.0**
 Added banner click support for iOS (thanks to alex-relov)
 

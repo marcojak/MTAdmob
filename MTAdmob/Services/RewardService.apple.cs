@@ -79,7 +79,8 @@ namespace MarcTron.Plugin.Services
 
         private void DidEarnReward()
         {
-            var r = _adRewarded.AdReward;
+            var reward = _adRewarded.AdReward;
+            mTAdmobImplementation.MOnRewarded(new MTEventArgs() { RewardAmount = (int)reward.Amount, RewardType = reward.Type });
         }
 
 
@@ -128,6 +129,7 @@ namespace MarcTron.Plugin.Services
         public override void DidPresentFullScreenContent(FullScreenPresentingAd ad)
         {
             Console.WriteLine("DidPresentFullScreenContent");
+            mTAdmobImplementation.MOnRewardedVideoAdLeftApplication();
             mTAdmobImplementation.MOnRewardedVideoAdOpened();
         }
 
@@ -142,5 +144,20 @@ namespace MarcTron.Plugin.Services
             Console.WriteLine("DidDismissFullScreenContent");
             mTAdmobImplementation.MOnRewardedVideoAdClosed();
         }
+
+        public override void DidRecordClick(FullScreenPresentingAd ad)
+        {
+            base.DidRecordClick(ad);
+        }
+
+        public override void DidRecordImpression(FullScreenPresentingAd ad)
+        {
+            base.DidRecordImpression(ad);
+        }
+
+        //public override void WillDismissFullScreenContent(FullScreenPresentingAd ad)
+        //{
+        //    base.WillDismissFullScreenContent(ad);
+        //}
     }
 }
