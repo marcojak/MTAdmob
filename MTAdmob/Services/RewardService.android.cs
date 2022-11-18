@@ -7,12 +7,12 @@ namespace MarcTron.Plugin.Services
 {
     class RewardService : RewardedAdLoadCallback, IOnUserEarnedRewardListener
     {
-        private Android.Gms.Ads.Rewarded.RewardedAd mRewardedAd;
-        public MTAdmobImplementation mTAdmobImplementation { get; }
+        private Android.Gms.Ads.Rewarded.RewardedAd _mRewardedAd;
+        private readonly MTAdmobImplementation _admobImplementation;
 
-        public RewardService(MTAdmobImplementation mTAdmobImplementation)
+        public RewardService(MTAdmobImplementation admobImplementation)
         {
-            this.mTAdmobImplementation = mTAdmobImplementation;
+            _admobImplementation = admobImplementation;
         }
 
         private void CreateRewardAd(string adUnit)
@@ -21,7 +21,7 @@ namespace MarcTron.Plugin.Services
                 return;
 
             var context = Android.App.Application.Context;
-            var requestBuilder = MTAdmobImplementation.GetRequest(/*mTAdmobImplementation*/);
+            var requestBuilder = MTAdmobImplementation.GetRequest();
             RewardedAd.Load(context, adUnit, requestBuilder.Build(), this);
         }
 
@@ -35,7 +35,7 @@ namespace MarcTron.Plugin.Services
 
         public bool IsLoaded()
         {
-            return mRewardedAd != null;
+            return _mRewardedAd != null;
         }
 
         public void ShowReward()
@@ -43,10 +43,10 @@ namespace MarcTron.Plugin.Services
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
 
-            if (mRewardedAd != null)
+            if (_mRewardedAd != null)
             {
-                mRewardedAd.Show(Android.App.Application.Context.GetActivity(), this);
-                mRewardedAd = null;
+                _mRewardedAd.Show(Android.App.Application.Context.GetActivity(), this);
+                _mRewardedAd = null;
             }
             else
             {
@@ -54,26 +54,24 @@ namespace MarcTron.Plugin.Services
             }
         }
 
-        public override void OnAdFailedToLoad(LoadAdError p0)
+        public override void OnAdFailedToLoad(LoadAdError error)
         {
-            base.OnAdFailedToLoad(p0);
-            mTAdmobImplementation.MOnRewardFailedToShow(p0);
-            mRewardedAd = null;
+            base.OnAdFailedToLoad(error);
+            _admobImplementation.MOnRewardFailedToLoad(error);
+            _mRewardedAd = null;
         }
 
         public override void OnRewardedAdLoaded(Android.Gms.Ads.Rewarded.RewardedAd rewardedAd)
         {
             base.OnRewardedAdLoaded(rewardedAd);
-            mRewardedAd = rewardedAd;
-            mRewardedAd.FullScreenContentCallback = new MyFullScreenContentCallback(mTAdmobImplementation, false);
-            mTAdmobImplementation.MOnRewardLoaded();
+            _mRewardedAd = rewardedAd;
+            _mRewardedAd.FullScreenContentCallback = new MyFullScreenContentCallback(_admobImplementation, false);
+            _admobImplementation.MOnRewardLoaded();
         }
 
         public void OnUserEarnedReward(Android.Gms.Ads.Rewarded.IRewardItem p0)
         {
-            //mTAdmobImplementation.MOnUserEarnedReward(p0);
-            mTAdmobImplementation.MOnRewarded(p0);
+            _admobImplementation.MOnUserEarnedReward(p0);
         }
     }
-
 }

@@ -7,9 +7,8 @@ using MarcTron.Plugin.Listeners;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using MarcTron.Plugin.Renderers;
-using Android.Util;
-using Android.Runtime;
-using Android.Views;
+using MarcTron.Plugin.Extra;
+using System.ComponentModel;
 
 [assembly: ExportRenderer(typeof(MTAdView), typeof(AdViewRenderer))]
 
@@ -19,18 +18,21 @@ namespace MarcTron.Plugin.Renderers
     {
         string _adUnitId = string.Empty;
         AdView _adView;
-
+        private MTAdView currentAdView;
+        private MyAdBannerListener listener;
         public AdViewRenderer(Context context) : base(context)
         {
         }
 
-        private void CreateNativeControl(MTAdView myMtAdView, string adsId)
+        private void CreateNativeControl(MTAdView myMtAdView, string adsId, BannerSize adSize)
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
 
             if (_adView != null)
                 return;
+
+            currentAdView = myMtAdView;
 
             _adUnitId = !string.IsNullOrEmpty(adsId) ? adsId : CrossMTAdmob.Current.AdsId;
 
@@ -39,28 +41,77 @@ namespace MarcTron.Plugin.Renderers
                 Console.WriteLine("You must set the adsID before using it");
             }
 
-            var listener = new MyAdBannerListener();
+            CreateAdView();
+        }
 
-            listener.AdClicked += myMtAdView.AdClicked;
-            listener.AdClosed += myMtAdView.AdClosed;
-            listener.AdImpression += myMtAdView.AdImpression;
-            listener.AdOpened += myMtAdView.AdOpened;
-            listener.AdFailedToLoad += myMtAdView.AdFailedToLoad;
-            listener.AdLoaded += myMtAdView.AdLoaded;
-            listener.AdLeftApplication += myMtAdView.AdLeftApplication;
+        private void CreateAdView()
+        {
+            if (listener != null)
+            {
+                listener.AdClicked -= currentAdView.AdClicked;
+                listener.AdClosed -= currentAdView.AdClosed;
+                listener.AdImpression -= currentAdView.AdImpression;
+                listener.AdOpened -= currentAdView.AdOpened;
+                listener.AdFailedToLoad -= currentAdView.AdFailedToLoad;
+                listener.AdLoaded -= currentAdView.AdLoaded;
+                listener.AdLoaded -= Listener_AdLoaded;
+                listener.AdLeftApplication -= currentAdView.AdLeftApplication;
+                listener = null;
+            }
+
+            listener = new MyAdBannerListener();
+
+            listener.AdClicked += currentAdView.AdClicked;
+            listener.AdClosed += currentAdView.AdClosed;
+            listener.AdImpression += currentAdView.AdImpression;
+            listener.AdOpened += currentAdView.AdOpened;
+            listener.AdFailedToLoad += currentAdView.AdFailedToLoad;
+            listener.AdFailedToLoad += Listener_AdFailedToLoad;
+            listener.AdLoaded += currentAdView.AdLoaded;
+            listener.AdLoaded += Listener_AdLoaded;
+            listener.AdLeftApplication += currentAdView.AdLeftApplication;
 
             _adView = new AdView(Context)
             {
-                AdSize = GetAdSize(),
+                AdSize = GetAdSize(currentAdView.AdSize),
                 AdUnitId = _adUnitId,
                 AdListener = listener,
                 LayoutParameters = new LinearLayout.LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent)
             };
-
-            var requestBuilder = MTAdmobImplementation.GetRequest();
-            _adView.LoadAd(requestBuilder.Build());
         }
 
+        private void Listener_AdFailedToLoad(object sender, MTEventArgs e)
+        {
+            try
+            {
+                if (currentAdView.AutoSize)
+                {
+                    var size = _adView.AdSize;
+                    currentAdView.HeightRequest = 0;
+                }
+            }
+            catch (Exception ecc)
+            {
+                Console.WriteLine($"Error in Ad failed to load: {ecc.Message}");
+            }
+        }
+
+        private void Listener_AdLoaded(object sender, EventArgs e)
+        {
+            try
+            {
+                if (currentAdView.AutoSize)
+                {
+                    var size = _adView.AdSize;
+                    currentAdView.HeightRequest = size.Height;
+                }
+            }
+            catch (Exception ecc)
+            {
+                Console.WriteLine($"Error in Ad loaded: {ecc.Message}");
+            }
+        }
+        
         protected override void OnElementChanged(ElementChangedEventArgs<MTAdView> e)
         {
             base.OnElementChanged(e);
@@ -69,24 +120,74 @@ namespace MarcTron.Plugin.Renderers
 
             if (Control == null)
             {
-                CreateNativeControl(e.NewElement, e.NewElement.AdsId);
+                CreateNativeControl(e.NewElement, e.NewElement.AdsId, e.NewElement.AdSize);
                 SetNativeControl(_adView);
+                LoadAds();
             }
         }
-        
-        private AdSize GetAdSize()
+
+        private void LoadAds()
         {
-            var outMetrics = new DisplayMetrics();
-            var display = Context?.GetSystemService(Context.WindowService).JavaCast<IWindowManager>();
+            var requestBuilder = MTAdmobImplementation.GetRequest();
+            _adView.LoadAd(requestBuilder.Build());
+        }
 
-            display?.DefaultDisplay?.GetMetrics(outMetrics);
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
 
-            float widthPixels = outMetrics.WidthPixels;
-            float density = outMetrics.Density;
+            if ((e.PropertyName.Equals("Width") || e.PropertyName.Equals("AdSize")) && _adView != null)
+            {
+                CreateAdView();
+                SetNativeControl(_adView);
+                LoadAds();
+            }
+        }
 
-            int adWidth = (int)(widthPixels / density);
+        private AdSize GetAdSize(BannerSize size)
+        {
+            switch (size)
+            {
+                case BannerSize.Banner:
+                    return AdSize.Banner;
+                case BannerSize.LargeBanner:
+                    return AdSize.LargeBanner;
+                case BannerSize.MediumRectangle:
+                    return AdSize.MediumRectangle;
+                case BannerSize.FullBanner:
+                    return AdSize.FullBanner;
+                case BannerSize.Leaderboard:
+                    return AdSize.Leaderboard;
+                case BannerSize.AnchoredAdaptive:
+                    return GetAdaptiveAdSize(true);
+                case BannerSize.InlineAdaptive:
+                    return GetAdaptiveAdSize(false);
+                case BannerSize.Smart:
+                    return AdSize.SmartBanner;
+                default:
+                    return GetAdaptiveAdSize(true);
+            }
+        }
 
-            return AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSize(Context, adWidth);
+        private AdSize GetAdaptiveAdSize(bool isAnchored)
+        {
+            //var outMetrics = new DisplayMetrics();
+            //var display = Context?.GetSystemService("window").JavaCast<IWindowManager>();
+
+            //display?.DefaultDisplay?.GetMetrics(outMetrics);
+
+            //float widthPixels = outMetrics.WidthPixels;
+            //float density = outMetrics.Density;
+
+            //int adWidth = (int)(widthPixels / density);
+
+            //var w = currentAdView.Width;
+            int adWidth = (int)currentAdView.Width;
+
+            if (isAnchored)
+                return AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSize(Context, adWidth);
+            else
+                return AdSize.GetCurrentOrientationInlineAdaptiveBannerAdSize(Context, adWidth);
         }
     }
 }

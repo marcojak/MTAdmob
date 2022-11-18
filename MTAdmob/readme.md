@@ -1,25 +1,70 @@
-﻿## MtAdmob plugin for Xamarin
+﻿
+## MtAdmob plugin for Xamarin
 
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
-This plugin supports: Banners, Interstitial and Rewarded Videos
+This plugin supports: Banners, Interstitial, Rewarded Videos and Rewearded Interstitials (from version 1.9)
 
 ### Please, support my work
 If possible, please, support my work with few coffees or even better with a Membership!
 You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert)
 Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
 
+## Current Status (Version 1.9)
+
+|                       | **Android** | **iOS** | **Windows** | **Mac** |
+|-----------------------|:-------------:|:---------:|:---------:|:---------:|
+| Banner                |     :heavy_check_mark:     |   :heavy_check_mark:      |    :x:  |    :x:  |
+| Interstitial          |     :heavy_check_mark:     |  :heavy_check_mark:       |    :x:  |    :x:  |
+| Rewarded              |    :heavy_check_mark:    |    :heavy_check_mark:     |    :x:  |    :x:  |
+| Rewarded Interstitial |   :heavy_check_mark:    |    :x:*  |    :x:  |    :x:  |
+
+*They are implemented but currently they are not working. Probably something in the Admob SDK. I'm investigating it.
+
+## Methods
+| **Banner** | **Interstitial**     | **Rewarded**     | **Rewarded Interstitial**  |
+|:----------:|--------------------|----------------|--------------------------|
+| LoadAd     | LoadInterstitial     | LoadRewarded     | LoadRewardedInterstitial     |
+|            | ShowInterstitial     | ShowRewarded     | ShowRewardedInterstitial     |
+|            | IsInterstitialLoaded | IsRewardedLoaded | IsRewardedInterstitialLoaded |
+
+
+## Events
+| **Banner**      | **Interstitial**           | **Rewarded**         | **Rewarded Interstitial** |
+|-----------------|----------------------------|----------------------|---------------------------|
+| AdsLoaded       | OnInterstitialLoaded       | OnRewardedLoaded     | OnRewardedLoaded          |
+| AdsFailedToLoad | OnInterstitialFailedToLoad | OnRewardedFailedToLoad| OnRewardedFailedToLoad|
+| AdsImpression   | OnInterstitialImpression   | OnRewardedImpression | OnRewardedImpression |
+| AdsClicked      | OnInterstitialOpened	   | OnRewardedOpened	  | OnRewardedOpened	  |
+| AdsOpened		  | OnInterstitialFailedToShow | OnRewardedFailedToShow| OnRewardedFailedToShow|
+| AdsClosed       | OnInterstitialClosed	   | OnRewardedClosed	  | OnRewardedClosed	  |
+| 				  | OnInterstitialClicked*     | OnRewardedClicked*   | OnRewardedClicked*|
+|  				  | 						   |OnUserEarnedReward    | OnUserEarnedReward|
+
+*Only supported on iOS
+
 ### IMPORTANT
-* On Android you need to add your Admob APPLICATION_ID to your AppManifest.
-* On iOS you need to add GADApplicationIdentifier to your Info.plist:
+
+#### To allow a smooth toward MAUI, Version 1.9 contains few breaking changes, several fixes and am improved support for Banner. It's not complicated to update your code and it's worth it.
+
+
+
+#### Android
+You need to add your Admob APPLICATION_ID to your AppManifest:
+
+```xml
+<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="YOUR APPLICATION ID" />
+```
+
+### iOS
+You need to add GADApplicationIdentifier to your Info.plist:
   Edit your info.plist adding these Keys:
+  ```xml
   <key>GADApplicationIdentifier</key>
-  <string>ca-app-pub-3940256099942544~1458002511</string> <- This is a test key, replace it with your APPID
+  <string>YOUR APPLICATION ID</string>
   <key>GADIsAdManagerApp</key>
   <true/>
+  ```
 * If you don't do this, your iOS app will crash
-
-* I'm slowly starting to move toward AndroidX, so it's possible that you need to install more packages in your Android project, in case of a build error,
-  Visual Studio will tell you which packages you need to install.
 
 
 ### BANNER
@@ -52,8 +97,8 @@ Android: ca-app-pub-3940256099942544/6300978111
 iOS: ca-app-pub-3940256099942544/2934735716
 ```
 
-**If the Banners don't appear in your app, probably it's a size problem. To solve it, add this style you your app.xaml:**
-```
+**If the Banners don't appear in your app, probably it's a size problem. To solve it, add this style to your app.xaml:**
+```xml
 <Style TargetType="controls:MTAdView">
     <Setter Property="HeightRequest">
         <Setter.Value>
@@ -67,6 +112,8 @@ iOS: ca-app-pub-3940256099942544/2934735716
 
 For each AdView if you want, you can set this property:
 AdsId: To add the id of your ads
+AdSize: To chose the size of your banners (from version 1.9)
+AutoSize: If true, the plugin will update the heightbanner height according to the ads loaded (from version 1.9)
 
 **For GDPR it's better to rely on a custom consent instead or using the non personalized ads as I cannot guarantee it works. So it's better if you create a custom consent**
 
@@ -89,54 +136,35 @@ CrossMTAdmob.Current.UserPersonalizedAds = true;
 
 You can show an interstitial with a single line of code:
 
+```csharp
 CrossMTAdmob.Current.ShowInterstitial();
-
+```
 To Load an interstitial you can use this line:
 
+```csharp 
 CrossMTAdmob.Current.LoadInterstitial("xx-xxx-xxx-xxxxxxxxxxxxxxxxx/xxxxxxxxxx");
-
+```
 
 ### REWARDED VIDEO
 
 You can show a Rewarded video with a single line of code:
-
-CrossMTAdmob.Current.ShowRewardedVideo();
-
+```csharp
+CrossMTAdmob.Current.ShowRewarded();
+```
 To Load a Rewarded Video you can use this line:
-
-CrossMTAdmob.Current.LoadRewardedVideo("xx-xxx-xxx-xxxxxxxxxxxxxxxxx/xxxxxxxxxx");
-
-
-### EVENTS FOR BANNERS
-
-Just in case you need, the Banner ads offer 4 events:
-```
-AdsClicked		    When a user clicks on the ads
-AdsClosed		    When the user closes the ads
-AdsImpression	    Called when an impression is recorded for an ad.
-AdsOpened		    When the ads is opened
+```csharp
+CrossMTAdmob.Current.LoadRewarded("xx-xxx-xxx-xxxxxxxxxxxxxxxxx/xxxxxxxxxx");
 ```
 
-### EVENTS FOR INTERSTITIALS
+### REWARD INTERSTITIAL (From Version 1.9)
 
-the Interstitial ads offer 3 events:
+You can show a Rewarded video with a single line of code:
+```csharp
+CrossMTAdmob.Current.ShowRewardInterstitial();
 ```
-OnInterstitialLoaded        When it's loaded
-OnInterstitialOpened        When it's opened      
-OnInterstitialClosed        When it's closed
-```
-
-### EVENTS FOR REWARDED VIDEOS
-
-The Rewarded Videos offer 7 events:
-```
-OnRewarded                          When the user gets a reward
-OnRewardedVideoAdClosed             When the ads is closed
-OnRewardedVideoAdFailedToLoad       When the ads fails to load
-OnRewardedVideoAdLeftApplication    When the users leaves the application
-OnRewardedVideoAdLoaded             When the ads is loaded
-OnRewardedVideoAdOpened             When the ads is opened
-OnRewardedVideoStarted              When the ads starts
+To Load a Rewarded Video you can use this line:
+```csharp
+CrossMTAdmob.Current.LoadRewardInterstitial("xx-xxx-xxx-xxxxxxxxxxxxxxxxx/xxxxxxxxxx");
 ```
 
 ### IMPORTANT
@@ -158,13 +186,13 @@ protected override void OnCreate(Bundle savedInstanceState)
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);            
-            MobileAds.Initialize(ApplicationContext, );
+            MobileAds.Initialize(ApplicationContext);
             Xamarin.Forms.Forms.Init(this, savedInstanceState); 
             LoadApplication(new App());
         }
 ```
 Remeber to add this to your AppManifest:
-```csharp
+```xml
 <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
@@ -172,11 +200,11 @@ Remeber to add this to your AppManifest:
 
 ### IMPORTANT FOR IOS:
 
-  **In case the plugin doesn't install automatically the nuget package
-  ```
-  Xamarin.Google.iOS.MobileAds
-  ```
-  you need to add it manually.**
+  In case the plugin doesn't install automatically the nuget package:
+  
+  **Xamarin.Google.iOS.MobileAds**
+  
+  you need to add it manually.
 
 
   That's it. Cannot be easier than that :)
@@ -189,4 +217,4 @@ Remeber to add this to your AppManifest:
   Tutorial: https://www.xamarinexpert.it/admob-made-easy/
 
   To report any issue: https://github.com/marcojak/MTAdmob/issues
-  
+ 

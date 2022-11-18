@@ -24,6 +24,9 @@ Your help allows me to continue to spend time on this project and continue to ma
 Release Notes
 Version 1.9.0
 Updated Xamarin.AndroidX.Work.Runtime to 2.7.0 to allow to target Android 12+
+Added Rewarded Interstitials to Android and iOS
+Added BannerSize to Banners
+Refactor code to make the future transition to MAUI easier
 
 Version 1.8.0
 Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.5

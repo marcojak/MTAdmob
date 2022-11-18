@@ -20,19 +20,14 @@
 		<PackageId>MarcTron.Admob</PackageId>
 
 		<Product>Plugin.MtAdmob</Product>
-		<AssemblyVersion>1.9.0.0</AssemblyVersion>
-		<AssemblyFileVersion>1.9.0.0</AssemblyFileVersion>
+		<AssemblyVersion>1.9.0.1</AssemblyVersion>
+		<AssemblyFileVersion>1.9.0.1</AssemblyFileVersion>
 		<Version>1.9.0</Version>
-		<PackageVersion>1.9.0.0</PackageVersion>
+		<PackageVersion>1.9.0.1</PackageVersion>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
 		<DefineConstants>$(DefineConstants);</DefineConstants>
-
-
-
-		<!--<IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>-->
 
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -46,6 +41,9 @@
 		<PackageReleaseNotes>
 			Version 1.9.0
 			Updated Xamarin.AndroidX.Work.Runtime to 2.7.0 to allow to target Android 12+
+			Added Rewarded Interstitials to Android and iOS
+			Added BannerSize to Banners
+			Refactor code to make the future transition to MAUI easier
 
 			Version 1.8.0
 			Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.5

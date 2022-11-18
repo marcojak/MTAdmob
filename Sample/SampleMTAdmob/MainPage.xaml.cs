@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using MarcTron.Plugin;
 using MarcTron.Plugin.Controls;
-using MarcTron.Plugin.CustomEventArgs;
 using Xamarin.Forms;
+using MarcTron.Plugin.Extra;
 
 namespace SampleMTAdmob
 {
@@ -18,7 +18,7 @@ namespace SampleMTAdmob
         public MainPage()
         {
             InitializeComponent();
-            CrossMTAdmob.Current.TestDevices = new List<string>() { "D70290758AB9D6060C3B14AA41DAB53A"};
+            CrossMTAdmob.Current.TestDevices = new List<string>() { "D70290758AB9D6060C3B14AA41DAB53A", "0EB3E09F26C31286957EF0BF27B58A4E" };
 
 
             CrossMTAdmob.Current.TagForChildDirectedTreatment = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
@@ -46,14 +46,14 @@ namespace SampleMTAdmob
             if (_shouldSetEvents)
             {
                 _shouldSetEvents = false;
-                CrossMTAdmob.Current.OnRewardedVideoStarted += Current_OnRewardedVideoStarted;
-                CrossMTAdmob.Current.OnRewarded += Current_OnRewarded;
-                CrossMTAdmob.Current.OnRewardedVideoAdClosed += Current_OnRewardedVideoAdClosed;
-                CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad += Current_OnRewardedVideoAdFailedToLoad;
-                CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication += Current_OnRewardedVideoAdLeftApplication;
-                CrossMTAdmob.Current.OnRewardedVideoAdLoaded += Current_OnRewardedVideoAdLoaded;
-                CrossMTAdmob.Current.OnRewardedVideoAdOpened += Current_OnRewardedVideoAdOpened;
-                CrossMTAdmob.Current.OnRewardedVideoAdCompleted += Current_OnRewardedVideoAdCompleted;
+                //CrossMTAdmob.Current.OnRewardedVideoStarted += Current_OnRewardedVideoStarted;
+                CrossMTAdmob.Current.OnUserEarnedReward += Current_OnRewarded;
+                CrossMTAdmob.Current.OnRewardedClosed += Current_OnRewardedVideoAdClosed;
+                CrossMTAdmob.Current.OnRewardedFailedToLoad += Current_OnRewardedVideoAdFailedToLoad;
+                //CrossMTAdmob.Current.OnRewardedLeftApplication += Current_OnRewardedVideoAdLeftApplication;
+                CrossMTAdmob.Current.OnRewardedLoaded += Current_OnRewardedVideoAdLoaded;
+                CrossMTAdmob.Current.OnRewardedOpened += Current_OnRewardedVideoAdOpened;
+                //CrossMTAdmob.Current.OnRewardedCompleted += Current_OnRewardedVideoAdCompleted;
 
                 CrossMTAdmob.Current.OnInterstitialLoaded += Current_OnInterstitialLoaded;
                 CrossMTAdmob.Current.OnInterstitialOpened += Current_OnInterstitialOpened;
@@ -148,17 +148,32 @@ namespace SampleMTAdmob
 
         private void LoadReward_OnClicked(object sender, EventArgs e)
         {
-            CrossMTAdmob.Current.LoadRewardedVideo("ca-app-pub-3940256099942544/5224354917");
+            CrossMTAdmob.Current.LoadRewarded("ca-app-pub-3940256099942544/5224354917");
         }
 
         private void ShowReward_OnClicked(object sender, EventArgs e)
         {
-            CrossMTAdmob.Current.ShowRewardedVideo();
+            CrossMTAdmob.Current.ShowRewarded();
         }
 
         private void IsRewardLoaded_OnClicked(object sender, EventArgs e)
         {
-            myLabel.Text = CrossMTAdmob.Current.IsRewardedVideoLoaded().ToString();
+            myLabel.Text = CrossMTAdmob.Current.IsRewardedLoaded().ToString();
+        }
+
+        private void LoadRewardInterstitial_OnClicked(object sender, EventArgs e)
+        {
+            CrossMTAdmob.Current.LoadRewardedInterstitial("ca-app-pub-3940256099942544/5354046379");
+        }
+
+        private void ShowRewardInterstitial_OnClicked(object sender, EventArgs e)
+        {
+            CrossMTAdmob.Current.ShowRewardedInterstitial();
+        }
+
+        private void IsRewardInterstitialLoaded_OnClicked(object sender, EventArgs e)
+        {
+            myLabel.Text = CrossMTAdmob.Current.IsRewardedInterstitialLoaded().ToString();
         }
 
         private void LoadInterstitial_OnClicked(object sender, EventArgs e)
@@ -185,13 +200,14 @@ namespace SampleMTAdmob
         private void DisableEvents()
         {
             _shouldSetEvents = true;
-            CrossMTAdmob.Current.OnRewardedVideoStarted -= Current_OnRewardedVideoStarted;
-            CrossMTAdmob.Current.OnRewarded -= Current_OnRewarded;
-            CrossMTAdmob.Current.OnRewardedVideoAdClosed -= Current_OnRewardedVideoAdClosed;
-            CrossMTAdmob.Current.OnRewardedVideoAdFailedToLoad -= Current_OnRewardedVideoAdFailedToLoad;
-            CrossMTAdmob.Current.OnRewardedVideoAdLeftApplication -= Current_OnRewardedVideoAdLeftApplication;
-            CrossMTAdmob.Current.OnRewardedVideoAdLoaded -= Current_OnRewardedVideoAdLoaded;
-            CrossMTAdmob.Current.OnRewardedVideoAdOpened -= Current_OnRewardedVideoAdOpened;
+            //CrossMTAdmob.Current.OnRewardedVideoStarted -= Current_OnRewardedVideoStarted;
+            CrossMTAdmob.Current.OnUserEarnedReward -= Current_OnRewarded;
+            CrossMTAdmob.Current.OnRewardedClosed -= Current_OnRewardedVideoAdClosed;
+            CrossMTAdmob.Current.OnRewardedFailedToLoad -= Current_OnRewardedVideoAdFailedToLoad;
+            //CrossMTAdmob.Current.OnRewardedLeftApplication -= Current_OnRewardedVideoAdLeftApplication;
+            CrossMTAdmob.Current.OnRewardedLoaded -= Current_OnRewardedVideoAdLoaded;
+            CrossMTAdmob.Current.OnRewardedOpened -= Current_OnRewardedVideoAdOpened;
+            //CrossMTAdmob.Current.OnRewardedCompleted -= Current_OnRewardedVideoAdCompleted;
 
             CrossMTAdmob.Current.OnInterstitialLoaded -= Current_OnInterstitialLoaded;
             CrossMTAdmob.Current.OnInterstitialOpened -= Current_OnInterstitialOpened;

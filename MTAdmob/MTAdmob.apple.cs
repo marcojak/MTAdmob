@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Foundation;
 using Google.MobileAds;
-using MarcTron.Plugin.CustomEventArgs;
+using MarcTron.Plugin.Extra;
 using MarcTron.Plugin.Interfaces;
 using MarcTron.Plugin.Services;
 
@@ -12,55 +12,35 @@ namespace MarcTron.Plugin
     /// <summary>
     /// Interface for MTAdmob
     /// </summary>
-    public class MTAdmobImplementation : IMTAdmob/*, IRewardedAdDelegate*/ //New rewarded delegate
+    public partial class MTAdmobImplementation : IMTAdmob
     {
-        public bool IsEnabled { get; set; } = true;
-        public string AdsId { get; set; }
-        public bool UserPersonalizedAds { get; set; }
-        public List<string> TestDevices { get; set; }
-        public bool UseRestrictedDataProcessing { get; set; } = false;
-        public bool ComplyWithFamilyPolicies { get; set; } = false;
-
-        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; } = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
-        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; } = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
-        public MTMaxAdContentRating MaxAdContentRating { get ; set ; } = MTMaxAdContentRating.MaxAdContentRatingG;
-
-        InterstitialService interstitialService;
-        RewardService rewardService;
-
-        InterstitialAd _adInterstitial;
-
-        public event EventHandler<MTEventArgs> OnRewarded;
-        public event EventHandler OnRewardedVideoAdClosed;
-        public event EventHandler<MTEventArgs> OnRewardedVideoAdFailedToLoad;
-        public event EventHandler OnRewardedVideoAdLeftApplication;
-        public event EventHandler OnRewardedVideoAdLoaded;
-        public event EventHandler OnRewardedVideoAdOpened;
-        public event EventHandler OnRewardedVideoStarted;
-        public event EventHandler OnRewardedVideoAdCompleted;
-
-        public event EventHandler OnInterstitialLoaded;
-        public event EventHandler OnInterstitialOpened;
-        public event EventHandler OnInterstitialClosed;
+        readonly InterstitialService _interstitialService;
+        readonly RewardService _rewardService;
+        readonly RewardInterstitialService _rewardInterstitialService;
 
         public virtual void MOnInterstitialLoaded() => OnInterstitialLoaded?.Invoke(this, EventArgs.Empty);
         public virtual void MOnInterstitialOpened() => OnInterstitialOpened?.Invoke(this, EventArgs.Empty);
         public virtual void MOnInterstitialClosed() => OnInterstitialClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialFailedToLoad(NSError error) => OnInterstitialFailedToLoad?.Invoke(this, new MTEventArgs() { ErrorCode = (int?)error.Code, ErrorMessage = error.Description, ErrorDomain = error.Domain });
+        public virtual void MOnInterstitialFailedToShow(NSError error) => OnInterstitialFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = (int?)error.Code, ErrorMessage = error.Description, ErrorDomain = error.Domain });
+        public virtual void MOnInterstitialImpression() => OnInterstitialImpression?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialClicked() => OnInterstitialClicked?.Invoke(this, EventArgs.Empty);
 
+        public virtual void MOnRewardLoaded() => OnRewardedLoaded?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardOpened() => OnRewardedOpened?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardClosed() => OnRewardedClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardFailedToLoad(NSError error) => OnRewardedFailedToLoad?.Invoke(this, new MTEventArgs() { ErrorCode = (int)error.Code, ErrorMessage = error.Description, ErrorDomain = error.Domain });
+        public virtual void MOnRewardFailedToShow(NSError error) => OnRewardedFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = (int)error.Code, ErrorMessage = error.Description, ErrorDomain = error.Domain });
+        public virtual void MOnRewardImpression() => OnRewardedImpression?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardedClicked() => OnRewardedClicked?.Invoke(this, EventArgs.Empty);
 
-        public virtual void MOnRewardedVideoAdLoaded() => OnRewardedVideoAdLoaded?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewarded(MTEventArgs args) => OnRewarded?.Invoke(this, args);
-        public virtual void MOnRewardedVideoAdClosed() => OnRewardedVideoAdClosed?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardedVideoAdCompleted() => OnRewardedVideoAdCompleted?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardedVideoAdFailedToLoad(MTEventArgs args) => OnRewardedVideoAdFailedToLoad?.Invoke(this, args);
-        public virtual void MOnRewardedVideoAdOpened() => OnRewardedVideoAdOpened?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardedVideoStarted() => OnRewardedVideoStarted?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardedVideoAdLeftApplication() => OnRewardedVideoAdLeftApplication?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnUserEarnedReward(MTEventArgs reward) => OnUserEarnedReward?.Invoke(this, reward);
 
         public MTAdmobImplementation()
         {
-            interstitialService = new InterstitialService(this);
-            rewardService = new RewardService(this);           
+            _interstitialService = new InterstitialService(this);
+            _rewardService = new RewardService(this);
+            _rewardInterstitialService = new RewardInterstitialService(this);
         }
 
         public static Request GetRequest()
@@ -85,14 +65,14 @@ namespace MarcTron.Plugin
             if (CrossMTAdmob.Current.UseRestrictedDataProcessing)
             {
                 dict.Add(new NSString("rdp"), new NSString("1"));
-                addExtra = true;
+                addExtra = true; 
+                NSUserDefaults.StandardUserDefaults.SetBool(true, "gad_rdp");
             }
 
             if (CrossMTAdmob.Current.ComplyWithFamilyPolicies)
             {
-                //To enable again
-                //request.Tag(CrossMTAdmob.Current.ComplyWithFamilyPolicies);
-                dict.Add(new NSString("max_ad_content_rating"), new NSString("G"));
+                CrossMTAdmob.Current.MaxAdContentRating = MTMaxAdContentRating.MaxAdContentRatingG;
+                MobileAds.SharedInstance.RequestConfiguration.MaxAdContentRating = CrossMTAdmob.Current.GetAdContentRatingString();
                 addExtra = true;
             }
 
@@ -110,32 +90,47 @@ namespace MarcTron.Plugin
 
         public bool IsInterstitialLoaded()
         {
-            return interstitialService.IsLoaded();
+            return _interstitialService.IsLoaded();
         }
 
         public void LoadInterstitial(string adUnit)
         {
-            interstitialService.LoadInterstitial(adUnit);
+            _interstitialService.LoadInterstitial(adUnit);
         }
 
         public void ShowInterstitial()
         {
-            interstitialService.ShowInterstitial();
+            _interstitialService.ShowInterstitial();
         }
 
-        public bool IsRewardedVideoLoaded()
+        public bool IsRewardedLoaded()
         {
-            return rewardService.IsRewardedVideoLoaded();
+            return _rewardService.IsRewardedLoaded();
         }
 
-        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
+        public void LoadRewarded(string adUnit, MTRewardedAdOptions options = null)
         {
-            rewardService.LoadRewardedVideo(adUnit, options);
+            _rewardService.LoadRewarded(adUnit, options);
         }
 
-        public void ShowRewardedVideo()
+        public void ShowRewarded()
         {
-            rewardService.ShowRewardedVideo();
+            _rewardService.ShowRewarded();
+        }
+
+        public bool IsRewardedInterstitialLoaded()
+        {
+            return _rewardInterstitialService.IsRewardedInterstitialLoaded();
+        }
+
+        public void LoadRewardedInterstitial(string adUnit, MTRewardedAdOptions options = null)
+        {
+            _rewardInterstitialService.LoadRewardedInterstitial(adUnit);
+        }
+
+        public void ShowRewardedInterstitial()
+        {
+            _rewardInterstitialService.ShowRewardedInterstitial();
         }
 
         public string GetAdContentRatingString()

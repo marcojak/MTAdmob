@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MarcTron.Plugin.CustomEventArgs
+namespace MarcTron.Plugin.Extra
 {
     // ReSharper disable once InconsistentNaming
     public class MTEventArgs : EventArgs

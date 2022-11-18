@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Android.Gms.Ads;
 using Android.Gms.Ads.Interstitial;
 using Android.Gms.Ads.Rewarded;
 using Android.OS;
 using Google.Ads.Mediation.Admob;
-using MarcTron.Plugin.CustomEventArgs;
+using MarcTron.Plugin.Extra;
 using MarcTron.Plugin.Interfaces;
 using MarcTron.Plugin.Services;
 //using static Android.Gms.Ads.RequestConfiguration;
@@ -16,81 +15,40 @@ namespace MarcTron.Plugin
     /// <summary>
     /// Interface for MTAdmob
     /// </summary>
-    public class MTAdmobImplementation : InterstitialAdLoadCallback, IMTAdmob
+    public partial class MTAdmobImplementation : InterstitialAdLoadCallback, IMTAdmob
     {
-        public bool IsEnabled { get; set; } = true;
-        public string AdsId { get; set; }
-        public bool UserPersonalizedAds { get; set; }
-        public bool UseRestrictedDataProcessing { get; set; } = false;
-        public List<string> TestDevices { get; set; }
-        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get; set; } = MTTagForChildDirectedTreatment.TagForChildDirectedTreatmentUnspecified;
-        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; } = MTTagForUnderAgeOfConsent.TagForUnderAgeOfConsentUnspecified;
-        public MTMaxAdContentRating MaxAdContentRating { get; set; } = MTMaxAdContentRating.MaxAdContentRatingG;
-        public bool ComplyWithFamilyPolicies { get; set; }
-
-        InterstitialService interstitialService;
-        RewardService rewardService;
-
-        public event EventHandler<MTEventArgs> OnRewarded;
-        public event EventHandler<MTEventArgs> OnUserEarnedReward;
-        public event EventHandler OnRewardedVideoAdClosed;
-        public event EventHandler<MTEventArgs> OnRewardedVideoAdFailedToLoad;
-        public event EventHandler OnRewardedVideoAdLeftApplication;
-        public event EventHandler OnRewardedVideoAdLoaded;
-        public event EventHandler OnRewardedVideoAdOpened;
-        public event EventHandler OnRewardedVideoStarted;
-        public event EventHandler OnRewardedVideoAdCompleted;
-
-        public event EventHandler OnInterstitialLoaded;
-        public event EventHandler OnInterstitialOpened;
-        public event EventHandler OnInterstitialClosed;
-        public event EventHandler<MTEventArgs> OnInterstitialFailedToShow;
-        public event EventHandler OnInterstitialImpression;
-
-        public event EventHandler OnRewardLoaded;
-        public event EventHandler OnRewardOpened;
-        public event EventHandler OnRewardClosed;
-        public event EventHandler<MTEventArgs> OnRewardFailedToShow;
-        public event EventHandler OnRewardImpression;
+        readonly InterstitialService interstitialService;
+        readonly RewardService rewardService;
+        readonly RewardInterstitialService rewardInterstitialService;
 
         public virtual void MOnInterstitialLoaded() => OnInterstitialLoaded?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnInterstitialOpened() => OnInterstitialOpened?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnInterstitialClosed() => OnInterstitialClosed?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnInterstitialFailedToShow(AdError p0) => OnInterstitialFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
+        public virtual void MOnInterstitialFailedToLoad(LoadAdError error) => OnInterstitialFailedToLoad?.Invoke(this, new MTEventArgs() { ErrorCode = error.Code, ErrorMessage = error.Message, ErrorDomain = error.Domain });
         public virtual void MOnInterstitialImpression() => OnInterstitialImpression?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialOpened() => OnInterstitialOpened?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialFailedToShow(AdError error) => OnInterstitialFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = error.Code, ErrorMessage = error.Message, ErrorDomain = error.Domain });
+        public virtual void MOnInterstitialClosed() => OnInterstitialClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnInterstitialClicked() => OnInterstitialClicked?.Invoke(this, EventArgs.Empty);
 
 
-        public virtual void MOnRewardLoaded()
-        {
-            OnRewardLoaded?.Invoke(this, EventArgs.Empty);
-            OnRewardedVideoAdLoaded?.Invoke(this, EventArgs.Empty);
-        }
+        public virtual void MOnRewardLoaded() => OnRewardedLoaded?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardFailedToLoad(LoadAdError error) => OnRewardedFailedToLoad?.Invoke(this, new MTEventArgs() { ErrorCode = error.Code, ErrorMessage = error.Message, ErrorDomain = error.Domain });
+        public virtual void MOnRewardImpression() => OnRewardedImpression?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardOpened() => OnRewardedOpened?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardFailedToShow(AdError p0) => OnRewardedFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
+        public virtual void MOnRewardClosed() => OnRewardedClosed?.Invoke(this, EventArgs.Empty);
+        public virtual void MOnRewardedClicked() => OnRewardedClicked?.Invoke(this, EventArgs.Empty);
 
-        public virtual void MOnRewardOpened() => OnRewardOpened?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardClosed()
-        {
-            OnRewardClosed?.Invoke(this, EventArgs.Empty); 
-            OnRewardedVideoAdClosed?.Invoke(this, EventArgs.Empty);
-        }
-        public virtual void MOnRewardedVideoAdCompleted() => OnRewardedVideoAdCompleted?.Invoke(this, EventArgs.Empty);
-        public virtual void MOnRewardFailedToShow(AdError p0) 
-        { 
-            OnRewardFailedToShow?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
-            OnRewardedVideoAdFailedToLoad?.Invoke(this, new MTEventArgs() { ErrorCode = p0.Code, ErrorMessage = p0.Message, ErrorDomain = p0.Domain });
-        }
-        public virtual void MOnUserEarnedReward(IRewardItem p0) => OnUserEarnedReward?.Invoke(this, new MTEventArgs() { RewardType=p0.Type, RewardAmount=p0.Amount });
+        public virtual void MOnUserEarnedReward(IRewardItem p0) => OnUserEarnedReward?.Invoke(this, new MTEventArgs() { RewardType = p0.Type, RewardAmount = p0.Amount });
 
-        public virtual void MOnRewarded(IRewardItem p0) => OnRewarded?.Invoke(this, new MTEventArgs() { RewardType = p0.Type, RewardAmount = p0.Amount });
-
-        public virtual void MOnRewardImpression() => OnRewardImpression?.Invoke(this, EventArgs.Empty);
 
         public MTAdmobImplementation()
         {
             interstitialService = new InterstitialService(this);
             rewardService = new RewardService(this);
+            rewardInterstitialService = new RewardInterstitialService(this);
         }
 
-        public static AdRequest.Builder GetRequest(/*MTAdmobImplementation mTAdmobImplementation*/)
+        public static AdRequest.Builder GetRequest()
         {
             bool addBundle = false;
             Bundle bundleExtra = new Bundle();
@@ -117,7 +75,6 @@ namespace MarcTron.Plugin
             MobileAds.RequestConfiguration = configuration.SetTagForChildDirectedTreatment((int)CrossMTAdmob.Current.TagForChildDirectedTreatment).
             SetTagForUnderAgeOfConsent((int)CrossMTAdmob.Current.TagForUnderAgeOfConsent).
             SetMaxAdContentRating(CrossMTAdmob.Current.GetAdContentRatingString()).Build();
-            //MobileAds.RequestConfiguration = configuration.Build();
 
             if (addBundle)
                 requestBuilder = requestBuilder.AddNetworkExtrasBundle(Java.Lang.Class.FromType(typeof(AdMobAdapter)), bundleExtra);
@@ -140,35 +97,19 @@ namespace MarcTron.Plugin
             interstitialService.ShowInterstitial();
         }
 
-        public bool IsRewardedVideoLoaded()
+        public bool IsRewardedLoaded()
         {
             return rewardService.IsLoaded();
         }
 
-        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
+        public void LoadRewarded(string adUnit, MTRewardedAdOptions options = null)
         {
             rewardService.LoadReward(adUnit);
         }
 
-        public void ShowRewardedVideo()
+        public void ShowRewarded()
         {
             rewardService.ShowReward();
-        }
-
-        public string GetAdContentRatingString()
-        {
-            switch (MaxAdContentRating)
-            {
-                case MTMaxAdContentRating.MaxAdContentRatingG:
-                    return "G";
-                case MTMaxAdContentRating.MaxAdContentRatingPg:
-                    return "PG";
-                case MTMaxAdContentRating.MaxAdContentRatingT:
-                    return "T";
-                case MTMaxAdContentRating.MaxAdContentRatingMa:
-                    return "MA";
-                default: return "";
-            }
         }
 
         public void SetAppMuted(bool muted)
@@ -179,6 +120,37 @@ namespace MarcTron.Plugin
         public void SetAppVolume(float volume)
         {
             MobileAds.SetAppVolume(volume);
+        }
+
+        public bool IsRewardedInterstitialLoaded()
+        {
+            return rewardInterstitialService.IsLoaded();
+        }
+
+        public void LoadRewardedInterstitial(string adUnit, MTRewardedAdOptions options = null)
+        {
+            rewardInterstitialService.LoadRewardInterstitial(adUnit);
+        }
+
+        public void ShowRewardedInterstitial()
+        {
+            rewardInterstitialService.ShowRewardInterstitial();
+        }
+
+        public string GetAdContentRatingString()
+        {
+            switch (MaxAdContentRating)
+            {
+                case MTMaxAdContentRating.MaxAdContentRatingG:
+                    return RequestConfiguration.MaxAdContentRatingG;
+                case MTMaxAdContentRating.MaxAdContentRatingPg:
+                    return RequestConfiguration.MaxAdContentRatingPg;
+                case MTMaxAdContentRating.MaxAdContentRatingT:
+                    return RequestConfiguration.MaxAdContentRatingT;
+                case MTMaxAdContentRating.MaxAdContentRatingMa:
+                    return RequestConfiguration.MaxAdContentRatingMa;
+                default: return RequestConfiguration.MaxAdContentRatingUnspecified;
+            }
         }
     }
 }
