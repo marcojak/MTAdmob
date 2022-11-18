@@ -20,7 +20,7 @@ namespace MarcTron.Plugin.Renderers
         private MTAdView currentAdView;
 
         private void CreateNativeControl(UIViewController controller, MTAdView myMtAdView, string adsId, BannerSize adSize,
-            bool needToRefreshAdView /*bool? personalizedAds,*/)
+            bool needToRefreshAdView)
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
@@ -29,6 +29,7 @@ namespace MarcTron.Plugin.Renderers
                 return;
 
             currentAdView = myMtAdView;
+
             _adUnitId = !string.IsNullOrEmpty(adsId) ? adsId : CrossMTAdmob.Current.AdsId;
 
             if (string.IsNullOrEmpty(_adUnitId))
@@ -41,13 +42,6 @@ namespace MarcTron.Plugin.Renderers
 
         private void CreateAdView(UIViewController controller)
         {
-            //_adView = new BannerView(GetAdSize(currentAdView.AdSize),
-            //        new CGPoint(0, UIScreen.MainScreen.Bounds.Size.Height - AdSizeCons.Banner.Size.Height))
-            //{
-            //    AdUnitId = _adUnitId,
-            //    RootViewController = controller
-            //};
-
             if (_adView!=null)
             {
                 _adView.AdReceived -= currentAdView.AdLoaded;
@@ -58,13 +52,16 @@ namespace MarcTron.Plugin.Renderers
 
                 _adView.ClickRecorded -= currentAdView.AdClicked;
                 _adView.ImpressionRecorded -= currentAdView.AdImpression;
+
+                _adView.RemoveFromSuperview();
+                _adView = null;
             }
 
             _adView = new BannerView(GetAdSize(currentAdView.AdSize))
             {
                 AdUnitId = _adUnitId,
                 RootViewController = controller,
-                //TranslatesAutoresizingMaskIntoConstraints= false,
+                TranslatesAutoresizingMaskIntoConstraints= false,
             };
             
             _adView.AdReceived += currentAdView.AdLoaded;
@@ -109,52 +106,13 @@ namespace MarcTron.Plugin.Renderers
             }
         }
 
-        private void LoadAds()
-        {
-            var request = MTAdmobImplementation.GetRequest();
-            _adView.LoadRequest(request);
-        }
-
-
-        //Request GetRequest()
-        //{
-        //    var request = Request.GetDefaultRequest();
-        //    return request;
-        //}
-
-        UIViewController GetVisibleViewController()
-        {
-            var rootController = UIApplication.SharedApplication.Delegate?.GetWindow()?.RootViewController;
-
-            if (rootController == null)
-                return null;
-
-            if (rootController.PresentedViewController == null)
-                return rootController;
-
-            if (rootController.PresentedViewController is UINavigationController controller)
-            {
-                return controller.VisibleViewController;
-            }
-
-            if (rootController.PresentedViewController is UITabBarController barController)
-            {
-                return barController.SelectedViewController;
-            }
-
-            return rootController.PresentedViewController;
-        }
-
         protected override void OnElementChanged(ElementChangedEventArgs<MTAdView> e)
         {
             base.OnElementChanged(e);
 
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
-
-            if (_adView != null)
-                return;
-
+          
             if (Control == null)
             {
                 UIViewController controller = GetVisibleViewController();
@@ -167,8 +125,15 @@ namespace MarcTron.Plugin.Renderers
                     else
                         return;
                     SetNativeControl(_adView);
+                    LoadAds();
                 }
             }
+        }
+
+        private void LoadAds()
+        {
+            var request = MTAdmobImplementation.GetRequest();
+            _adView.LoadRequest(request);
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -219,14 +184,33 @@ namespace MarcTron.Plugin.Renderers
             frame =  SafeAreaInsets.InsetRect(controller.View.Frame);
             int adWidth = (int)currentAdView.Width;
 
-            //if (isAnchored)
-            //    return AdSizeCons.GetCurrentOrientationAnchoredAdaptiveBannerAdSize(frame.Size.Width);
-            //else
-            //    return AdSizeCons.GetCurrentOrientationInlineAdaptiveBannerAdSizeh(frame.Size.Width);
             if (isAnchored)
                 return AdSizeCons.GetCurrentOrientationAnchoredAdaptiveBannerAdSize(adWidth);
             else
                 return AdSizeCons.GetCurrentOrientationInlineAdaptiveBannerAdSizeh(adWidth);
+        }
+
+        private UIViewController GetVisibleViewController()
+        {
+            var rootController = UIApplication.SharedApplication.Delegate?.GetWindow()?.RootViewController;
+
+            if (rootController == null)
+                return null;
+
+            if (rootController.PresentedViewController == null)
+                return rootController;
+
+            if (rootController.PresentedViewController is UINavigationController controller)
+            {
+                return controller.VisibleViewController;
+            }
+
+            if (rootController.PresentedViewController is UITabBarController barController)
+            {
+                return barController.SelectedViewController;
+            }
+
+            return rootController.PresentedViewController;
         }
     }
 }
