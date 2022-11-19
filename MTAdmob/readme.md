@@ -1,4 +1,5 @@
 ﻿
+
 ## MtAdmob plugin for Xamarin
 
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
@@ -8,6 +9,10 @@ This plugin supports: Banners, Interstitial, Rewarded Videos and Rewearded Inter
 If possible, please, support my work with few coffees or even better with a Membership!
 You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert)
 Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
+
+### Commercial support
+
+The plugin is free to use and I aim to improve it and fix any bugs in the shortest possible time. Said that, if you need faster support with this plugin or in general with your Xamarin or MAUI project, contact me at hightouchinnovation@gmail.com to discuss it further.
 
 ## Current Status (Version 1.9)
 
@@ -208,6 +213,10 @@ Remeber to add this to your AppManifest:
 
 
   That's it. Cannot be easier than that :)
+
+
+  ### VIDEO
+  [Get Filthy Rich by Monetizing Your Xamarin.Forms App with AdMob - Gerald Versluis (Youtube)](https://www.youtube.com/watch?v=Bka0T3806qo&ab_channel=GeraldVersluis)
 
 
   ### LINKS
