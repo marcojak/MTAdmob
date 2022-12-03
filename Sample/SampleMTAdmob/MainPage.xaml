@@ -25,8 +25,7 @@
                     AdsId="ca-app-pub-3940256099942544/6300978111"
                     AdsImpression="MyAds_AdVImpression"
                     AdsLoaded="MyAds_AdLoaded"
-                    AdsOpened="MyAds_AdVOpened"
-                    IsVisible="true">
+                    AdsOpened="MyAds_AdVOpened">
                 </controls:MTAdView>
             </Grid>-->
 
@@ -40,9 +39,11 @@
                 AdsId="ca-app-pub-3940256099942544/6300978111"
                 AdsImpression="MyAds_AdVImpression"
                 AdsLoaded="MyAds_AdLoaded"
-                AdsOpened="MyAds_AdVOpened"
-                IsVisible="true">
+                AdsOpened="MyAds_AdVOpened">
             </controls:MTAdView>
+
+            <controls:MTAdView AdSize="FullBanner" AdsId="ca-app-pub-3940256099942544/6300978111"/>
+
 
             <Button Text="Load Reward" Clicked="LoadReward_OnClicked"/>
             <Button Text="Show Reward" Clicked="ShowReward_OnClicked"/>

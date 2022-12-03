@@ -100,13 +100,11 @@ namespace MarcTron.Plugin.Services
 
         public override void DidRecordImpression(FullScreenPresentingAd ad)
         {
-            base.DidRecordImpression(ad);
             _admobImplementation.MOnInterstitialImpression();
         }
 
         public override void DidRecordClick(FullScreenPresentingAd ad)
         {
-            base.DidRecordClick(ad);
             _admobImplementation.MOnInterstitialClicked();
         }
     }

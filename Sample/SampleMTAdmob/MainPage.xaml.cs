@@ -46,19 +46,44 @@ namespace SampleMTAdmob
             if (_shouldSetEvents)
             {
                 _shouldSetEvents = false;
-                //CrossMTAdmob.Current.OnRewardedVideoStarted += Current_OnRewardedVideoStarted;
                 CrossMTAdmob.Current.OnUserEarnedReward += Current_OnRewarded;
+
                 CrossMTAdmob.Current.OnRewardedClosed += Current_OnRewardedVideoAdClosed;
                 CrossMTAdmob.Current.OnRewardedFailedToLoad += Current_OnRewardedVideoAdFailedToLoad;
-                //CrossMTAdmob.Current.OnRewardedLeftApplication += Current_OnRewardedVideoAdLeftApplication;
+                CrossMTAdmob.Current.OnRewardedFailedToShow += Current_OnRewardedFailedToShow;
                 CrossMTAdmob.Current.OnRewardedLoaded += Current_OnRewardedVideoAdLoaded;
                 CrossMTAdmob.Current.OnRewardedOpened += Current_OnRewardedVideoAdOpened;
-                //CrossMTAdmob.Current.OnRewardedCompleted += Current_OnRewardedVideoAdCompleted;
+                CrossMTAdmob.Current.OnRewardedImpression += Current_OnRewardedImpression;
+                CrossMTAdmob.Current.OnRewardedClicked += Current_OnRewardedClicked;
 
                 CrossMTAdmob.Current.OnInterstitialLoaded += Current_OnInterstitialLoaded;
+                CrossMTAdmob.Current.OnInterstitialFailedToLoad += Current_OnInterstitialFailedToLoad;
                 CrossMTAdmob.Current.OnInterstitialOpened += Current_OnInterstitialOpened;
+                CrossMTAdmob.Current.OnInterstitialFailedToShow += Current_OnInterstitialFailedToShow;
                 CrossMTAdmob.Current.OnInterstitialClosed += Current_OnInterstitialClosed;
+                CrossMTAdmob.Current.OnInterstitialClicked += Current_OnInterstitialClicked;
+                CrossMTAdmob.Current.OnInterstitialImpression += Current_OnInterstitialImpression;
             }
+        }
+
+        private void Current_OnInterstitialImpression(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnInterstitialImpression");
+        }
+
+        private void Current_OnInterstitialFailedToShow(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine("OnInterstitialFailedToShow");
+        }
+
+        private void Current_OnInterstitialFailedToLoad(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine("OnInterstitialFailedToLoad");
+        }
+
+        private void Current_OnInterstitialClicked(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnInterstitialClicked");
         }
 
         private void Current_OnInterstitialClosed(object sender, EventArgs e)
@@ -76,6 +101,16 @@ namespace SampleMTAdmob
             Debug.WriteLine("OnInterstitialLoaded");
         }
 
+        private void Current_OnRewardedClicked(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnRewardedClicked");
+        }
+
+        private void Current_OnRewardedImpression(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnRewardedImpression");
+        }
+
         private void Current_OnRewardedVideoAdOpened(object sender, EventArgs e)
         {
             Debug.WriteLine("OnRewardedVideoAdOpened");
@@ -86,14 +121,13 @@ namespace SampleMTAdmob
             Debug.WriteLine("OnRewardedVideoAdLoaded");
         }
 
-        private void Current_OnRewardedVideoAdLeftApplication(object sender, EventArgs e)
-        {
-            Debug.WriteLine("OnRewardedVideoAdLeftApplication");
-        }
-
         private void Current_OnRewardedVideoAdFailedToLoad(object sender, MTEventArgs e)
         {
             Debug.WriteLine("OnRewardedVideoAdFailedToLoad");
+        }
+        private void Current_OnRewardedFailedToShow(object sender, MTEventArgs e)
+        {
+            Debug.WriteLine("OnRewardedFailedToShow");
         }
 
         private void Current_OnRewardedVideoAdClosed(object sender, EventArgs e)
@@ -104,16 +138,6 @@ namespace SampleMTAdmob
         private void Current_OnRewarded(object sender, MTEventArgs e)
         {
             Debug.WriteLine($"OnRewarded: {e.RewardType} - {e.RewardAmount}");
-        }
-
-        private void Current_OnRewardedVideoStarted(object sender, EventArgs e)
-        {
-            Debug.WriteLine("OnRewardedVideoStarted");
-        }
-
-        private void Current_OnRewardedVideoAdCompleted(object sender, EventArgs e)
-        {
-            Debug.WriteLine("OnRewardedVideoAdCompleted");
         }
 
         private void MyAds_AdVOpened(object sender, EventArgs e)
@@ -200,18 +224,22 @@ namespace SampleMTAdmob
         private void DisableEvents()
         {
             _shouldSetEvents = true;
-            //CrossMTAdmob.Current.OnRewardedVideoStarted -= Current_OnRewardedVideoStarted;
             CrossMTAdmob.Current.OnUserEarnedReward -= Current_OnRewarded;
             CrossMTAdmob.Current.OnRewardedClosed -= Current_OnRewardedVideoAdClosed;
             CrossMTAdmob.Current.OnRewardedFailedToLoad -= Current_OnRewardedVideoAdFailedToLoad;
-            //CrossMTAdmob.Current.OnRewardedLeftApplication -= Current_OnRewardedVideoAdLeftApplication;
+            CrossMTAdmob.Current.OnRewardedFailedToShow -= Current_OnRewardedFailedToShow;
             CrossMTAdmob.Current.OnRewardedLoaded -= Current_OnRewardedVideoAdLoaded;
             CrossMTAdmob.Current.OnRewardedOpened -= Current_OnRewardedVideoAdOpened;
-            //CrossMTAdmob.Current.OnRewardedCompleted -= Current_OnRewardedVideoAdCompleted;
+            CrossMTAdmob.Current.OnRewardedImpression -= Current_OnRewardedImpression;
+            CrossMTAdmob.Current.OnRewardedClicked -= Current_OnRewardedClicked;
 
             CrossMTAdmob.Current.OnInterstitialLoaded -= Current_OnInterstitialLoaded;
+            CrossMTAdmob.Current.OnInterstitialFailedToLoad -= Current_OnInterstitialFailedToLoad;
             CrossMTAdmob.Current.OnInterstitialOpened -= Current_OnInterstitialOpened;
+            CrossMTAdmob.Current.OnInterstitialFailedToShow -= Current_OnInterstitialFailedToShow;
             CrossMTAdmob.Current.OnInterstitialClosed -= Current_OnInterstitialClosed;
+            CrossMTAdmob.Current.OnInterstitialClicked -= Current_OnInterstitialClicked;
+            CrossMTAdmob.Current.OnInterstitialImpression -= Current_OnInterstitialImpression;
         }
     }
 }

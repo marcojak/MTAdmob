@@ -121,7 +121,7 @@ namespace MarcTron.Plugin.Renderers
                     if (e.NewElement != null)
                         CreateNativeControl(controller, e.NewElement, e.NewElement.AdsId, e.NewElement.AdSize, false);
                     else if (e.OldElement != null)
-                        CreateNativeControl(controller, e.OldElement, e.OldElement.AdsId, e.NewElement.AdSize, true);
+                        CreateNativeControl(controller, e.OldElement, e.OldElement.AdsId, e.OldElement.AdSize, true);
                     else
                         return;
                     SetNativeControl(_adView);

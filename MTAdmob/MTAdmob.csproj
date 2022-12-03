@@ -20,10 +20,10 @@
 		<PackageId>MarcTron.Admob</PackageId>
 
 		<Product>Plugin.MtAdmob</Product>
-		<AssemblyVersion>1.9.0.1</AssemblyVersion>
-		<AssemblyFileVersion>1.9.0.1</AssemblyFileVersion>
+		<AssemblyVersion>1.9.0.3</AssemblyVersion>
+		<AssemblyFileVersion>1.9.0.3</AssemblyFileVersion>
 		<Version>1.9.0</Version>
-		<PackageVersion>1.9.0.1</PackageVersion>
+		<PackageVersion>1.9.0.3</PackageVersion>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
@@ -39,6 +39,9 @@
 		<PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
 		<RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
 		<PackageReleaseNotes>
+			Version 1.9.0.3
+			Fixed some issues with iOS
+			
 			Version 1.9.0
 			Updated Xamarin.AndroidX.Work.Runtime to 2.7.0 to allow to target Android 12+
 			Added Rewarded Interstitials to Android and iOS
@@ -150,7 +153,7 @@
 			Banner and Insterstitial for iOS
 		</PackageReleaseNotes>
 		<PackageIconUrl>ICON URL</PackageIconUrl>
-		<PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, MTAdmob, Ads, Admob, uwp, Xamarin, Xamarin Expert, Banner, Insterstitial, Rewarded video, video, Google, Google Ads, Google Admob</PackageTags>
+		<PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, xamarin-plugin, MTAdmob, Ads, Admob, uwp, Xamarin, Xamarin Expert, Banner, Insterstitial, Rewarded video, video, Google, Google Ads, Google Admob</PackageTags>
 
 		<Title>MtAdmob Plugin for Xamarin</Title>
 		<Summary>The easiest way to add Ads and Interstitials to your Xamarin projects</Summary>
