@@ -73,12 +73,12 @@ namespace SampleMTAdmob
 
         private void Current_OnInterstitialFailedToShow(object sender, MTEventArgs e)
         {
-            Debug.WriteLine("OnInterstitialFailedToShow");
+            Debug.WriteLine($"OnInterstitialFailedToShow: {e.ErrorCode} - {e.ErrorMessage}");
         }
 
         private void Current_OnInterstitialFailedToLoad(object sender, MTEventArgs e)
         {
-            Debug.WriteLine("OnInterstitialFailedToLoad");
+            Debug.WriteLine($"OnInterstitialFailedToLoad: {e.ErrorCode} - {e.ErrorMessage}");
         }
 
         private void Current_OnInterstitialClicked(object sender, EventArgs e)
@@ -123,11 +123,11 @@ namespace SampleMTAdmob
 
         private void Current_OnRewardedVideoAdFailedToLoad(object sender, MTEventArgs e)
         {
-            Debug.WriteLine("OnRewardedVideoAdFailedToLoad");
+            Debug.WriteLine($"OnRewardedVideoAdFailedToLoad: {e.ErrorCode} - {e.ErrorMessage}");
         }
         private void Current_OnRewardedFailedToShow(object sender, MTEventArgs e)
         {
-            Debug.WriteLine("OnRewardedFailedToShow");
+            Debug.WriteLine($"OnRewardedFailedToShow: {e.ErrorCode} - {e.ErrorMessage}");
         }
 
         private void Current_OnRewardedVideoAdClosed(object sender, EventArgs e)
