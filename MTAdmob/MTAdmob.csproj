@@ -197,18 +197,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
-		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
+		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
 		<Compile Include="**\*.android.cs" />
-		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.3.0.5" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="121.4.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinios')) ">
 		<Compile Include="**\*.apple.cs" />
-		<PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="8.13.0.1" />
+		<PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="8.13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
