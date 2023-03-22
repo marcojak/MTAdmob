@@ -58,6 +58,10 @@ You need to add your Admob APPLICATION_ID to your AppManifest:
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="YOUR APPLICATION ID" />
 ```
 
+If you Target android 12 and the app crashes with the following message: "Targeting S+ (version 31 and above) requires that one of FLAG_IMMUTABLE or FLAG_MUTABLE be specified when creating a PendingIntent."
+
+You NEED TO update Xamarin.AndroidX.Work.Runtime to version 2.7.0! This will solve the issue
+
 ### iOS
 You need to add GADApplicationIdentifier to your Info.plist:
   Edit your info.plist adding these Keys:
