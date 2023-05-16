@@ -12,10 +12,10 @@
 		<PackageId>MarcTron.Admob</PackageId>
 
 		<Product>Plugin.MtAdmob</Product>
-		<AssemblyVersion>1.9.0.4</AssemblyVersion>
-		<AssemblyFileVersion>1.9.0.4</AssemblyFileVersion>
+		<AssemblyVersion>1.9.0.5</AssemblyVersion>
+		<AssemblyFileVersion>1.9.0.5</AssemblyFileVersion>
 		<Version>1.9.0</Version>
-		<PackageVersion>1.9.0.4</PackageVersion>
+		<PackageVersion>1.9.0.5</PackageVersion>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
@@ -31,9 +31,9 @@
 		<PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
 		<RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
 		<PackageReleaseNotes>
-			Version 1.9.0.4
-			Added Meta Audience network
-			
+			Version 1.9.0.5
+			Updated Xamarin.GooglePlayServices.Ads.Lite to version 121.4.0
+
 			Version 1.9.0.3
 			Fixed some issues with iOS
 
