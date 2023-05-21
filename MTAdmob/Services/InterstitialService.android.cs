@@ -7,23 +7,13 @@ namespace MarcTron.Plugin.Services
 {
     public class InterstitialService : InterstitialAdLoadCallback
     {
-        private Android.Gms.Ads.Interstitial.InterstitialAd mInterstitialAd;
+        private Android.Gms.Ads.Interstitial.InterstitialAd _interstitialAd;
 
-        public MTAdmobImplementation mTAdmobImplementation { get; }
+        private readonly MTAdmobImplementation _admobImplementation;
 
-        public InterstitialService(MTAdmobImplementation mTAdmobImplementation)
+        public InterstitialService(MTAdmobImplementation admobImplementation)
         {
-            this.mTAdmobImplementation = mTAdmobImplementation;
-        }
-
-        private void CreateInterstitialAd(string adUnit)
-        {
-            if (!CrossMTAdmob.Current.IsEnabled)
-                return;
-
-            var context = Android.App.Application.Context;
-            var requestBuilder = MTAdmobImplementation.GetRequest(/*mTAdmobImplementation*/);
-            InterstitialAd.Load(context, adUnit, requestBuilder.Build(), this);
+            _admobImplementation = admobImplementation;
         }
 
         public void LoadInterstitial(string adUnit)
@@ -34,9 +24,18 @@ namespace MarcTron.Plugin.Services
             CreateInterstitialAd(adUnit);
         }
 
+        private void CreateInterstitialAd(string adUnit)
+        {
+            if (!CrossMTAdmob.Current.IsEnabled)
+                return;
+
+            var requestBuilder = MTAdmobImplementation.GetRequest();
+            InterstitialAd.Load(Android.App.Application.Context, adUnit, requestBuilder.Build(), this);
+        }
+
         public bool IsLoaded()
         {
-            return mInterstitialAd != null;
+            return _interstitialAd != null;
         }
 
         public void ShowInterstitial()
@@ -44,10 +43,10 @@ namespace MarcTron.Plugin.Services
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
 
-            if (mInterstitialAd != null)
+            if (_interstitialAd != null)
             {
-                mInterstitialAd.Show(Android.App.Application.Context.GetActivity());
-                mInterstitialAd = null;
+                _interstitialAd.Show(Android.App.Application.Context.GetActivity());
+                _interstitialAd = null;
             }
             else
             {
@@ -58,16 +57,16 @@ namespace MarcTron.Plugin.Services
         public override void OnInterstitialAdLoaded(Android.Gms.Ads.Interstitial.InterstitialAd interstitialAd)
         {
             base.OnInterstitialAdLoaded(interstitialAd);
-            mInterstitialAd = interstitialAd;
-            mInterstitialAd.FullScreenContentCallback = new MyFullScreenContentCallback(mTAdmobImplementation, true);
-            mTAdmobImplementation.MOnInterstitialLoaded();
+            _interstitialAd = interstitialAd;
+            _interstitialAd.FullScreenContentCallback = new MyFullScreenContentCallback(_admobImplementation, true);
+            _admobImplementation.MOnInterstitialLoaded();
         }
-
       
-        public override void OnAdFailedToLoad(LoadAdError p0)
+        public override void OnAdFailedToLoad(LoadAdError error)
         {
-            base.OnAdFailedToLoad(p0);
-            mInterstitialAd = null;
+            base.OnAdFailedToLoad(error);
+            _admobImplementation.MOnInterstitialFailedToLoad(error);
+            _interstitialAd = null;
         }
     }
 }

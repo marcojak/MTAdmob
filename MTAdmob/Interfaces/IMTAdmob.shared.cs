@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarcTron.Plugin.CustomEventArgs;
+using MarcTron.Plugin.Extra;
 
 namespace MarcTron.Plugin.Interfaces
 {
@@ -28,11 +28,13 @@ namespace MarcTron.Plugin.Interfaces
         void LoadInterstitial(string adUnit);
         void ShowInterstitial();
 
-        bool IsRewardedVideoLoaded();
+        bool IsRewardedLoaded();
+        public void LoadRewarded(string adUnit, MTRewardedAdOptions options = null);
+        void ShowRewarded();
 
-        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null);
-
-        void ShowRewardedVideo();
+        bool IsRewardedInterstitialLoaded();
+        public void LoadRewardedInterstitial(string adUnit, MTRewardedAdOptions options = null);
+        void ShowRewardedInterstitial();
 
         string GetAdContentRatingString();
 
@@ -40,16 +42,33 @@ namespace MarcTron.Plugin.Interfaces
         void SetAppVolume(float volume);
 
         event EventHandler OnInterstitialLoaded;
-        event EventHandler OnInterstitialOpened;      
+        event EventHandler<MTEventArgs> OnInterstitialFailedToLoad;
+        event EventHandler OnInterstitialOpened;
         event EventHandler OnInterstitialClosed;
+        event EventHandler<MTEventArgs> OnInterstitialFailedToShow;
+        event EventHandler OnInterstitialImpression;
+        //Only iOS
+        event EventHandler OnInterstitialClicked;
 
-        event EventHandler<MTEventArgs> OnRewarded;
-        event EventHandler OnRewardedVideoAdClosed;
-        event EventHandler<MTEventArgs> OnRewardedVideoAdFailedToLoad;
-        event EventHandler OnRewardedVideoAdLeftApplication;
-        event EventHandler OnRewardedVideoAdLoaded;
-        event EventHandler OnRewardedVideoAdOpened;
-        event EventHandler OnRewardedVideoStarted;
-        event EventHandler OnRewardedVideoAdCompleted;
+        event EventHandler OnRewardedLoaded;
+        event EventHandler<MTEventArgs> OnRewardedFailedToLoad;
+        event EventHandler OnRewardedOpened;
+        event EventHandler OnRewardedClosed;
+        event EventHandler<MTEventArgs> OnRewardedFailedToShow;
+        event EventHandler OnRewardedImpression;
+        //Only iOS
+        event EventHandler OnRewardedClicked;
+
+        event EventHandler<MTEventArgs> OnUserEarnedReward;
+
+
+        //event EventHandler<MTEventArgs> OnRewarded;
+        //event EventHandler OnRewardedVideoAdClosed;
+        //event EventHandler<MTEventArgs> OnRewardedVideoAdFailedToLoad;
+        //event EventHandler OnRewardedVideoAdLeftApplication;
+        //event EventHandler OnRewardedVideoAdLoaded;
+        //event EventHandler OnRewardedVideoAdOpened;
+        //event EventHandler OnRewardedVideoStarted;
+        //event EventHandler OnRewardedVideoAdCompleted;
     }
 }

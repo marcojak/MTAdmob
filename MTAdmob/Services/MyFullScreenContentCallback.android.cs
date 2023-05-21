@@ -4,54 +4,52 @@ namespace MarcTron.Plugin.Services
 {
     public class MyFullScreenContentCallback : FullScreenContentCallback
     {
-        private readonly bool isInterstitial;
+        private readonly bool _isInterstitial;
 
-        public MTAdmobImplementation MTAdmobImplementation { get; }
+        private readonly MTAdmobImplementation _admobImplementation;
 
-        public MyFullScreenContentCallback(MTAdmobImplementation mTAdmobImplementation, bool isInterstitial)
+        public MyFullScreenContentCallback(MTAdmobImplementation admobImplementation, bool isInterstitial)
         {
-            MTAdmobImplementation = mTAdmobImplementation;
-            this.isInterstitial = isInterstitial;
+            _admobImplementation = admobImplementation;
+            _isInterstitial = isInterstitial;
         }
 
         public override void OnAdDismissedFullScreenContent()
         {
             base.OnAdDismissedFullScreenContent();
-            if (isInterstitial)
-                MTAdmobImplementation.MOnInterstitialClosed();
+            if (_isInterstitial)
+                _admobImplementation.MOnInterstitialClosed();
             else
-                MTAdmobImplementation.MOnRewardClosed();
+                _admobImplementation.MOnRewardClosed();
         }
 
-        public override void OnAdFailedToShowFullScreenContent(AdError p0)
+        public override void OnAdFailedToShowFullScreenContent(AdError error)
         {
-            base.OnAdFailedToShowFullScreenContent(p0);
-            if (isInterstitial)
-                MTAdmobImplementation.MOnInterstitialFailedToShow(p0);
+            base.OnAdFailedToShowFullScreenContent(error);
+            if (_isInterstitial)
+                _admobImplementation.MOnInterstitialFailedToShow(error);
             else
-                MTAdmobImplementation.MOnRewardFailedToShow(p0);
+                _admobImplementation.MOnRewardFailedToShow(error);
         }
 
         public override void OnAdShowedFullScreenContent()
         {
             base.OnAdShowedFullScreenContent();
-            if (isInterstitial)
-                MTAdmobImplementation.MOnInterstitialOpened();
+            if (_isInterstitial)
+                _admobImplementation.MOnInterstitialOpened();
             else
             {
-                MTAdmobImplementation.MOnRewardOpened();
-                MTAdmobImplementation.MOnRewardedVideoAdCompleted();
+                _admobImplementation.MOnRewardOpened();
             }
         }
 
         public override void OnAdImpression()
         {
             base.OnAdImpression();
-            if (isInterstitial)
-                MTAdmobImplementation.MOnInterstitialImpression();
+            if (_isInterstitial)
+                _admobImplementation.MOnInterstitialImpression();
             else
-                MTAdmobImplementation.MOnRewardImpression();
+                _admobImplementation.MOnRewardImpression();
         }
-        
     }
 }

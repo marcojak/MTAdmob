@@ -1,15 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
-
 	<PropertyGroup>
 		<!--Work around so the conditions work below-->
 		<TargetFrameworks>netstandard2.0;xamarinios10;monoandroid12.0;</TargetFrameworks>
-		<TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">uap10.0.18362;$(TargetFrameworks)</TargetFrameworks>
-
-		<!--<TargetFrameworkVersion Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">v10.0</TargetFrameworkVersion>-->
-		<!--Feel free to add as many targets as you need below
-    netstandard1.0;netstandard2.0;MonoAndroid81;Xamarin.iOS10;uap10.0.16299;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;Tizen40
-    For UWP update the version number with a version number you have installed.
-    -->
 
 		<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>
 
@@ -20,19 +12,14 @@
 		<PackageId>MarcTron.Admob</PackageId>
 
 		<Product>Plugin.MtAdmob</Product>
-		<AssemblyVersion>1.9.0.0</AssemblyVersion>
-		<AssemblyFileVersion>1.9.0.0</AssemblyFileVersion>
+		<AssemblyVersion>1.9.0.5</AssemblyVersion>
+		<AssemblyFileVersion>1.9.0.5</AssemblyFileVersion>
 		<Version>1.9.0</Version>
-		<PackageVersion>1.9.0.0</PackageVersion>
+		<PackageVersion>1.9.0.5</PackageVersion>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
 		<DefineConstants>$(DefineConstants);</DefineConstants>
-
-
-
-		<!--<IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>-->
 
 		<UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -44,8 +31,17 @@
 		<PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
 		<RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
 		<PackageReleaseNotes>
+			Version 1.9.0.5
+			Updated Xamarin.GooglePlayServices.Ads.Lite to version 121.4.0
+
+			Version 1.9.0.3
+			Fixed some issues with iOS
+
 			Version 1.9.0
 			Updated Xamarin.AndroidX.Work.Runtime to 2.7.0 to allow to target Android 12+
+			Added Rewarded Interstitials to Android and iOS
+			Added BannerSize to Banners
+			Refactor code to make the future transition to MAUI easier
 
 			Version 1.8.0
 			Updated Xamarin.GooglePlayServices.Ads.Lite to 120.3.0.5
@@ -152,7 +148,7 @@
 			Banner and Insterstitial for iOS
 		</PackageReleaseNotes>
 		<PackageIconUrl>ICON URL</PackageIconUrl>
-		<PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, MTAdmob, Ads, Admob, uwp, Xamarin, Xamarin Expert, Banner, Insterstitial, Rewarded video, video, Google, Google Ads, Google Admob</PackageTags>
+		<PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, xamarin-plugin, MTAdmob, Ads, Admob, uwp, Xamarin, Xamarin Expert, Banner, Insterstitial, Rewarded video, video, Google, Google Ads, Google Admob</PackageTags>
 
 		<Title>MtAdmob Plugin for Xamarin</Title>
 		<Summary>The easiest way to add Ads and Interstitials to your Xamarin projects</Summary>
@@ -196,18 +192,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
-		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
+		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />		
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
 		<Compile Include="**\*.android.cs" />
-		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="120.3.0.5" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="121.4.0" />		
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinios')) ">
 		<Compile Include="**\*.apple.cs" />
-		<PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="8.13.0.1" />
+		<PackageReference Include="Xamarin.Google.iOS.MobileAds" Version="8.13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>

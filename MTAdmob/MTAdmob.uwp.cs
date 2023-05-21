@@ -1,7 +1,6 @@
-﻿using MarcTron.Plugin.CustomEventArgs;
+﻿using MarcTron.Plugin.Extra;
 using MarcTron.Plugin.Interfaces;
 using System;
-using System.Collections.Generic;
 
 namespace MarcTron.Plugin
 {
@@ -9,30 +8,12 @@ namespace MarcTron.Plugin
     /// Interface for MTAdmob
     /// This has not been implemented yet but it could be in a next version or you can implement and send it with a pull request :)
     /// </summary>
-    public class MTAdmobImplementation : IMTAdmob
+    public partial class MTAdmobImplementation : IMTAdmob
     {
-        public bool IsEnabled { get; set; } = true;
-        public string AdsId { get; set; }
-        public bool UserPersonalizedAds { get; set; }
-        public List<string> TestDevices { get; set; }
-        public bool UseRestrictedDataProcessing { get; set; }
-        public bool ComplyWithFamilyPolicies { get; set; }
-        public MTTagForChildDirectedTreatment TagForChildDirectedTreatment { get ; set ; }
-        public MTTagForUnderAgeOfConsent TagForUnderAgeOfConsent { get; set; }
-        public MTMaxAdContentRating MaxAdContentRating { get; set; }
-
-        public event EventHandler<MTEventArgs> OnRewarded;
-        public event EventHandler OnRewardedVideoAdClosed;
-        public event EventHandler<MTEventArgs> OnRewardedVideoAdFailedToLoad;
-        public event EventHandler OnRewardedVideoAdLeftApplication;
-        public event EventHandler OnRewardedVideoAdLoaded;
-        public event EventHandler OnRewardedVideoAdOpened;
-        public event EventHandler OnRewardedVideoStarted;
-
-        public event EventHandler OnInterstitialLoaded;
-        public event EventHandler OnInterstitialOpened;
-        public event EventHandler OnInterstitialClosed;
-        public event EventHandler OnRewardedVideoAdCompleted;
+        public void ShowRewardedInterstitial()
+        {
+            throw new NotImplementedException();
+        }
 
         public string GetAdContentRatingString()
         {
@@ -44,7 +25,7 @@ namespace MarcTron.Plugin
             return false;
         }
 
-        public bool IsRewardedVideoLoaded()
+        public bool IsRewardedLoaded()
         {
             return false;
         }
@@ -53,7 +34,7 @@ namespace MarcTron.Plugin
         {
         }
 
-        public void LoadRewardedVideo(string adUnit, MTRewardedAdOptions options = null)
+        public void LoadRewarded(string adUnit, MTRewardedAdOptions options = null)
         {
         }
 
@@ -70,7 +51,16 @@ namespace MarcTron.Plugin
 
         }
 
-        public void ShowRewardedVideo()
+        public void ShowRewarded()
+        {
+        }
+
+        public bool IsRewardedInterstitialLoaded()
+        {
+            return false;
+        }
+
+        public void LoadRewardedInterstitial(string adUnit, MTRewardedAdOptions options = null)
         {
         }
 

@@ -6,17 +6,17 @@ using UIKit;
 
 namespace MarcTron.Plugin.Services
 {
-    class RewardService : FullScreenContentDelegate
+    class RewardInterstitialService : FullScreenContentDelegate, IRewardedAdDelegate
     {
-        private RewardedAd _adRewarded;
+        private RewardedInterstitialAd _rewardedInterstitialAd;
         private readonly MTAdmobImplementation _admobImplementation;
 
-        public RewardService(MTAdmobImplementation admobImplementation)
+        public RewardInterstitialService(MTAdmobImplementation admobImplementation)
         {
             _admobImplementation = admobImplementation;
         }
 
-        public void LoadRewarded(string adUnit, MTRewardedAdOptions options = null)
+        public void LoadRewardedInterstitial(string adUnit, MTRewardedAdOptions options = null)
         {
             if (!CrossMTAdmob.Current.IsEnabled)
                 return;
@@ -27,16 +27,15 @@ namespace MarcTron.Plugin.Services
         private void CreateRewardedAd(string adUnit)
         {
             var request = MTAdmobImplementation.GetRequest();
-            RewardedAd.Load(adUnit, request, RewardedLoaded);
+            RewardedInterstitialAd.Load(adUnit, request, RewardedInterstitialLoaded);
         }
 
-        private void RewardedLoaded(RewardedAd rewardedAd, NSError error)
+        private void RewardedInterstitialLoaded(RewardedInterstitialAd rewardedInterstitialAd, NSError error)
         {
-            _adRewarded = rewardedAd;
+            _rewardedInterstitialAd = rewardedInterstitialAd;
             if (error == null)
             {
                 _admobImplementation.MOnRewardLoaded();
-                _adRewarded.Delegate = this;
             }
             else
             {
@@ -56,37 +55,44 @@ namespace MarcTron.Plugin.Services
             return vc;
         }
 
-        public bool IsRewardedLoaded()
+        public bool IsRewardedInterstitialLoaded()
         {
-            return _adRewarded != null && _adRewarded.CanPresent(GetViewController(), out var error);
+            return _rewardedInterstitialAd != null && _rewardedInterstitialAd.CanPresent(GetViewController(), out var error);
         }
 
-        public void ShowRewarded()
+        public void ShowRewardedInterstitial()
         {
-            if (!CrossMTAdmob.Current.IsEnabled)
-                return;
-            if (_adRewarded != null)
+            try
             {
-                var canPresent = _adRewarded.CanPresent(GetViewController(), out var error);
-                if (canPresent)
+                if (!CrossMTAdmob.Current.IsEnabled)
+                    return;
+                if (_rewardedInterstitialAd != null)
                 {
-                    var window = UIApplication.SharedApplication.KeyWindow;
-                    var vc = window.RootViewController;
-                    while (vc.PresentedViewController != null)
+                    var canPresent = _rewardedInterstitialAd.CanPresent(GetViewController(), out var error);
+                    if (canPresent)
                     {
-                        vc = vc.PresentedViewController;
-                    }
+                        var window = UIApplication.SharedApplication.KeyWindow;
+                        var vc = window.RootViewController;
+                        while (vc.PresentedViewController != null)
+                        {
+                            vc = vc.PresentedViewController;
+                        }
 
-                    _adRewarded.Present(vc, DidEarnReward);
+                        _rewardedInterstitialAd.Present(vc, this);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Rewarded interstitial not fully implemented yet!");
             }
         }
 
-        private void DidEarnReward()
+        public void UserDidEarnReward(RewardedAd rewardedAd, AdReward reward)
         {
-            if (_adRewarded.AdReward != null)
+            if (_rewardedInterstitialAd.Reward != null)
             {
-                _admobImplementation.MOnUserEarnedReward(new MTEventArgs() { RewardAmount = (int)_adRewarded.AdReward.Amount, RewardType = _adRewarded.AdReward.Type });
+                _admobImplementation.MOnUserEarnedReward(new MTEventArgs() { RewardAmount = (int)_rewardedInterstitialAd.Reward.Amount, RewardType = _rewardedInterstitialAd.Reward.Type });
             }
         }
 

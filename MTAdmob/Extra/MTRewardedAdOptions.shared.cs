@@ -1,4 +1,4 @@
-﻿namespace MarcTron.Plugin
+﻿namespace MarcTron.Plugin.Extra
 {
     public class MTRewardedAdOptions
     {

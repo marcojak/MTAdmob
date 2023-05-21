@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarcTron.Plugin
+namespace MarcTron.Plugin.Extra
 {
     public enum MTTagForChildDirectedTreatment
     {
@@ -26,12 +26,4 @@ namespace MarcTron.Plugin
         MaxAdContentRatingMa,
         MaxAdContentRatingUnspecified
     }
-
-    //public static class MTMaxAdContentRating
-    //{
-    //    public static string MaxAdContentRatingG = "G";
-    //    public static string MaxAdContentRatingT = "T";
-    //    public static string MaxAdContentRatingMa = "MA";
-    //    public static string MaxAdContentRatingPg = "PG";
-    //}
 }

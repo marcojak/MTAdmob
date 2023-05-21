@@ -1,5 +1,5 @@
 ﻿using System;
-using MarcTron.Plugin.CustomEventArgs;
+using MarcTron.Plugin.Extra;
 using Xamarin.Forms;
 
 namespace MarcTron.Plugin.Controls
@@ -23,20 +23,19 @@ namespace MarcTron.Plugin.Controls
             set => SetValue(AdsIdProperty, value);
         }
 
-        //public static readonly BindableProperty PersonalizedAdsProperty = BindableProperty.Create("PersonalizedAds", typeof(bool), typeof(MTAdView));
+        public static readonly BindableProperty AdSizeProperty = BindableProperty.Create("AdSize", typeof(BannerSize), typeof(MTAdView));
+        public BannerSize AdSize
+        {
+            get => (BannerSize)GetValue(AdSizeProperty);
+            set => SetValue(AdSizeProperty, value);
+        }
 
-        //public bool? PersonalizedAds
-        //{
-        //    get => (bool?)GetValue(PersonalizedAdsProperty);
-        //    set => SetValue(PersonalizedAdsProperty, value);
-        //}
-
-        //public static readonly BindableProperty ComplyFamilyPoliciesProperty = BindableProperty.Create("ComplyFamilyPolicies", typeof(bool), typeof(MTAdView));
-        //public bool? ComplyFamilyPolicies
-        //{
-        //    get => (bool?)GetValue(ComplyFamilyPoliciesProperty);
-        //    set => SetValue(ComplyFamilyPoliciesProperty, value);
-        //}
+        public static readonly BindableProperty AutoSizeProperty = BindableProperty.Create("AutoSize", typeof(bool), typeof(MTAdView));
+        public bool AutoSize
+        {
+            get => (bool)GetValue(AutoSizeProperty);
+            set => SetValue(AutoSizeProperty, value);
+        }
 
         internal void AdClicked(object sender, EventArgs e)
         {
