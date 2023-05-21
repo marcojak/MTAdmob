@@ -42,8 +42,8 @@ The plugin is free to use and I aim to improve it and fix any bugs in the shorte
 | AdsClicked      | OnInterstitialOpened	   | OnRewardedOpened	  | OnRewardedOpened	  |
 | AdsOpened		  | OnInterstitialFailedToShow | OnRewardedFailedToShow| OnRewardedFailedToShow|
 | AdsClosed       | OnInterstitialClosed	   | OnRewardedClosed	  | OnRewardedClosed	  |
-| 				  | OnInterstitialClicked*     | OnRewardedClicked*   | OnRewardedClicked*|
-|  				  | 						   |OnUserEarnedReward    | OnUserEarnedReward|
+| AdsSwiped 	  | OnInterstitialClicked*     | OnRewardedClicked*   | OnRewardedClicked*|
+|  				  | 						   | OnUserEarnedReward   | OnUserEarnedReward|
 
 *Only supported on iOS
 
