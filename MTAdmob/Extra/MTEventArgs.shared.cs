@@ -2,7 +2,6 @@
 
 namespace MarcTron.Plugin.Extra
 {
-    // ReSharper disable once InconsistentNaming
     public class MTEventArgs : EventArgs
     {
         public int? ErrorCode;

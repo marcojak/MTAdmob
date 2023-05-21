@@ -55,7 +55,7 @@ namespace MarcTron.Plugin.Renderers
                 listener.AdFailedToLoad -= currentAdView.AdFailedToLoad;
                 listener.AdLoaded -= currentAdView.AdLoaded;
                 listener.AdLoaded -= Listener_AdLoaded;
-                listener.AdLeftApplication -= currentAdView.AdLeftApplication;
+                listener.AdSwiped -= currentAdView.AdSwiped;
                 listener = null;
             }
 
@@ -69,9 +69,9 @@ namespace MarcTron.Plugin.Renderers
             listener.AdFailedToLoad += Listener_AdFailedToLoad;
             listener.AdLoaded += currentAdView.AdLoaded;
             listener.AdLoaded += Listener_AdLoaded;
-            listener.AdLeftApplication += currentAdView.AdLeftApplication;
+            listener.AdSwiped += currentAdView.AdSwiped;
 
-            _adView = new AdView(Context)
+           _adView = new AdView(Context)
             {
                 AdSize = GetAdSize(currentAdView.AdSize),
                 AdUnitId = _adUnitId,

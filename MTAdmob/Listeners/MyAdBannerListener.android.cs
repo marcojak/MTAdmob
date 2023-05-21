@@ -11,8 +11,8 @@ namespace MarcTron.Plugin.Listeners
         public event EventHandler AdImpression;
         public event EventHandler AdOpened;
         public event EventHandler<MTEventArgs> AdFailedToLoad;
-        public event EventHandler AdLeftApplication;
         public event EventHandler AdLoaded;
+        public event EventHandler AdSwiped;
 
         public override void OnAdClicked()
         {
@@ -65,11 +65,11 @@ namespace MarcTron.Plugin.Listeners
             );
         }
 
-        //public override void OnAdLeftApplication()
-        //{
-        //    base.OnAdLeftApplication();
-        //    AdLeftApplication?.Invoke(this, null);
-        //}
+        public override void OnAdSwipeGestureClicked()
+        {
+            base.OnAdSwipeGestureClicked();
+            AdSwiped?.Invoke(this, null);
+        }
 
         public override void OnAdLoaded()
         {

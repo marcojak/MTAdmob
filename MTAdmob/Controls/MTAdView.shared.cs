@@ -12,8 +12,8 @@ namespace MarcTron.Plugin.Controls
         public event EventHandler AdsImpression;
         public event EventHandler AdsOpened;
         public event EventHandler<MTEventArgs> AdsFailedToLoad;
-        public event EventHandler AdsLeftApplication;
         public event EventHandler AdsLoaded;
+        public event EventHandler AdsSwiped;
 
         public static readonly BindableProperty AdsIdProperty = BindableProperty.Create("AdsId", typeof(string), typeof(MTAdView));
 
@@ -62,14 +62,14 @@ namespace MarcTron.Plugin.Controls
             AdsFailedToLoad?.Invoke(sender, e);
         }
 
-        internal void AdLeftApplication(object sender, EventArgs e)
-        {
-            AdsLeftApplication?.Invoke(sender, e);
-        }
-
         internal void AdLoaded(object sender, EventArgs e)
         {
             AdsLoaded?.Invoke(sender, e);
+        }
+
+        internal void AdSwiped(object sender, EventArgs e)
+        {
+            AdsSwiped?.Invoke(sender, e);
         }
     }
 }

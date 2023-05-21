@@ -1,4 +1,11 @@
 ﻿### Release Notes
+**Version 1.9.0.6**
+Updated ads library in SampleMTAdmob.Android
+Removed AdsLeftApplication on Android as not used
+
+**Version 1.9.0.5**
+Updated Xamarin.GooglePlayServices.Ads.Lite to version 121.4.0
+
 **Version 1.9.0.3**
 Fixed some issues with iOS
 
