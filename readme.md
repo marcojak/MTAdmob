@@ -12,7 +12,7 @@ Your help allows me to continue to spend time on this project and continue to ma
 
 The plugin is free to use and I aim to improve it and fix any bugs in the shortest possible time. Said that, if you need faster support with this plugin or in general with your Xamarin or MAUI project, contact me at hightouchinnovation@gmail.com to discuss it further.
 
-## Current Status (Version 1.9.06)
+## Current Status (Version 1.9.0.6)
 
 |                       | **Android** | **iOS** | **Windows** | **Mac** |
 |-----------------------|:-------------:|:---------:|:---------:|:---------:|
