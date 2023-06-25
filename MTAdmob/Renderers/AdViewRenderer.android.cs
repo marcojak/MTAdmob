@@ -65,10 +65,10 @@ namespace MarcTron.Plugin.Renderers
             listener.AdClosed += currentAdView.AdClosed;
             listener.AdImpression += currentAdView.AdImpression;
             listener.AdOpened += currentAdView.AdOpened;
-            listener.AdFailedToLoad += currentAdView.AdFailedToLoad;
             listener.AdFailedToLoad += Listener_AdFailedToLoad;
-            listener.AdLoaded += currentAdView.AdLoaded;
+            listener.AdFailedToLoad += currentAdView.AdFailedToLoad;
             listener.AdLoaded += Listener_AdLoaded;
+            listener.AdLoaded += currentAdView.AdLoaded;
             listener.AdSwiped += currentAdView.AdSwiped;
 
            _adView = new AdView(Context)
