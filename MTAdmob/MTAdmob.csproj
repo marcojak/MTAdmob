@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 	<PropertyGroup>
 		<!--Work around so the conditions work below-->
-		<TargetFrameworks>netstandard2.0;xamarinios10;monoandroid12.0;</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;xamarinios10;monoandroid13.0;</TargetFrameworks>
 
 		<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>
 
@@ -197,12 +197,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />		
-		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
 		<Compile Include="**\*.android.cs" />
-		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="121.4.0" />		
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="122.1.0" />		
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinios')) ">
