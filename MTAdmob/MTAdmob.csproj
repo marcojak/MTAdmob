@@ -3,8 +3,6 @@
 		<!--Work around so the conditions work below-->
 		<TargetFrameworks>netstandard2.0;xamarinios10;monoandroid13.0;</TargetFrameworks>
 
-		<AndroidSdkBuildToolsVersion>29.0.2</AndroidSdkBuildToolsVersion>
-
 		<DesignTimeBuild>false</DesignTimeBuild>
 
 		<AssemblyName>Plugin.MtAdmob</AssemblyName>
@@ -12,10 +10,10 @@
 		<PackageId>MarcTron.Admob</PackageId>
 
 		<Product>Plugin.MtAdmob</Product>
-		<AssemblyVersion>1.9.0.6</AssemblyVersion>
-		<AssemblyFileVersion>1.9.0.6</AssemblyFileVersion>
+		<AssemblyVersion>1.9.0.7</AssemblyVersion>
+		<AssemblyFileVersion>1.9.0.7</AssemblyFileVersion>
 		<Version>1.9.0</Version>
-		<PackageVersion>1.9.0.6</PackageVersion>
+		<PackageVersion>1.9.0.7</PackageVersion>
 		<PackOnBuild>true</PackOnBuild>
 		<NeutralLanguage>en</NeutralLanguage>
 		<LangVersion>default</LangVersion>
@@ -31,10 +29,13 @@
 		<PackageProjectUrl>https://www.xamarinexpert.it/admob-made-easy/</PackageProjectUrl>
 		<RepositoryUrl>https://www.nuget.org/packages/MarcTron.Admob</RepositoryUrl>
 		<PackageReleaseNotes>
+			Version 1.9.0.7
+			Updated Xamarin.GooglePlayServices.Ads.Lite to version 122.1.0.1
+			
 			Version 1.9.0.6
 			Updated ads library in SampleMTAdmob.Android
 			Removed AdsLeftApplication on Android as not used
-			
+
 			Version 1.9.0.5
 			Updated Xamarin.GooglePlayServices.Ads.Lite to version 121.4.0
 
@@ -202,7 +203,7 @@
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
 		<Compile Include="**\*.android.cs" />
-		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="122.1.0" />		
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="122.1.0.1" />		
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('xamarinios')) ">
