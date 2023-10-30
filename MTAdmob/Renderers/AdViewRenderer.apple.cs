@@ -178,10 +178,10 @@ namespace MarcTron.Plugin.Renderers
 
         private AdSize GetAdaptiveAdSize(bool isAnchored)
         {
-            UIViewController controller = GetVisibleViewController();
-            CGRect frame = controller.View.Frame;
+            //UIViewController controller = GetVisibleViewController();
+            //CGRect frame = controller.View.Frame;
 
-            frame =  SafeAreaInsets.InsetRect(controller.View.Frame);
+            //frame =  SafeAreaInsets.InsetRect(controller.View.Frame);
             int adWidth = (int)currentAdView.Width;
 
             if (isAnchored)
