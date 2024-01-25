@@ -1,7 +1,7 @@
 ## MtAdmob plugin for Xamarin
 
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
-This plugin supports: Banners, Interstitial, Rewarded Videos and Rewearded Interstitials (from version 1.9)
+This plugin supports: Banners, Interstitial, Rewarded Videos and Rewarded Interstitials (from version 1.9)
 
 ### PLEASE READ
 From version 2.1.0, I've added support for the consent required by Google for all the final users living in Europe.
@@ -10,6 +10,10 @@ Without the license, the plugin will continue to work as usual with all the othe
 This will allow me to continue supporting the development of the plugin.
 You can buy the license at https://hightouchinnovation.com/XMTAdmob
 If you are a charity or your app is used to support a good cause, contact me and I'll evaluate it to send you a free license.
+
+**The licensed version unlocks the mandatory Consent required by Google since the 16th of January. 
+If you like, you can use the unlicensed version of the plugin and implement your choice of Certified CMP. 
+The license will help me to continue updating and supporting this plugin adding all the newer features that Google implements.**
 
 ### CRYPTOGRAPHY
 This plugin uses a cryptographic algorithm to handle the license.
