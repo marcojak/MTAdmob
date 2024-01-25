@@ -3,16 +3,41 @@
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial, Rewarded Videos and Rewearded Interstitials (from version 1.9)
 
+### PLEASE READ
+From version 2.1.0, I've added support for the consent required by Google for all the final users living in Europe.
+This support for UMP is only available in the licensed version of the plugin.
+Without the license, the plugin will continue to work as usual with all the other features normally available.
+This will allow me to continue supporting the development of the plugin.
+You can buy the license at https://hightouchinnovation.com/XMTAdmob
+If you are a charity or your app is used to support a good cause, contact me and I'll evaluate it to send you a free license.
+
+### CRYPTOGRAPHY
+This plugin uses a cryptographic algorithm to handle the license.
+
 ### Please, support my work
-If possible, please, support my work with few coffees or even better with a Membership!
+If you prefer to not buy a license, if possible, please, support my work with a few coffees or even better with a Membership!
 You can do it here: [Buy Me A Coffee](https://www.buymeacoffee.com/xamarinexpert)
-Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK 20: [Google SDK 20 Migration](https://developers.google.com/admob/android/migration).
+Your help allows me to continue to spend time on this project and continue to maintain and update it with new features and to be ready for the new Google SDK : [Google SDK Migration](https://developers.google.com/admob/android/migration).
+
+### DISCLAIMER OF LIABILITY
+
+By using MAUIMtAdmob (the "Plugin"), you agree that:
+
+1. The Plugin is provided "as is" without any warranties or guarantees of any kind, either expressed or implied.
+2. I shall not be responsible or liable for any direct, indirect, incidental, special, or consequential damages arising out of the use or inability to use the Plugin.
+3. I do not warrant that the Plugin will meet your specific requirements or operate without interruption.
+
+You acknowledge that the use of the Plugin is at your own risk. The author of the plugin disclaims all liability for any damage to your computer system or loss of data that results from the use of the Plugin.
+
+This disclaimer of liability is a fundamental part of the agreement between you and the author of the plugin. You agree that the limitations and exclusions of liability set forth in this disclaimer are reasonable and fair.
+
+If you do not agree to these terms, do not use the Plugin.
 
 ### Commercial support
 
-The plugin is free to use and I aim to improve it and fix any bugs in the shortest possible time. Said that, if you need faster support with this plugin or in general with your Xamarin or MAUI project, contact me at hightouchinnovation@gmail.com to discuss it further.
+If you need faster support with this plugin, custom changes or in general with your Xamarin or MAUI project, contact me at hightouchinnovation@gmail.com to discuss it further.
 
-## Current Status (Version 1.9.0.6)
+## Current Status (Version 2.1.0)
 
 |                       | **Android** | **iOS** | **Windows** | **Mac** |
 |-----------------------|:-------------:|:---------:|:---------:|:---------:|
@@ -21,7 +46,7 @@ The plugin is free to use and I aim to improve it and fix any bugs in the shorte
 | Rewarded              |    :heavy_check_mark:    |    :heavy_check_mark:     |    :x:  |    :x:  |
 | Rewarded Interstitial |   :heavy_check_mark:    |    :x:*  |    :x:  |    :x:  |
 
-*They are implemented but currently they are not working. Probably something in the Admob SDK. I'm investigating it.
+*They are implemented but currently, they are not working. Probably something in the Admob SDK. I'm investigating it.
 
 ## Methods
 | **Banner** | **Interstitial**     | **Rewarded**     | **Rewarded Interstitial**  |
@@ -40,16 +65,21 @@ The plugin is free to use and I aim to improve it and fix any bugs in the shorte
 | AdsClicked      | OnInterstitialOpened	   | OnRewardedOpened	  | OnRewardedOpened	  |
 | AdsOpened		  | OnInterstitialFailedToShow | OnRewardedFailedToShow| OnRewardedFailedToShow|
 | AdsClosed       | OnInterstitialClosed	   | OnRewardedClosed	  | OnRewardedClosed	  |
-| AdsSwiped**     | OnInterstitialClicked*     | OnRewardedClicked*   | OnRewardedClicked*|
+| AdsSwiped 	  | OnInterstitialClicked*     | OnRewardedClicked*   | OnRewardedClicked*|
 |  				  | 						   | OnUserEarnedReward   | OnUserEarnedReward|
 
 *Only supported on iOS
-**Only supported on Android
 
 ### IMPORTANT
 
 #### To allow a smooth toward MAUI, Version 1.9 contains few breaking changes, several fixes and am improved support for Banner. It's not complicated to update your code and it's worth it.
 
+### INITIALIZATION
+
+From your platform code, from version 2.1.0, you need to call:
+CrossMTAdmob.Current.Init(this,...);
+
+If you don't you'll get an error!
 
 
 #### Android
@@ -58,10 +88,6 @@ You need to add your Admob APPLICATION_ID to your AppManifest:
 ```xml
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="YOUR APPLICATION ID" />
 ```
-
-If you Target android 12 and the app crashes with the following message: "Targeting S+ (version 31 and above) requires that one of FLAG_IMMUTABLE or FLAG_MUTABLE be specified when creating a PendingIntent."
-
-You NEED TO update Xamarin.AndroidX.Work.Runtime to version 2.7.0! This will solve the issue
 
 ### iOS
 You need to add GADApplicationIdentifier to your Info.plist:
@@ -120,17 +146,18 @@ iOS: ca-app-pub-3940256099942544/2934735716
 
 For each AdView if you want, you can set this property:
 AdsId: To add the id of your ads
-AdSize: To chose the size of your banners (from version 1.9)
-AutoSize: If true, the plugin will update the heightbanner height according to the ads loaded (from version 1.9)
+AdSize: To choose the size of your banners (from version 1.9)
+AutoSize: If true, the plugin will update the banner height according to the ads loaded (from version 1.9)
 
-**For GDPR it's better to rely on a custom consent instead or using the non personalized ads as I cannot guarantee it works. So it's better if you create a custom consent**
+**From the 16th ofJanuary, Google made it mandatory to use Certified CMP! You ca implement your own or you can use the licensed version of the plugin, that implements the Google UMP to handle the Consent for the European users.**
 
 ### GLOBAL PROPERTIES
 
 AdsId: To add the id of your ads
 
 PersonalizedAds: You can set it to False if you want to use generic ads (for GDPR...) (It works only for Android Banners, for the others, you must ask for consent)
-**For GDPR it's better to rely on a custom consent instead or using the non personalized ads as I cannot guarantee it works. So it's better if you create a custom consent**
+
+**From the 16th ofJanuary, Google made it mandatory to use Certified CMP! You ca implement your own or you can use the licensed version of the plugin, that implements the Google UMP to handle the Consent for the European users.**
 
 TestDevices: You can add here the ID of your test devices
 
@@ -199,7 +226,7 @@ protected override void OnCreate(Bundle savedInstanceState)
             LoadApplication(new App());
         }
 ```
-Remeber to add this to your AppManifest:
+Remember to add this to your AppManifest:
 ```xml
 <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
 <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -223,10 +250,13 @@ Remeber to add this to your AppManifest:
 
 
   ### LINKS
+  To buy the license visit https://hightouchinnovation.com/XMTAdmob
 
   Available on Nuget: https://www.nuget.org/packages/MarcTron.Admob
 
   Tutorial: https://www.xamarinexpert.it/admob-made-easy/
+
+  Guide: https://hightouchinnovation.com/XMTAdmobGuide
 
   To report any issue: https://github.com/marcojak/MTAdmob/issues
  
