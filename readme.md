@@ -3,6 +3,10 @@
 With this Plugin you can add a Google Admob Ads inside your Xamarin Android and iOS Projects with a single line!!!
 This plugin supports: Banners, Interstitial, Rewarded Videos and Rewarded Interstitials (from version 1.9)
 
+### NEW RELEASE
+
+You can find the new updated sample project for this plugin here: https://github.com/marcojak/XamarinMTAdmobSample
+
 ### PLEASE READ
 From version 2.1.0, I've added support for the consent required by Google for all the final users living in Europe.
 This support for UMP is only available in the licensed version of the plugin.
